@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interface de jeu en ligne — Les Ombres d'Erebor">
+  <title>Jeu en cours — Les Ombres d'Erebor</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/game.css">
+</head>
+<body>
+
+  <!-- Navigation (minimaliste en jeu) -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-title">Les Ombres d'Erebor</span>
+        <span class="nav-logo-sub" id="nav-phase-label">Chargement...</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="rules.html">📖 Règles</a></li>
+        <li><a href="roles.html">🎭 Rôles</a></li>
+        <li><a href="play.html">🚪 Quitter la partie</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile-drawer">
+    <a href="rules.html">📖 Règles du jeu</a>
+    <a href="roles.html">🎭 Les 25 rôles</a>
+    <a href="play.html">🚪 Quitter la partie</a>
+  </div>
+
+  <!-- ======== VUE : SETUP (sans salle) ======== -->
+  <div id="view-setup" class="game-view" style="padding-top:var(--nav-height);">
+    <div class="setup-box">
+      <h1>Rejoindre ou Créer</h1>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="create">🏰 Créer une salle</button>
+        <button class="tab-btn" data-tab="join">🚪 Rejoindre</button>
+      </div>
+
+      <div id="tab-create" class="tab-panel active">
+        <div class="setup-card create">
+          <h2>Nouvelle partie</h2>
+          <p>Vous serez le Maître du Jeu (MJ).</p>
+          <div class="form-group">
+            <label class="form-label">Votre nom</label>
+            <input type="text" class="form-input" id="setup-gm-name" placeholder="Maître du Jeu" maxlength="20">
+          </div>
+          <div class="form-group">
+            <span class="form-label">Sélectionnez les rôles</span>
+            <div class="role-checkboxes" id="role-checkboxes-setup"></div>
+          </div>
+          <button class="btn btn-primary" style="width:100%;margin-top:1rem;" onclick="setupCreateRoom()">
+            🏰 Créer la salle
+          </button>
+        </div>
+      </div>
+
+      <div id="tab-join" class="tab-panel">
+        <div class="setup-card join">
+          <h2>Rejoindre une partie</h2>
+          <p>Entrez le code partagé par le MJ.</p>
+          <div class="form-group">
+            <label class="form-label">Votre nom</label>
+            <input type="text" class="form-input" id="setup-player-name" placeholder="Votre prénom" maxlength="20">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Code de salle</label>
+            <input type="text" class="form-input code-input" id="setup-room-code" placeholder="XXXXXX" maxlength="6">
+          </div>
+          <button class="btn btn-secondary" style="width:100%;margin-top:1rem;justify-content:center;" onclick="setupJoinRoom()">
+            🚪 Rejoindre
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== VUE : LOBBY ======== -->
+  <div id="view-lobby" class="game-view" style="padding-top:var(--nav-height);">
+    <div class="lobby-container">
+      <div class="lobby-header">
+        <h1 class="lobby-title">Salle d'Attente</h1>
+        <p class="text-muted" style="margin-bottom:1.5rem;">Partagez ce code avec tous les joueurs :</p>
+        <div class="room-code-display">
+          <span class="room-code-label">Code</span>
+          <span class="room-code-value" id="lobby-room-code">——————</span>
+          <button class="room-code-copy" id="copy-room-code">📋 Copier</button>
+        </div>
+      </div>
+
+      <div class="lobby-grid">
+        <!-- Liste joueurs -->
+        <div class="player-list">
+          <div class="player-list-header">
+            Joueurs connectés
+            <span id="player-list-count" style="font-weight:400;">0 joueur</span>
+          </div>
+          <div class="player-list-body" id="player-list-body">
+            <div style="padding:2rem;text-align:center;color:var(--color-text-dim);font-size:0.875rem;">
+              En attente des joueurs...
+            </div>
+          </div>
+        </div>
+
+        <!-- Contrôles MJ -->
+        <div class="lobby-controls" id="gm-lobby-panel" style="display:none;">
+          <h3>⚔️ Contrôles du MJ</h3>
+          <p style="font-size:0.875rem;">Attendez que tous les joueurs aient rejoint, puis distribuez les rôles.</p>
+
+          <div class="form-group" style="margin-top:1rem;">
+            <span class="form-label">Rôles pour cette partie</span>
+            <div class="role-checkboxes" id="role-checkboxes-lobby" style="max-height:180px;overflow-y:auto;"></div>
+          </div>
+
+          <button class="btn btn-secondary" onclick="assignRoles()" style="width:100%;">
+            🃏 Attribuer les rôles
+          </button>
+          <button class="btn btn-primary" onclick="startNight()" style="width:100%;">
+            🌑 Démarrer la Nuit 1
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== VUE : NUIT ======== -->
+  <div id="view-night" class="game-view">
+    <div class="night-container">
+
+      <!-- Sidebar ordre d'activation -->
+      <div class="night-order-sidebar">
+        <div class="night-order-header">🌑 Ordre d'activation</div>
+        <ul class="night-step-list" id="night-step-list"></ul>
+      </div>
+
+      <!-- Zone principale -->
+      <div class="night-main">
+        <!-- Panel MJ -->
+        <div id="gm-night-content" style="display:none;">
+          <div class="gm-night-panel">
+            <div class="gm-night-panel-header">
+              <h3>⚔️ Grimoire du MJ — Phase de Nuit</h3>
+              <span id="night-round-label" style="font-family:var(--font-ui);font-size:0.75rem;color:var(--color-text-muted);">Tour 1</span>
+            </div>
+            <div class="gm-night-body" id="gm-night-body">
+              <div style="padding:2rem;text-align:center;color:var(--color-text-muted);">Chargement...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel Joueur -->
+        <div id="player-night-content" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== VUE : JOUR ======== -->
+  <div id="view-day" class="game-view">
+    <div class="day-container">
+
+      <!-- Zone principale Jour -->
+      <div>
+        <!-- Fil d'événements -->
+        <div class="event-feed">
+          <div class="event-feed-header">📣 Fil de la Journée</div>
+          <div class="event-feed-body" id="event-feed-body">
+            <div class="feed-entry">
+              <span class="feed-icon">☀️</span>
+              <span class="feed-text gm">Le jour se lève sur Erebor...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vote -->
+        <div class="vote-panel">
+          <div class="vote-panel-header">
+            <h3>🗳️ Vote d'Accusation</h3>
+            <span class="vote-status-badge open" id="vote-status">Ouvert</span>
+          </div>
+          <div class="vote-panel-body">
+            <div id="vote-candidates" class="vote-candidates"></div>
+            <div id="gm-vote-actions" style="display:none;">
+              <button class="gm-btn" onclick="resolveVote()" style="margin-top:0.5rem;">
+                ⚖️ Résoudre le vote & Éliminer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Jour -->
+      <div class="day-sidebar">
+        <!-- Joueurs vivants -->
+        <div class="alive-players-panel">
+          <div class="panel-header">👥 Joueurs</div>
+          <div class="alive-players-list" id="alive-players-list"></div>
+        </div>
+
+        <!-- Contrôles MJ -->
+        <div class="gm-day-controls" id="gm-day-controls" style="display:none;">
+          <h3>⚔️ Actions du MJ</h3>
+          <button class="gm-btn" onclick="resolveVote()">⚖️ Résoudre le vote</button>
+          <button class="gm-btn" onclick="continueToCrepuscule()">🌅 Lancer le Crépuscule</button>
+          <button class="gm-btn" onclick="startNight()">🌑 Passer à la nuit suivante</button>
+          <button class="gm-btn danger" onclick="checkVictory()">🏆 Vérifier la victoire</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======== VUE : CRÉPUSCULE ======== -->
+  <div id="view-crepuscule" class="game-view">
+    <div class="crepuscule-container">
+      <h1 class="crepuscule-title">⚡ Crépuscule</h1>
+      <div class="event-card">
+        <span class="event-card-icon" id="event-icon">🌀</span>
+        <h2 class="event-card-title" id="event-title">Événement en cours...</h2>
+        <p class="event-card-desc" id="event-desc">L'obscurité d'Erebor est traversée d'un événement inattendu.</p>
+        <div class="event-card-effect" id="event-effect"></div>
+        <div id="gm-crepuscule-actions" style="display:none;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <button class="btn btn-secondary" onclick="startNight()">🌑 Lancer la prochaine Nuit</button>
+          <button class="btn btn-primary" onclick="checkVictory()">🏆 Vérifier la victoire</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== VUE : FIN DE PARTIE ======== -->
+  <div id="view-gameover" class="game-view">
+    <div class="gameover-container">
+      <div class="gameover-winner-banner lune" id="gameover-banner">
+        <span class="gameover-icon" id="gameover-icon">🌙</span>
+        <div class="gameover-label">Victoire</div>
+        <h2 class="gameover-winner-name" id="gameover-winner-name">Conseil de la Lune</h2>
+        <p class="gameover-subtitle" id="gameover-subtitle">La lumière triomphe des ténèbres.</p>
+      </div>
+
+      <div class="gameover-roles-reveal">
+        <div class="gameover-roles-reveal-header">🃏 Révélation des rôles</div>
+        <div class="role-reveal-grid" id="role-reveal-grid"></div>
+      </div>
+
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="play.html" class="btn btn-primary">🔄 Nouvelle partie</a>
+        <a href="index.html" class="btn btn-secondary">🏠 Accueil</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== Grimoire flottant (MJ) ======== -->
+  <button class="grimoire-toggle" onclick="toggleGrimoire()" title="Grimoire du MJ">📖</button>
+  <div class="grimoire-panel" id="grimoire-panel">
+    <div class="grimoire-header">📖 Grimoire du MJ</div>
+    <div class="grimoire-body" id="grimoire-body"></div>
+  </div>
+
+  <!-- Barre de connexion -->
+  <div class="connection-bar">
+    <div class="connection-dot"></div>
+    <span class="connection-text">Connexion...</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script src="assets/js/config/firebase-config.js"></script>
+  <script src="assets/js/data/roles.js"></script>
+  <script src="assets/js/data/interactions.js"></script>
+  <script src="assets/js/components/nav.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/pages/game.js"></script>
+
+  <script>
+    // Fonctions du setup inline (depuis game.html sans passer par play.html)
+    function setupCreateRoom() {
+      const name  = document.getElementById('setup-gm-name').value.trim();
+      if (!name) return alert('Entrez votre nom.');
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let code = '';
+      for (let i=0;i<6;i++) code += chars[Math.floor(Math.random()*chars.length)];
+
+      sessionStorage.setItem('erebor_room', code);
+      sessionStorage.setItem('erebor_is_gm', 'true');
+
+      const uid = getOrCreateUID();
+      const roomData = {
+        gmId: uid, phase: 'lobby', round: 0, nightStep: 0,
+        config: { playerCount: 10, roundCount: 6 },
+        createdAt: Date.now(),
+        players: { [uid]: { name, isGM: true, isAlive: true, roleId: null, nightActionDone: false, nightActionTarget: null } }
+      };
+
+      if (db) {
+        db.ref(`rooms/${code}`).set(roomData).then(() => {
+          window.location.search = `?room=${code}&gm=1`;
+        });
+      } else {
+        sessionStorage.setItem(`room_${code}`, JSON.stringify(roomData));
+        window.location.search = `?room=${code}&gm=1`;
+      }
+    }
+
+    function setupJoinRoom() {
+      const name = document.getElementById('setup-player-name').value.trim();
+      const code = document.getElementById('setup-room-code').value.trim().toUpperCase();
+      if (!name) return alert('Entrez votre nom.');
+      if (code.length !== 6) return alert('Code invalide (6 caractères requis).');
+
+      const uid = getOrCreateUID();
+      sessionStorage.setItem('erebor_room', code);
+      sessionStorage.setItem('erebor_is_gm', 'false');
+
+      if (db) {
+        db.ref(`rooms/${code}`).get().then(snap => {
+          if (!snap.exists()) return alert('Salle introuvable.');
+          db.ref(`rooms/${code}/players/${uid}`).set({
+            name, isGM: false, isAlive: true, roleId: null, nightActionDone: false, nightActionTarget: null
+          }).then(() => { window.location.search = `?room=${code}`; });
+        });
+      } else {
+        const raw = sessionStorage.getItem(`room_${code}`);
+        if (!raw) return alert('Salle introuvable (mode local).');
+        const room = JSON.parse(raw);
+        room.players[uid] = { name, isGM: false, isAlive: true, roleId: null, nightActionDone: false, nightActionTarget: null };
+        sessionStorage.setItem(`room_${code}`, JSON.stringify(room));
+        window.location.search = `?room=${code}`;
+      }
+    }
+
+    // Construction des checkboxes en lobby
+    function buildLobbyCheckboxes() {
+      const c = document.getElementById('role-checkboxes-lobby');
+      if (!c || typeof ROLES === 'undefined') return;
+      c.innerHTML = '';
+      ROLES.forEach(role => {
+        const label = document.createElement('label');
+        label.className = 'role-checkbox-item';
+        label.innerHTML = `
+          <input type="checkbox" value="${role.id}" ${['herald','assassin','pretresse','gardien','murmure','archives','voyant','changeur'].includes(role.id) ? 'checked' : ''}>
+          <span class="rci-icon">${role.icon}</span>
+          <span class="rci-name">${role.name}</span>
+          <span class="rci-faction ${role.faction}"></span>
+        `;
+        c.appendChild(label);
+      });
+    }
+
+    // Initialiser checkboxes après que game.js a construit celles du setup
+    setTimeout(() => {
+      buildLobbyCheckboxes();
+      // Actions MJ crépuscule
+      const gmCrep = document.getElementById('gm-crepuscule-actions');
+      if (gmCrep && STATE && STATE.isGM) gmCrep.style.display = 'flex';
+      // Vote actions MJ
+      const gmVote = document.getElementById('gm-vote-actions');
+      if (gmVote && STATE && STATE.isGM) gmVote.style.display = 'block';
+    }, 200);
+
+    // Mise à jour du label de phase dans la nav
+    const origRenderPhase = window.renderPhase;
+    window.renderPhase = function() {
+      if (typeof origRenderPhase === 'function') origRenderPhase();
+      const phases = { lobby: 'Lobby', night: 'Nuit', day: 'Jour', crepuscule: 'Crépuscule', gameover: 'Fin de partie' };
+      const label = document.getElementById('nav-phase-label');
+      if (label && STATE) label.textContent = phases[STATE.phase] || 'En jeu';
+    };
+  </script>
+
+</body>
+</html>

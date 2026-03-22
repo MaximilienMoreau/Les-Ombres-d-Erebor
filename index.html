@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Les Ombres d'Erebor — Jeu de déduction sociale inspiré du Loup-Garou, Blood on the Clocktower et Two Rooms and a Boom. 25 rôles. 3 factions. Une nuit sans fin.">
+  <title>Les Ombres d'Erebor — Jeu de déduction sociale</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/home.css">
+</head>
+<body>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" role="navigation" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Les Ombres d'Erebor — Accueil">
+        <span class="nav-logo-title">Les Ombres d'Erebor</span>
+        <span class="nav-logo-sub">Jeu de déduction sociale</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="index.html" class="active"><span class="nav-icon">🏠</span> Accueil</a></li>
+        <li><a href="rules.html"><span class="nav-icon">📖</span> Règles</a></li>
+        <li><a href="roles.html"><span class="nav-icon">🎭</span> Rôles</a></li>
+        <li><a href="interactions.html"><span class="nav-icon">🕸️</span> Interactions</a></li>
+        <li><a href="play.html"><span class="nav-icon">🎮</span> Jouer</a></li>
+        <li><a href="shop.html"><span class="nav-icon">🛒</span> Boutique</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <a href="play.html" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;">🎮 Jouer</a>
+      </div>
+
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div class="nav-mobile-drawer" role="navigation" aria-label="Navigation mobile">
+    <a href="index.html">🏠 Accueil</a>
+    <a href="rules.html">📖 Règles du jeu</a>
+    <a href="roles.html">🎭 Les 25 rôles</a>
+    <a href="interactions.html">🕸️ Matrice d'interactions</a>
+    <a href="play.html">🎮 Jouer en ligne</a>
+    <a href="shop.html">🛒 Boutique</a>
+  </div>
+
+  <!-- ============ CONTENU PRINCIPAL ============ -->
+  <main class="page-content">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <canvas id="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-bg" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <div class="hero-eyebrow" aria-hidden="true">
+          ✦ Un royaume sous la nuit éternelle ✦
+        </div>
+
+        <h1 class="hero-title" id="hero-title">
+          <span class="line-1">Les Ombres de</span>
+          <span class="line-2">EREBOR</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Un jeu de déduction sociale pour 8 à 20 joueurs. Trois factions. Vingt-cinq rôles.
+          Une seule nuit pour découvrir qui vous pouvez encore faire confiance.
+        </p>
+
+        <div class="hero-badges" aria-label="Inspiré de">
+          <span class="hero-badge">🐺 Loup-Garou</span>
+          <span class="hero-badge">🕰️ Blood on the Clocktower</span>
+          <span class="hero-badge">💥 Two Rooms and a Boom</span>
+        </div>
+
+        <div class="hero-actions">
+          <a href="rules.html" class="btn btn-primary">📖 Lire les règles</a>
+          <a href="roles.html" class="btn btn-secondary">🎭 Découvrir les rôles</a>
+        </div>
+      </div>
+
+      <div class="hero-scroll" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/>
+        </svg>
+        <span>Descendre</span>
+      </div>
+    </section>
+
+    <!-- PRÉSENTATION -->
+    <section class="section-intro" aria-labelledby="intro-title">
+      <div class="container">
+        <div class="intro-grid">
+          <div class="intro-text reveal">
+            <span class="section-eyebrow">Le jeu</span>
+            <h2 id="intro-title">Un royaume plongé dans les ténèbres</h2>
+            <p>
+              La cité fortifiée d'Erebor est assiégée de l'intérieur. Des forces occultes ont
+              infiltré ses quartiers, corrompu ses gardiens, et semé la méfiance entre ses habitants.
+              Chaque joueur porte un visage public… et un secret mortel.
+            </p>
+            <p>
+              Contrairement aux jeux classiques, <em>Les Ombres d'Erebor</em> refuse la simplicité :
+              les identités changent en cours de partie, les alliances sont temporaires, et même
+              votre meilleur allié d'hier peut être l'ennemi de demain.
+            </p>
+            <a href="rules.html" class="btn btn-secondary" style="margin-top:1.5rem;">En savoir plus →</a>
+          </div>
+
+          <div class="intro-visual reveal delay-2">
+            <div class="intro-card">
+              <div class="intro-stats">
+                <div class="stat-item">
+                  <div class="stat-number">25</div>
+                  <div class="stat-label">Rôles uniques</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">3</div>
+                  <div class="stat-label">Factions</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">8-20</div>
+                  <div class="stat-label">Joueurs</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">∞</div>
+                  <div class="stat-label">Possibilités</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FACTIONS -->
+    <section class="section-factions" aria-labelledby="factions-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Les trois camps</span>
+          <h2 id="factions-title">Choisissez votre allégeance</h2>
+          <p>Ou plutôt — laissez le destin choisir pour vous.</p>
+        </div>
+
+        <div class="factions-grid">
+          <div class="faction-card lune reveal">
+            <span class="faction-icon">🌙</span>
+            <h3>Conseil de la Lune</h3>
+            <p class="faction-tagline">"La vérité est notre épée, la lumière notre bouclier."</p>
+            <p>
+              Les défenseurs d'Erebor. Leurs pouvoirs permettent de détecter, protéger et révéler
+              les Ombres tapis dans la cité. Mais leurs informations sont souvent incomplètes,
+              falsifiées… ou utilisées contre eux.
+            </p>
+            <span class="faction-count">10 rôles</span>
+          </div>
+
+          <div class="faction-card ombre reveal delay-2">
+            <span class="faction-icon">🌑</span>
+            <h3>Ombre Souveraine</h3>
+            <p class="faction-tagline">"Le mensonge parfait est indiscernable de la vérité."</p>
+            <p>
+              Les infiltrés, les corrupteurs, les assassins. Ils usurpent les identités, réécrivent
+              les informations et sèment la méfiance. Leur force est de ne pas être vus — jusqu'à
+              ce qu'il soit trop tard.
+            </p>
+            <span class="faction-count">8 rôles</span>
+          </div>
+
+          <div class="faction-card solitaire reveal delay-4">
+            <span class="faction-icon">🌀</span>
+            <h3>Solitaires</h3>
+            <p class="faction-tagline">"Je ne joue pas dans votre partie. J'ai la mienne."</p>
+            <p>
+              Ni bons ni mauvais, ces joueurs poursuivent des objectifs personnels secrets.
+              Ils peuvent aider n'importe quel camp en apparence, mais ils ne servent que leur
+              propre agenda — parfois jusqu'à renverser toute la partie.
+            </p>
+            <span class="faction-count">7 rôles</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMENT JOUER -->
+    <section class="section-howto" aria-labelledby="howto-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Comment jouer</span>
+          <h2 id="howto-title">Une nuit ne ressemble jamais à une autre</h2>
+        </div>
+
+        <div class="howto-grid">
+          <div class="howto-step reveal">
+            <div class="step-number">1</div>
+            <span class="step-icon">🃏</span>
+            <h3>Distribution des rôles</h3>
+            <p>Chaque joueur reçoit un rôle public (sa "fonction" en ville) et un rôle secret (son alignement et pouvoir réel).</p>
+          </div>
+
+          <div class="howto-step reveal delay-1">
+            <div class="step-number">2</div>
+            <span class="step-icon">🌑</span>
+            <h3>La Nuit tombe</h3>
+            <p>Dans le noir, les pouvoirs s'activent. Assassinats, corruptions, espionnages, soins — chaque joueur agit selon son rôle.</p>
+          </div>
+
+          <div class="howto-step reveal delay-2">
+            <div class="step-number">3</div>
+            <span class="step-icon">☀️</span>
+            <h3>Le Jour se lève</h3>
+            <p>Accusations, procès, votes. Les informations révélées sont partielles, contestées, parfois fausses. Qui croire ?</p>
+          </div>
+
+          <div class="howto-step reveal delay-3">
+            <div class="step-number">4</div>
+            <span class="step-icon">🏆</span>
+            <h3>La Victoire</h3>
+            <p>Le Conseil élimine toutes les Ombres, ou les Ombres corrompent la majorité — ou un Solitaire accomplit sa quête personnelle.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- APERÇU DES RÔLES -->
+    <section class="section-roles-preview" aria-labelledby="preview-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Les rôles</span>
+          <h2 id="preview-title">Vingt-cinq destins, une même nuit</h2>
+          <p>Chaque rôle dispose d'un pouvoir unique qui interagit avec les autres.</p>
+        </div>
+      </div>
+
+      <div class="roles-strip" aria-label="Aperçu des rôles" id="roles-strip-home">
+        <!-- Rempli par JavaScript -->
+      </div>
+
+      <div class="roles-cta">
+        <a href="roles.html" class="btn btn-primary">Voir tous les rôles →</a>
+      </div>
+    </section>
+
+    <!-- CONDITIONS DE VICTOIRE -->
+    <section class="section-victory" aria-labelledby="victory-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Conditions de victoire</span>
+          <h2 id="victory-title">Trois chemins vers la gloire</h2>
+        </div>
+
+        <div class="victory-grid">
+          <div class="victory-card lune reveal">
+            <span class="victory-icon">🌙</span>
+            <h3>Conseil de la Lune</h3>
+            <p>
+              Éliminer toutes les Ombres avant le lever du Soleil (nombre limité de tours).
+              La victoire collective — mais chaque erreur de vote rapproche la défaite.
+            </p>
+          </div>
+
+          <div class="victory-card ombre reveal delay-2">
+            <span class="victory-icon">🌑</span>
+            <h3>Ombre Souveraine</h3>
+            <p>
+              Corrompre ou éliminer la majorité des joueurs avant la fin du jeu.
+              La victoire par l'infiltration — chaque corruption non détectée est un pas de plus.
+            </p>
+          </div>
+
+          <div class="victory-card solitaire reveal delay-4">
+            <span class="victory-icon">🌀</span>
+            <h3>Solitaires</h3>
+            <p>
+              Remplir un objectif personnel unique, souvent contradictoire avec les deux autres camps.
+              La victoire impossible — ou inattendue.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="section-cta-final" aria-labelledby="cta-title">
+      <div class="container">
+        <h2 class="cta-final-title" id="cta-title">Prêt à plonger dans les ténèbres ?</h2>
+        <p class="cta-final-sub">Maîtrisez les règles. Découvrez les rôles. Déchiffrez la toile d'interactions.</p>
+        <div class="cta-final-actions">
+          <a href="rules.html" class="btn btn-primary">📖 Lire les règles</a>
+          <a href="roles.html" class="btn btn-secondary">🎭 Explorer les rôles</a>
+          <a href="interactions.html" class="btn btn-secondary">🕸️ Voir la matrice</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo">Les Ombres d'Erebor</span>
+          <p>Un jeu de déduction sociale inspiré du Loup-Garou, Blood on the Clocktower et Two Rooms and a Boom. 25 rôles. 3 factions. Une nuit sans fin.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="rules.html">Règles</a></li>
+            <li><a href="roles.html">Rôles</a></li>
+            <li><a href="interactions.html">Interactions</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Factions</h4>
+          <ul>
+            <li><a href="roles.html?faction=lune">🌙 Conseil de la Lune</a></li>
+            <li><a href="roles.html?faction=ombre">🌑 Ombre Souveraine</a></li>
+            <li><a href="roles.html?faction=solitaire">🌀 Solitaires</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Le jeu</h4>
+          <ul>
+            <li><a href="rules.html#setup">Configuration</a></li>
+            <li><a href="rules.html#phases">Phases de jeu</a></li>
+            <li><a href="rules.html#victoire">Victoire</a></li>
+            <li><a href="rules.html#reference">Référence rapide</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Les Ombres d'Erebor. Jeu de société de déduction sociale.</p>
+        <p class="text-muted">Inspiré de Loup-Garou, Blood on the Clocktower & Two Rooms and a Boom.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/data/roles.js"></script>
+  <script src="assets/js/data/interactions.js"></script>
+  <script src="assets/js/components/particles.js"></script>
+  <script src="assets/js/components/nav.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Particules hero
+    new ParticleSystem('hero-canvas');
+
+    // Strip de rôles en aperçu (6 rôles représentatifs)
+    const previewIds = ['herald', 'assassin', 'pretresse', 'changeur', 'oracles', 'marchand'];
+    const strip = document.getElementById('roles-strip-home');
+    if (strip && typeof ROLES !== 'undefined') {
+      const previewRoles = ROLES.filter(r => previewIds.includes(r.id));
+      // Ajouter tous les rôles pour défilement
+      ROLES.forEach(role => {
+        const card = document.createElement('a');
+        card.href = `roles.html#${role.id}`;
+        card.className = 'role-preview-card';
+        card.innerHTML = `
+          <span class="role-preview-icon">${role.icon}</span>
+          <div class="role-preview-name">${role.name}</div>
+          <p class="role-preview-power">${role.shortPower}</p>
+        `;
+        strip.appendChild(card);
+      });
+    }
+
+    // Faction filter depuis URL
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('faction')) {
+      window.location.href = `roles.html?faction=${params.get('faction')}`;
+    }
+  </script>
+
+</body>
+</html>

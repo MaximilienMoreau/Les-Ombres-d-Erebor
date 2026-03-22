@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Matrice des interactions entre les 25 rôles des Ombres d'Erebor — Synergies, Conflits et Détournements.">
+  <title>Matrice d'Interactions — Les Ombres d'Erebor</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/interactions.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-title">Les Ombres d'Erebor</span>
+        <span class="nav-logo-sub">Jeu de déduction sociale</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html"><span class="nav-icon">🏠</span> Accueil</a></li>
+        <li><a href="rules.html"><span class="nav-icon">📖</span> Règles</a></li>
+        <li><a href="roles.html"><span class="nav-icon">🎭</span> Rôles</a></li>
+        <li><a href="interactions.html" class="active"><span class="nav-icon">🕸️</span> Interactions</a></li>
+        <li><a href="play.html"><span class="nav-icon">🎮</span> Jouer</a></li>
+        <li><a href="shop.html"><span class="nav-icon">🛒</span> Boutique</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="play.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.8rem;">🎮 Jouer</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile-drawer">
+    <a href="index.html">🏠 Accueil</a>
+    <a href="rules.html">📖 Règles du jeu</a>
+    <a href="roles.html">🎭 Les 25 rôles</a>
+    <a href="interactions.html">🕸️ Matrice d'interactions</a>
+    <a href="play.html">🎮 Jouer en ligne</a>
+    <a href="shop.html">🛒 Boutique</a>
+  </div>
+
+  <!-- CONTENU -->
+  <main class="page-content interactions-page">
+    <div class="container">
+
+      <!-- Hero -->
+      <div class="interactions-hero">
+        <span class="section-eyebrow">Toile d'intrigues</span>
+        <h1 style="color:var(--color-detournement-light);text-shadow:0 0 30px rgba(90,61,122,0.5);margin-bottom:1rem;">
+          Matrice des Interactions
+        </h1>
+        <p style="color:var(--color-text-muted);font-size:var(--text-lg);max-width:640px;margin:0 auto;">
+          Comment chaque rôle interagit avec les autres. Cliquez sur un nom pour mettre en focus
+          ses interactions. Survolez une cellule pour en voir le détail.
+        </p>
+      </div>
+
+      <!-- Légende -->
+      <div class="legend reveal">
+        <span class="legend-title">Légende</span>
+        <div class="legend-items">
+          <div class="legend-item">
+            <div class="legend-dot synergie"></div>
+            <span>🤝 Synergie — Ces rôles se renforcent mutuellement</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot conflit"></div>
+            <span>⚔️ Conflit — Ces rôles se bloquent mutuellement</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot detournement"></div>
+            <span>🔄 Détournement — Un rôle retourne l'effet de l'autre</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot none"></div>
+            <span>· Aucune interaction répertoriée</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Matrice desktop -->
+      <div class="matrix-wrapper reveal" id="matrix-container" aria-label="Matrice des interactions entre rôles" role="region">
+        <!-- Rempli par JavaScript -->
+      </div>
+
+      <!-- Tooltip (toujours dans body) -->
+      <div id="matrix-tooltip" class="matrix-tooltip" role="tooltip" aria-live="polite"></div>
+
+      <!-- Statistiques -->
+      <div class="interaction-stats reveal">
+        <div class="istat-card">
+          <div class="istat-number synergie" id="stat-synergies">—</div>
+          <div class="istat-label">🤝 Synergies</div>
+        </div>
+        <div class="istat-card">
+          <div class="istat-number conflit" id="stat-conflits">—</div>
+          <div class="istat-label">⚔️ Conflits</div>
+        </div>
+        <div class="istat-card">
+          <div class="istat-number detournement" id="stat-detournements">—</div>
+          <div class="istat-label">🔄 Détournements</div>
+        </div>
+      </div>
+
+      <!-- Vue mobile -->
+      <div class="mobile-interactions">
+        <div class="mobile-role-select-wrapper">
+          <label for="mobile-role-select">Sélectionnez un rôle pour voir ses interactions :</label>
+          <select id="mobile-role-select" class="mobile-role-select" aria-label="Choisir un rôle">
+            <!-- Rempli par JavaScript -->
+          </select>
+        </div>
+        <div id="mobile-interactions-list" class="mobile-interactions-list" aria-live="polite">
+          <!-- Rempli par JavaScript -->
+        </div>
+      </div>
+
+      <!-- Guide d'utilisation -->
+      <div class="reveal" style="margin-top:3rem;padding:2rem;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);">
+        <h2 style="font-size:var(--text-xl);color:var(--color-gold-light);margin-bottom:1rem;">💡 Comment utiliser cette matrice</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;">
+          <div>
+            <h3 style="font-size:var(--text-base);color:var(--color-text-light);margin-bottom:0.5rem;">🖱️ Survol</h3>
+            <p style="font-size:var(--text-sm);color:var(--color-text-muted);">Passez la souris sur une cellule colorée pour voir le détail de l'interaction entre les deux rôles.</p>
+          </div>
+          <div>
+            <h3 style="font-size:var(--text-base);color:var(--color-text-light);margin-bottom:0.5rem;">🔍 Focus</h3>
+            <p style="font-size:var(--text-sm);color:var(--color-text-muted);">Cliquez sur un nom de rôle (en-tête de ligne ou colonne) pour mettre en focus toutes ses interactions.</p>
+          </div>
+          <div>
+            <h3 style="font-size:var(--text-base);color:var(--color-text-light);margin-bottom:0.5rem;">📱 Mobile</h3>
+            <p style="font-size:var(--text-sm);color:var(--color-text-muted);">Sur mobile, utilisez le sélecteur pour choisir un rôle et voir toutes ses interactions listées en détail.</p>
+          </div>
+          <div>
+            <h3 style="font-size:var(--text-base);color:var(--color-text-light);margin-bottom:0.5rem;">🎭 Rôles</h3>
+            <p style="font-size:var(--text-sm);color:var(--color-text-muted);">Consultez la <a href="roles.html">page des rôles</a> pour voir les pouvoirs complets et le lore de chaque personnage.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo">Les Ombres d'Erebor</span>
+          <p>La toile de trahisons la plus complexe du jeu de déduction sociale.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="rules.html">Règles</a></li>
+            <li><a href="roles.html">Rôles</a></li>
+            <li><a href="interactions.html">Interactions</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Types d'interactions</h4>
+          <ul>
+            <li style="color:var(--color-synergie-light);font-size:0.875rem;list-style:none;">🤝 Synergies</li>
+            <li style="color:var(--color-conflit-light);font-size:0.875rem;list-style:none;">⚔️ Conflits</li>
+            <li style="color:var(--color-detournement-light);font-size:0.875rem;list-style:none;">🔄 Détournements</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Factions</h4>
+          <ul>
+            <li><a href="roles.html?faction=lune">🌙 Conseil de la Lune</a></li>
+            <li><a href="roles.html?faction=ombre">🌑 Ombre Souveraine</a></li>
+            <li><a href="roles.html?faction=solitaire">🌀 Solitaires</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Les Ombres d'Erebor.</p>
+        <p>25 rôles · 3 factions · Une nuit sans fin.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/data/roles.js"></script>
+  <script src="assets/js/data/interactions.js"></script>
+  <script src="assets/js/components/nav.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/pages/interactions.js"></script>
+
+</body>
+</html>

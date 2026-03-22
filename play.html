@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jouez aux Ombres d'Erebor en ligne avec vos amis. Créez une salle ou rejoignez une partie existante.">
+  <title>Jouer en Ligne — Les Ombres d'Erebor</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/play.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-title">Les Ombres d'Erebor</span>
+        <span class="nav-logo-sub">Jeu de déduction sociale</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">🏠 Accueil</a></li>
+        <li><a href="rules.html">📖 Règles</a></li>
+        <li><a href="roles.html">🎭 Rôles</a></li>
+        <li><a href="interactions.html">🕸️ Interactions</a></li>
+        <li><a href="play.html" class="active">🎮 Jouer</a></li>
+        <li><a href="shop.html">🛒 Boutique</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="shop.html" class="btn btn-secondary" style="padding:0.5rem 1rem;font-size:0.8rem;">🛒 Acheter</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile-drawer">
+    <a href="index.html">🏠 Accueil</a>
+    <a href="rules.html">📖 Règles du jeu</a>
+    <a href="roles.html">🎭 Les 25 rôles</a>
+    <a href="interactions.html">🕸️ Matrice d'interactions</a>
+    <a href="play.html">🎮 Jouer en ligne</a>
+    <a href="shop.html">🛒 Boutique</a>
+  </div>
+
+  <main class="page-content play-page">
+    <div class="container">
+
+      <!-- Hero -->
+      <div class="play-hero">
+        <span class="section-eyebrow">Mode en ligne</span>
+        <h1>Jouer avec vos amis</h1>
+        <p>Connectez-vous via un code de salle. Chaque joueur voit son rôle secret sur son appareil pendant que vous discutez en appel vidéo.</p>
+        <div class="play-hero-badges">
+          <span class="play-badge">🎥 Compatible Discord / Zoom</span>
+          <span class="play-badge">📱 Fonctionne sur mobile</span>
+          <span class="play-badge">8–20 joueurs</span>
+        </div>
+      </div>
+
+      <!-- Alerte si Firebase non configuré -->
+      <div class="setup-alert" id="setup-alert">
+        <div class="setup-alert-icon">⚙️</div>
+        <div class="setup-alert-body">
+          <h3>Configuration requise pour le mode en ligne</h3>
+          <p>Pour synchroniser les parties en temps réel entre appareils distants, configurez un projet Firebase gratuit :</p>
+          <ul class="setup-steps">
+            <li data-step="1">Créez un projet sur <strong>console.firebase.google.com</strong></li>
+            <li data-step="2">Activez <strong>Realtime Database</strong> en mode test</li>
+            <li data-step="3">Copiez votre config dans <strong>assets/js/config/firebase-config.js</strong></li>
+            <li data-step="4">Passez <strong>configured: true</strong> dans le fichier</li>
+          </ul>
+          <p style="margin-top:0.75rem;font-size:0.75rem;color:var(--color-text-dim);">
+            Sans Firebase, utilisez le <strong>mode local</strong> (toutes les cartes sur un seul appareil) décrit plus bas.
+          </p>
+        </div>
+      </div>
+
+      <!-- Grille Créer / Rejoindre -->
+      <div class="play-grid">
+
+        <!-- Créer une salle -->
+        <div class="play-card create">
+          <span class="play-card-icon">🏰</span>
+          <h2>Créer une salle</h2>
+          <p>Vous serez le Maître du Jeu. Vous configurez les rôles, gérez les phases et arbitrez la partie. Les autres joueurs vous rejoignent avec le code que vous recevrez.</p>
+
+          <form id="create-form">
+            <div class="form-group">
+              <label class="form-label" for="gm-name">Votre nom</label>
+              <input type="text" id="gm-name" class="form-input" placeholder="Nom du Maître du Jeu" maxlength="20" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="player-count">Nombre de joueurs</label>
+                <select id="player-count" class="form-select">
+                  <option value="8">8 joueurs</option>
+                  <option value="10" selected>10 joueurs</option>
+                  <option value="12">12 joueurs</option>
+                  <option value="15">15 joueurs</option>
+                  <option value="18">18 joueurs</option>
+                  <option value="20">20 joueurs</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="round-count">Nombre de tours</label>
+                <select id="round-count" class="form-select">
+                  <option value="5">5 tours</option>
+                  <option value="6" selected>6 tours</option>
+                  <option value="7">7 tours</option>
+                  <option value="8">8 tours</option>
+                </select>
+              </div>
+            </div>
+            <p class="form-error" id="create-error"></p>
+            <button type="submit" class="btn btn-primary" style="width:100%;">🏰 Créer la salle</button>
+          </form>
+        </div>
+
+        <!-- Rejoindre une salle -->
+        <div class="play-card join">
+          <span class="play-card-icon">🚪</span>
+          <h2>Rejoindre une salle</h2>
+          <p>Entrez le code de salle partagé par le Maître du Jeu. Vous rejoindrez le salon d'attente et recevrez votre rôle secret quand la partie commencera.</p>
+
+          <form id="join-form">
+            <div class="form-group">
+              <label class="form-label" for="player-name">Votre nom</label>
+              <input type="text" id="player-name" class="form-input" placeholder="Votre prénom ou pseudo" maxlength="20" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="room-code-input">Code de salle</label>
+              <input type="text" id="room-code-input" class="form-input code-input" placeholder="XXXXXX" maxlength="6" required>
+            </div>
+            <p class="form-error" id="join-error"></p>
+            <button type="submit" class="btn btn-secondary" style="width:100%;justify-content:center;">🚪 Rejoindre la partie</button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Comment ça marche -->
+      <section class="how-it-works">
+        <div class="section-header">
+          <span class="section-eyebrow">Fonctionnement</span>
+          <h2 style="color:var(--color-gold-light);">Comment jouer en ligne</h2>
+          <p style="color:var(--color-text-muted);">Le site gère les rôles et les votes. Vous gérez la discussion en appel vidéo.</p>
+        </div>
+        <div class="how-steps">
+          <div class="how-step reveal">
+            <span class="how-step-icon">🏰</span>
+            <h4>1. Créer la salle</h4>
+            <p>Le MJ crée la salle et reçoit un code à 6 caractères.</p>
+          </div>
+          <div class="how-step reveal delay-1">
+            <span class="how-step-icon">📤</span>
+            <h4>2. Partager le code</h4>
+            <p>Le MJ envoie le code via Discord, WhatsApp, etc.</p>
+          </div>
+          <div class="how-step reveal delay-2">
+            <span class="how-step-icon">🃏</span>
+            <h4>3. Attribution des rôles</h4>
+            <p>Le MJ assigne les rôles. Chacun voit le sien sur son écran.</p>
+          </div>
+          <div class="how-step reveal delay-3">
+            <span class="how-step-icon">🌑</span>
+            <h4>4. La nuit tombe</h4>
+            <p>Les joueurs soumettent leurs actions nocturnes sur le site.</p>
+          </div>
+          <div class="how-step reveal delay-4">
+            <span class="how-step-icon">☀️</span>
+            <h4>5. Discussion & Vote</h4>
+            <p>Débattez en appel vidéo, puis votez sur le site.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mode local -->
+      <section class="local-mode-section">
+        <div class="section-header" style="margin-bottom:2rem;">
+          <span class="section-eyebrow">Alternative</span>
+          <h2 style="color:var(--color-solitaire-light);">Mode Local — Même réseau</h2>
+          <p style="color:var(--color-text-muted);">Jouez sans configuration si tous les joueurs sont au même endroit.</p>
+        </div>
+        <div class="local-mode-card">
+          <div class="local-mode-text">
+            <h2>Aucun compte requis</h2>
+            <p>Si tous vos joueurs sont dans la même pièce, utilisez le mode local. Un seul appareil fait office de Grimoire pour le MJ. Les cartes de rôle sont partagées individuellement (l'appareil passe de main en main au démarrage).</p>
+            <p style="margin-top:1rem;">Parfait pour les soirées de jeu où tout le monde est présent !</p>
+            <a href="game.html?mode=local" class="btn btn-secondary" style="margin-top:1.5rem;">
+              🎮 Lancer en mode local
+            </a>
+          </div>
+          <div class="local-mode-visual">
+            <div class="local-feature"><span class="local-feature-icon">📱</span><span class="local-feature-text">Un seul appareil pour le MJ (Grimoire)</span></div>
+            <div class="local-feature"><span class="local-feature-icon">🔐</span><span class="local-feature-text">Rôles affichés en privé à chaque joueur</span></div>
+            <div class="local-feature"><span class="local-feature-icon">🌐</span><span class="local-feature-text">Pas de connexion internet requise</span></div>
+            <div class="local-feature"><span class="local-feature-icon">⚡</span><span class="local-feature-text">Démarrage immédiat, aucune configuration</span></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo">Les Ombres d'Erebor</span>
+          <p>Jouez en ligne ou en physique. Le destin d'Erebor est entre vos mains.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="rules.html">Règles</a></li>
+            <li><a href="roles.html">Rôles</a></li>
+            <li><a href="shop.html">Boutique</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Jouer</h4>
+          <ul>
+            <li><a href="game.html">Interface de jeu</a></li>
+            <li><a href="game.html?mode=local">Mode local</a></li>
+            <li><a href="rules.html">Comment jouer</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Acheter</h4>
+          <ul>
+            <li><a href="shop.html">Coffret de Base</a></li>
+            <li><a href="shop.html">Édition Collector</a></li>
+            <li><a href="shop.html">Extension</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Les Ombres d'Erebor.</p>
+        <p>25 rôles · 3 factions · Une nuit sans fin.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase SDK (CDN) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script src="assets/js/config/firebase-config.js"></script>
+  <script src="assets/js/data/roles.js"></script>
+  <script src="assets/js/components/nav.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Afficher/masquer alerte Firebase
+    if (FIREBASE_CONFIG.configured) {
+      document.getElementById('setup-alert').classList.add('hidden');
+    }
+
+    // Utilitaires
+    function generateRoomCode() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+      return code;
+    }
+    function getOrCreateUID() {
+      let uid = sessionStorage.getItem('erebor_uid');
+      if (!uid) {
+        uid = 'u' + Date.now() + Math.random().toString(36).slice(2, 7);
+        sessionStorage.setItem('erebor_uid', uid);
+      }
+      return uid;
+    }
+
+    let db = null;
+    if (FIREBASE_CONFIG.configured) {
+      try {
+        const app = firebase.initializeApp(FIREBASE_CONFIG);
+        db = firebase.database(app);
+      } catch(e) { console.warn('Firebase init failed:', e); }
+    }
+
+    // ---- Créer une salle ----
+    document.getElementById('create-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errEl = document.getElementById('create-error');
+      errEl.classList.remove('visible');
+
+      const gmName     = document.getElementById('gm-name').value.trim();
+      const playerCount = parseInt(document.getElementById('player-count').value);
+      const roundCount  = parseInt(document.getElementById('round-count').value);
+
+      if (!gmName) { errEl.textContent = 'Entrez votre nom.'; errEl.classList.add('visible'); return; }
+
+      const code = generateRoomCode();
+      const uid  = getOrCreateUID();
+
+      const roomData = {
+        gmId: uid,
+        phase: 'lobby',
+        round: 0,
+        nightStep: 0,
+        config: { playerCount, roundCount },
+        createdAt: Date.now(),
+        players: {
+          [uid]: { name: gmName, isGM: true, isAlive: true, roleId: null, nightActionDone: false, nightActionTarget: null }
+        }
+      };
+
+      if (db) {
+        await db.ref(`rooms/${code}`).set(roomData);
+      } else {
+        // Mode local : stockage en mémoire partagée via sessionStorage
+        sessionStorage.setItem(`room_${code}`, JSON.stringify(roomData));
+      }
+
+      sessionStorage.setItem('erebor_room', code);
+      sessionStorage.setItem('erebor_is_gm', 'true');
+      window.location.href = `game.html?room=${code}&gm=1`;
+    });
+
+    // ---- Rejoindre une salle ----
+    document.getElementById('join-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errEl = document.getElementById('join-error');
+      errEl.classList.remove('visible');
+
+      const name = document.getElementById('player-name').value.trim();
+      const code = document.getElementById('room-code-input').value.trim().toUpperCase();
+
+      if (!name) { errEl.textContent = 'Entrez votre nom.'; errEl.classList.add('visible'); return; }
+      if (code.length !== 6) { errEl.textContent = 'Le code doit faire 6 caractères.'; errEl.classList.add('visible'); return; }
+
+      const uid = getOrCreateUID();
+
+      if (db) {
+        const snap = await db.ref(`rooms/${code}`).get();
+        if (!snap.exists()) { errEl.textContent = 'Salle introuvable. Vérifiez le code.'; errEl.classList.add('visible'); return; }
+        await db.ref(`rooms/${code}/players/${uid}`).set({
+          name, isGM: false, isAlive: true, roleId: null, nightActionDone: false, nightActionTarget: null
+        });
+      } else {
+        const raw = sessionStorage.getItem(`room_${code}`);
+        if (!raw) { errEl.textContent = 'Salle introuvable (mode local).'; errEl.classList.add('visible'); return; }
+        const room = JSON.parse(raw);
+        room.players[uid] = { name, isGM: false, isAlive: true, roleId: null, nightActionDone: false, nightActionTarget: null };
+        sessionStorage.setItem(`room_${code}`, JSON.stringify(room));
+      }
+
+      sessionStorage.setItem('erebor_room', code);
+      sessionStorage.setItem('erebor_is_gm', 'false');
+      window.location.href = `game.html?room=${code}`;
+    });
+  </script>
+</body>
+</html>

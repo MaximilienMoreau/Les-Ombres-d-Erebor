@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Règles complètes des Ombres d'Erebor — Configuration, phases de jeu, conditions de victoire et référence rapide.">
+  <title>Règles du Jeu — Les Ombres d'Erebor</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/rules.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-title">Les Ombres d'Erebor</span>
+        <span class="nav-logo-sub">Jeu de déduction sociale</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html"><span class="nav-icon">🏠</span> Accueil</a></li>
+        <li><a href="rules.html" class="active"><span class="nav-icon">📖</span> Règles</a></li>
+        <li><a href="roles.html"><span class="nav-icon">🎭</span> Rôles</a></li>
+        <li><a href="interactions.html"><span class="nav-icon">🕸️</span> Interactions</a></li>
+        <li><a href="play.html"><span class="nav-icon">🎮</span> Jouer</a></li>
+        <li><a href="shop.html"><span class="nav-icon">🛒</span> Boutique</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="play.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.8rem;">🎮 Jouer</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile-drawer">
+    <a href="index.html">🏠 Accueil</a>
+    <a href="rules.html">📖 Règles du jeu</a>
+    <a href="roles.html">🎭 Les 25 rôles</a>
+    <a href="interactions.html">🕸️ Matrice d'interactions</a>
+    <a href="play.html">🎮 Jouer en ligne</a>
+    <a href="shop.html">🛒 Boutique</a>
+  </div>
+
+  <!-- CONTENU -->
+  <main class="page-content rules-page">
+    <div class="container">
+
+      <!-- Hero -->
+      <div class="rules-hero">
+        <span class="section-eyebrow">Le Grimoire</span>
+        <h1 style="color:var(--color-lune-light);text-shadow:0 0 30px rgba(74,143,168,0.4);margin-bottom:1rem;">
+          Règles du Jeu
+        </h1>
+        <p style="color:var(--color-text-muted);font-size:var(--text-lg);max-width:600px;margin:0 auto;">
+          Tout ce qu'il faut savoir pour plonger dans les ténèbres d'Erebor.
+          Des règles simples sur une mécanique infiniment profonde.
+        </p>
+      </div>
+
+      <!-- Layout deux colonnes -->
+      <div class="rules-layout">
+
+        <!-- Sidebar navigation -->
+        <aside class="chapter-nav" aria-label="Chapitres des règles">
+          <div class="chapter-nav-header">Chapitres</div>
+          <ul class="chapter-nav-list" role="list">
+            <li><a href="#apercu" class="active"><span class="chapter-icon">🌑</span> Aperçu</a></li>
+            <li><a href="#setup"><span class="chapter-icon">🃏</span> Configuration</a></li>
+            <li><a href="#quartiers"><span class="chapter-icon">🗺️</span> Quartiers</a></li>
+            <li><a href="#phases"><span class="chapter-icon">🌓</span> Phases de jeu</a></li>
+            <li><a href="#nuit"><span class="chapter-icon">🌑</span> Phase de Nuit</a></li>
+            <li><a href="#jour"><span class="chapter-icon">☀️</span> Phase de Jour</a></li>
+            <li><a href="#crepuscule"><span class="chapter-icon">🌅</span> Crépuscule</a></li>
+            <li><a href="#mort"><span class="chapter-icon">💀</span> La Mort</a></li>
+            <li><a href="#victoire"><span class="chapter-icon">🏆</span> Victoire</a></li>
+            <li><a href="#speciales"><span class="chapter-icon">⚡</span> Mécaniques spéciales</a></li>
+            <li><a href="#reference"><span class="chapter-icon">📋</span> Référence rapide</a></li>
+          </ul>
+        </aside>
+
+        <!-- Contenu -->
+        <div class="rules-content">
+
+          <!-- APERÇU -->
+          <section class="rules-section" id="apercu">
+            <h2><span class="section-emoji">🌑</span> Aperçu du jeu</h2>
+            <p>
+              <strong>Les Ombres d'Erebor</strong> est un jeu de déduction sociale pour 8 à 20 joueurs
+              se jouant sans maître du jeu (ou avec un MJ optionnel pour les parties complexes).
+              Une partie dure entre 90 minutes et 3 heures selon le nombre de joueurs.
+            </p>
+            <p>
+              Le jeu se distingue par trois mécaniques fondamentales qui le rendent
+              plus profond — et plus difficile — que ses inspirations :
+            </p>
+            <ul>
+              <li><strong>Les identités changent</strong> — Corruption, échange de rôles, héritage : votre rôle du début n'est peut-être plus le vôtre à mi-partie.</li>
+              <li><strong>L'espace est divisé</strong> — Les joueurs sont répartis en 2 ou 3 quartiers avec des règles distinctes. Tous ne peuvent pas s'entendre.</li>
+              <li><strong>La mort n'est pas la fin</strong> — Les joueurs éliminés deviennent des Esprits errants et peuvent encore influencer la partie.</li>
+            </ul>
+
+            <div class="callout info">
+              <div class="callout-icon">💡</div>
+              <div class="callout-body">
+                <h4>Conseil pour les nouveaux joueurs</h4>
+                <p>Pour une première partie, nous recommandons 8 joueurs avec les rôles de difficulté "Débutant" uniquement. Ajoutez les rôles "Intermédiaire" et "Expert" au fil des parties.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr>
+
+          <!-- CONFIGURATION -->
+          <section class="rules-section" id="setup">
+            <h2><span class="section-emoji">🃏</span> Configuration</h2>
+
+            <h3>Nombre de joueurs et répartition des rôles</h3>
+            <p>
+              La distribution des rôles secrets est calculée selon le nombre de joueurs.
+              Chaque joueur possède un <strong>rôle public</strong> (sa fonction visible en ville)
+              et un <strong>rôle secret</strong> (son véritable alignement et pouvoir).
+            </p>
+
+            <table class="config-table">
+              <thead>
+                <tr>
+                  <th>Joueurs</th>
+                  <th>🌙 Conseil de la Lune</th>
+                  <th>🌑 Ombres</th>
+                  <th>🌀 Solitaires</th>
+                  <th>Quartiers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>8</td><td>5</td><td>2</td><td>1</td><td>2</td></tr>
+                <tr><td>10</td><td>6</td><td>3</td><td>1</td><td>2</td></tr>
+                <tr><td>12</td><td>7</td><td>3</td><td>2</td><td>2-3</td></tr>
+                <tr><td>15</td><td>9</td><td>4</td><td>2</td><td>3</td></tr>
+                <tr><td>18</td><td>11</td><td>5</td><td>2</td><td>3</td></tr>
+                <tr><td>20</td><td>12</td><td>5</td><td>3</td><td>3</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Préparation de la partie</h3>
+            <ol>
+              <li>Sélectionnez les rôles secrets adaptés au nombre de joueurs et à l'expérience du groupe.</li>
+              <li>Distribuez un rôle public à chaque joueur (visible de tous) et un rôle secret (strictement confidentiel).</li>
+              <li>Divisez physiquement les joueurs en 2 ou 3 groupes et désignez leurs quartiers.</li>
+              <li>Chaque joueur prend connaissance de son rôle secret sans le révéler.</li>
+              <li>Les Ombres se reconnaissent mutuellement pendant une phase secrète initiale (yeux fermés).</li>
+              <li>La première phase de Nuit commence.</li>
+            </ol>
+
+            <div class="callout warning">
+              <div class="callout-icon">⚠️</div>
+              <div class="callout-body">
+                <h4>Équilibre des rôles</h4>
+                <p>Ne mélangez pas trop de rôles Expert dans une même partie. Un seul Voyant Éclipsé et une seule Main de l'Ombre suffisent pour créer une tension maximale.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr>
+
+          <!-- QUARTIERS -->
+          <section class="rules-section" id="quartiers">
+            <h2><span class="section-emoji">🗺️</span> Les Quartiers</h2>
+            <p>
+              L'espace de jeu est divisé en <strong>2 ou 3 quartiers physiques</strong>
+              (pièces séparées, tables distinctes, ou zones délimitées). Cette division est au cœur
+              de toute la stratégie.
+            </p>
+
+            <h3>Règles de quartier</h3>
+            <ul>
+              <li><strong>Les discussions sont confinées</strong> — Vous ne pouvez parler librement qu'avec les joueurs de votre quartier.</li>
+              <li><strong>Certains pouvoirs sont limités</strong> — Quelques rôles ne peuvent agir que dans leur propre quartier ou dans un quartier spécifique.</li>
+              <li><strong>Les échanges de prisonniers</strong> — À intervalles réguliers (entre chaque phase de Crépuscule), les quartiers échangent 1 à 2 joueurs selon un protocole défini.</li>
+              <li><strong>La lutte pour le contrôle</strong> — Avoir une majorité de joueurs dans un quartier peut activer certains effets ou événements.</li>
+            </ul>
+
+            <h3>Échanges inter-quartiers</h3>
+            <p>
+              Après chaque Crépuscule, chaque quartier désigne un "envoyé" qui rejoindra
+              le quartier adjacent. Les Ombres peuvent tenter de placer leurs agents stratégiquement.
+              Les Solitaires (comme le Fouet de Minuit) peuvent forcer des échanges.
+            </p>
+
+            <div class="callout info">
+              <div class="callout-icon">🗺️</div>
+              <div class="callout-body">
+                <h4>Communication entre quartiers</h4>
+                <p>Les seules communications autorisées entre quartiers sont les messages du Messager Céleste (qui peuvent être interceptés) et les annonces publiques lors de la Phase de Jour.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr>
+
+          <!-- PHASES -->
+          <section class="rules-section" id="phases">
+            <h2><span class="section-emoji">🌓</span> Structure d'un tour</h2>
+            <p>
+              Chaque tour de jeu est composé de <strong>trois phases</strong>, jouées dans cet ordre fixe :
+            </p>
+
+            <div class="phase-cards">
+              <div class="phase-card nuit">
+                <div class="phase-card-header">
+                  <div class="phase-number">1</div>
+                  <div class="phase-card-title">🌑 Nuit</div>
+                </div>
+                <div class="phase-card-body">
+                  <p>Tous les joueurs ferment les yeux. Les pouvoirs secrets s'activent dans un ordre prédéfini. Assassinats, soins, espionnages, corruptions — tout se passe dans l'obscurité.</p>
+                </div>
+              </div>
+
+              <div class="phase-card jour">
+                <div class="phase-card-header">
+                  <div class="phase-number">2</div>
+                  <div class="phase-card-title">☀️ Jour</div>
+                </div>
+                <div class="phase-card-body">
+                  <p>Les résultats de la nuit sont révélés. Les joueurs discutent, accusent, défendent. Un vote public détermine si un joueur est exécuté. Des Épreuves publiques peuvent survenir.</p>
+                </div>
+              </div>
+
+              <div class="phase-card crepuscule">
+                <div class="phase-card-header">
+                  <div class="phase-number">3</div>
+                  <div class="phase-card-title">🌅 Crépuscule</div>
+                </div>
+                <div class="phase-card-body">
+                  <p>Un événement aléatoire global survient (tirage au sort) : inondation, malédiction, apparition d'une créature… Ces événements peuvent bouleverser toutes les stratégies en cours. Les échanges de quartiers ont lieu.</p>
+                </div>
+              </div>
+            </div>
+
+            <p>Une partie dure entre <strong>5 et 8 tours</strong> selon le rythme des éliminations. La limite est annoncée au début : si le Conseil de la Lune n'a pas éliminé toutes les Ombres au dernier Crépuscule, l'Ombre Souveraine gagne automatiquement.</p>
+          </section>
+
+          <hr>
+
+          <!-- NUIT -->
+          <section class="rules-section" id="nuit">
+            <h2><span class="section-emoji">🌑</span> Phase de Nuit</h2>
+            <p>
+              La nuit est la phase la plus tactique. Tous les yeux sont fermés.
+              Le MJ (ou un système de jetons) réveille les rôles dans un ordre précis.
+            </p>
+
+            <h3>Ordre d'activation nocturne</h3>
+            <ol>
+              <li><strong>Sculpteur de Cauchemars</strong> — Désigne sa cible (qui perd son pouvoir cette nuit).</li>
+              <li><strong>Main de l'Ombre</strong> — Effectue une corruption si c'est son tour.</li>
+              <li><strong>Murmure de l'Abysse</strong> — Choisit sa cible de désinformation.</li>
+              <li><strong>Fausse Oracle</strong> — Envoie ses fausses visions.</li>
+              <li><strong>Assassin Voilé</strong> — Désigne sa victime.</li>
+              <li><strong>Chasseur de l'Ombre</strong> — Désigne sa cible (s'il agit).</li>
+              <li><strong>Prêtresse de la Lune</strong> — Soigne un joueur.</li>
+              <li><strong>Voyant Éclipsé</strong> — Utilise son pouvoir unique (si encore disponible).</li>
+              <li><strong>Héraut de l'Aube</strong> — Reçoit son information binaire.</li>
+              <li><strong>Maître des Archives</strong> — Reçoit un fragment d'alignement.</li>
+              <li><strong>Messager Céleste</strong> — Envoie son message.</li>
+              <li><strong>Collectionneur de Secrets</strong> — Écoute une discussion.</li>
+            </ol>
+
+            <div class="callout danger">
+              <div class="callout-icon">💀</div>
+              <div class="callout-body">
+                <h4>Résolution des conflits nocturnes</h4>
+                <p>Si un joueur soigné par la Prêtresse est aussi visé par l'Assassin, il survit. Si le Sculpteur de Cauchemars a bloqué la Prêtresse, la mort est effective. L'ordre d'activation détermine toutes les résolutions.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr>
+
+          <!-- JOUR -->
+          <section class="rules-section" id="jour">
+            <h2><span class="section-emoji">☀️</span> Phase de Jour</h2>
+            <p>
+              Au lever du jour, les morts de la nuit sont annoncés. Les Esprits errants
+              rejoignent la zone des morts. Puis commence la phase de discussion et de vote.
+            </p>
+
+            <h3>Discussion</h3>
+            <p>
+              Les joueurs de chaque quartier discutent librement pendant un temps limité
+              (5 à 10 minutes selon le nombre de joueurs). Chaque joueur peut :
+            </p>
+            <ul>
+              <li>Révéler tout ou partie de son rôle public (jamais le rôle secret directement).</li>
+              <li>Partager des informations obtenues (vraies ou fausses).</li>
+              <li>Accuser ou défendre d'autres joueurs.</li>
+              <li>Utiliser les pouvoirs de jour disponibles (Capitaine, Tisserand, Oracle Fou…).</li>
+            </ul>
+
+            <h3>Le Procès et le Vote</h3>
+            <p>
+              Chaque quartier peut nominer un suspect. Le Procès rassemble les quarters
+              (ou est mené via messagers). Un vote à main levée détermine l'exécution.
+            </p>
+            <ul>
+              <li>Majorité simple pour l'exécution (50% + 1 vote).</li>
+              <li>Les joueurs arrêtés par le Capitaine ne votent pas ce tour.</li>
+              <li>Les Esprits errants ne peuvent pas voter, mais peuvent envoyer un message.</li>
+              <li>Un joueur exécuté révèle son rôle secret complet à ce moment.</li>
+            </ul>
+
+            <h3>Épreuves publiques</h3>
+            <p>
+              Une ou deux fois par partie, une Épreuve publique peut être déclenchée
+              (par un rôle, ou aléatoirement). C'est un mini-jeu collectif où les quartiers
+              doivent coopérer avec une information partielle. Les Ombres peuvent saboter le résultat.
+            </p>
+          </section>
+
+          <hr>
+
+          <!-- CRÉPUSCULE -->
+          <section class="rules-section" id="crepuscule">
+            <h2><span class="section-emoji">🌅</span> Phase de Crépuscule</h2>
+            <p>
+              Le Crépuscule est une phase d'instabilité. Deux choses se produisent systématiquement :
+            </p>
+
+            <h3>1. L'Événement aléatoire</h3>
+            <p>
+              Un joueur tire une carte Événement au hasard. Ces événements peuvent inclure :
+            </p>
+            <ul>
+              <li><strong>L'Inondation</strong> — Un quartier entier est évacué et ses joueurs redistribués.</li>
+              <li><strong>La Malédiction du Miroir</strong> — Tous les pouvoirs nocturnes sont inversés (les soins deviennent des dégâts, etc.) pour un tour.</li>
+              <li><strong>L'Apparition</strong> — Un joueur mort choisit de partager une information publique avec tout le monde.</li>
+              <li><strong>Le Pacte de Sang</strong> — Deux joueurs désignés aléatoirement doivent révéler leur faction (pas leur rôle) publiquement.</li>
+              <li><strong>La Nuit Blanche</strong> — Pas de phase de Nuit ce tour. Les Ombres perdent leur action.</li>
+              <li><strong>Le Grand Exil</strong> — Un joueur aléatoire est exilé du jeu pendant un tour (ne peut pas agir mais n'est pas mort).</li>
+            </ul>
+
+            <h3>2. L'Échange de prisonniers</h3>
+            <p>
+              Après l'événement, chaque quartier sélectionne entre 1 et 2 joueurs qui vont rejoindre un autre quartier. Cette sélection peut être volontaire ou forcée (par le Fouet de Minuit, par exemple).
+            </p>
+          </section>
+
+          <hr>
+
+          <!-- MORT -->
+          <section class="rules-section" id="mort">
+            <h2><span class="section-emoji">💀</span> La Mort et les Esprits errants</h2>
+            <p>
+              Contrairement à la plupart des jeux de déduction sociale,
+              <strong>la mort n'élimine pas complètement un joueur</strong>.
+            </p>
+
+            <h3>Devenir un Esprit errant</h3>
+            <p>
+              À la mort, un joueur révèle son rôle secret et rejoint la zone des Esprits.
+              Il peut encore :
+            </p>
+            <ul>
+              <li>Envoyer <strong>un message codé</strong> par tour à un joueur vivant (via le MJ ou un système de jetons).</li>
+              <li>Observer les Épreuves publiques et influencer les résultats (selon les règles de l'Épreuve).</li>
+              <li>Si le <strong>Marchand d'Âmes</strong> le ressuscite, il revient à la vie avec ses souvenirs mais sans son pouvoir original.</li>
+            </ul>
+
+            <div class="callout warning">
+              <div class="callout-icon">👻</div>
+              <div class="callout-body">
+                <h4>Règle du silence des Esprits</h4>
+                <p>Les Esprits errants ne peuvent pas communiquer librement. Leurs messages sont strictement limités à 15 mots et doivent passer par le MJ (ou être écrits et remis physiquement).</p>
+              </div>
+            </div>
+          </section>
+
+          <hr>
+
+          <!-- VICTOIRE -->
+          <section class="rules-section" id="victoire">
+            <h2><span class="section-emoji">🏆</span> Conditions de victoire</h2>
+
+            <div class="victory-conditions">
+              <div class="victory-cond-card lune">
+                <span class="victory-cond-icon">🌙</span>
+                <h4>Conseil de la Lune</h4>
+                <p>Toutes les Ombres actives (pas en Esprit errant) sont éliminées avant la fin du dernier tour.</p>
+              </div>
+              <div class="victory-cond-card ombre">
+                <span class="victory-cond-icon">🌑</span>
+                <h4>Ombre Souveraine</h4>
+                <p>Les Ombres actives sont au moins aussi nombreuses que les joueurs du Conseil de la Lune, OU la limite de tours est atteinte sans victoire du Conseil.</p>
+              </div>
+              <div class="victory-cond-card solitaire">
+                <span class="victory-cond-icon">🌀</span>
+                <h4>Solitaires</h4>
+                <p>Objectif personnel accompli (variable selon le rôle). La victoire solitaire est indépendante — elle peut coexister avec la victoire d'un autre camp.</p>
+              </div>
+            </div>
+
+            <h3>Ordre de priorité</h3>
+            <p>
+              Si plusieurs conditions de victoire sont remplies simultanément au même tour :
+            </p>
+            <ol>
+              <li>La victoire du <strong>Solitaire</strong> est déclarée en premier si son objectif est atteint.</li>
+              <li>Puis la victoire du <strong>Conseil de la Lune</strong> si toutes les Ombres sont éliminées.</li>
+              <li>La victoire de <strong>l'Ombre Souveraine</strong> s'applique en dernier recours.</li>
+            </ol>
+            <p>
+              <em>Remarque : Plusieurs joueurs Solitaires peuvent gagner simultanément si leurs objectifs sont tous accomplis.</em>
+            </p>
+          </section>
+
+          <hr>
+
+          <!-- MÉCANIQUES SPÉCIALES -->
+          <section class="rules-section" id="speciales">
+            <h2><span class="section-emoji">⚡</span> Mécaniques spéciales</h2>
+
+            <h3>La Corruption</h3>
+            <p>
+              Quand un joueur est corrompu par la Main de l'Ombre, il change silencieusement de camp.
+              Il conserve tous ses souvenirs et son rôle public. Il reçoit un nouvel objectif
+              secondaire de l'Ombre (remis physiquement ou via message du MJ).
+              La corruption est irréversible sauf par mort.
+            </p>
+
+            <h3>L'Héritage</h3>
+            <p>
+              L'Apprenti Mystique peut hériter du rôle d'un joueur mort. Il choisit activement
+              de "canaliser" l'esprit du défunt. Cet héritage lui donne les pouvoirs futurs du rôle
+              (il ne peut pas refaire les actions déjà effectuées par le joueur mort).
+            </p>
+
+            <h3>L'Échange d'identité</h3>
+            <p>
+              Le Changeur de Peau peut échanger son rôle secret avec celui d'un autre joueur.
+              Cet échange est permanent et doit être annoncé discrètement au MJ.
+              Les deux joueurs reçoivent une fiche mise à jour.
+            </p>
+
+            <h3>Les Fragments d'information</h3>
+            <p>
+              Certains rôles (Maître des Archives, Collectionneur de Secrets) accumulent des
+              fragments d'information. Ces fragments sont des cartes physiques remises par le MJ.
+              Leur véracité est notée sur la face cachée — le joueur ne sait pas si l'info est vraie.
+            </p>
+
+            <div class="callout info">
+              <div class="callout-icon">🎲</div>
+              <div class="callout-body">
+                <h4>Jouer sans Maître du Jeu</h4>
+                <p>En mode sans MJ, utilisez une application ou un système de jetons codés. Chaque joueur dispose d'une enveloppe fermée contenant ses informations nocturnes, à ouvrir au lever du jour.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr>
+
+          <!-- RÉFÉRENCE RAPIDE -->
+          <div class="quick-ref reveal" id="reference">
+            <div class="quick-ref-header">
+              <span style="font-size:1.5rem;">📋</span>
+              <h3>Référence rapide</h3>
+            </div>
+            <div class="quick-ref-body">
+              <div class="qr-col">
+                <h4>⚡ Phase de Nuit (dans l'ordre)</h4>
+                <ul>
+                  <li>Sculpteur de Cauchemars bloque</li>
+                  <li>Main de l'Ombre corrompt</li>
+                  <li>Murmure désinforme</li>
+                  <li>Fausse Oracle envoie des visions</li>
+                  <li>Assassin Voilé tue</li>
+                  <li>Chasseur de l'Ombre cible</li>
+                  <li>Prêtresse soigne</li>
+                  <li>Voyant Éclipsé voit</li>
+                  <li>Héraut reçoit son info</li>
+                  <li>Archives reçoivent un fragment</li>
+                  <li>Messager envoie</li>
+                  <li>Collectionneur écoute</li>
+                </ul>
+
+                <h4 style="margin-top:1rem;">🌅 Phase de Crépuscule</h4>
+                <ul>
+                  <li>Tirer un Événement aléatoire</li>
+                  <li>Résoudre l'effet de l'événement</li>
+                  <li>Échange de prisonniers (1-2 par quartier)</li>
+                  <li>Vérifier les conditions de victoire</li>
+                </ul>
+              </div>
+
+              <div class="qr-col">
+                <h4>☀️ Phase de Jour</h4>
+                <ul>
+                  <li>Annoncer les morts de la nuit</li>
+                  <li>Révélation des rôles des morts</li>
+                  <li>Discussion (5-10 min par quartier)</li>
+                  <li>Pouvoirs de jour (Capitaine, Tisserand…)</li>
+                  <li>Nomination d'un suspect par quartier</li>
+                  <li>Procès et vote à main levée</li>
+                  <li>Exécution + révélation du rôle</li>
+                  <li>Vérifier les conditions de victoire</li>
+                </ul>
+
+                <h4 style="margin-top:1rem;">🏆 Victoire immédiate si…</h4>
+                <ul>
+                  <li>Toutes les Ombres actives mortes → Lune gagne</li>
+                  <li>Ombres ≥ Lune en joueurs actifs → Ombre gagne</li>
+                  <li>Objectif solitaire rempli + en vie → Solitaire gagne</li>
+                  <li>Dernier tour écoulé → Ombre gagne</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo">Les Ombres d'Erebor</span>
+          <p>Un jeu de déduction sociale pour 8 à 20 joueurs. La nuit tombe sur Erebor.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="rules.html">Règles</a></li>
+            <li><a href="roles.html">Rôles</a></li>
+            <li><a href="interactions.html">Interactions</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Chapitres</h4>
+          <ul>
+            <li><a href="#setup">Configuration</a></li>
+            <li><a href="#phases">Phases de jeu</a></li>
+            <li><a href="#victoire">Victoire</a></li>
+            <li><a href="#reference">Référence rapide</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Factions</h4>
+          <ul>
+            <li><a href="roles.html?faction=lune">🌙 Conseil de la Lune</a></li>
+            <li><a href="roles.html?faction=ombre">🌑 Ombre Souveraine</a></li>
+            <li><a href="roles.html?faction=solitaire">🌀 Solitaires</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Les Ombres d'Erebor.</p>
+        <p>25 rôles · 3 factions · Une nuit sans fin.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/data/roles.js"></script>
+  <script src="assets/js/data/interactions.js"></script>
+  <script src="assets/js/components/nav.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Navigation active des chapitres au scroll
+    (function() {
+      const sections = document.querySelectorAll('.rules-section, .quick-ref');
+      const navLinks = document.querySelectorAll('.chapter-nav-list a');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`.chapter-nav-list a[href="#${entry.target.id}"]`);
+            if (activeLink) activeLink.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -70% 0px' });
+
+      sections.forEach(s => observer.observe(s));
+    })();
+  </script>
+
+</body>
+</html>

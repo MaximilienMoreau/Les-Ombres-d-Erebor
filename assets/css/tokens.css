@@ -1,0 +1,105 @@
+/* ============================================
+   TOKENS — Les Ombres d'Erebor
+   ============================================ */
+
+:root {
+  /* Palette de base */
+  --color-void:        #06080f;
+  --color-deep:        #0b0f1a;
+  --color-surface:     #111827;
+  --color-surface-2:   #1a2235;
+  --color-border:      #2a3450;
+  --color-border-glow: #3d4f73;
+
+  /* Accent principal — or lunaire */
+  --color-gold:        #c9a84c;
+  --color-gold-light:  #e8cc7a;
+  --color-gold-dim:    #7a6230;
+  --color-gold-glow:   rgba(201, 168, 76, 0.15);
+
+  /* Factions */
+  --color-lune:        #4a8fa8;
+  --color-lune-light:  #6db8d4;
+  --color-lune-dim:    #1f3d4f;
+  --color-lune-glow:   rgba(74, 143, 168, 0.15);
+
+  --color-ombre:       #8b2635;
+  --color-ombre-light: #c44055;
+  --color-ombre-dim:   #3d1018;
+  --color-ombre-glow:  rgba(139, 38, 53, 0.15);
+
+  --color-solitaire:   #7a5a1f;
+  --color-solitaire-light: #c49240;
+  --color-solitaire-dim:   #3d2e10;
+  --color-solitaire-glow:  rgba(122, 90, 31, 0.15);
+
+  /* Interactions */
+  --color-synergie:    #2d6a4f;
+  --color-synergie-light: #52b788;
+  --color-conflit:     #8b2635;
+  --color-conflit-light: #c44055;
+  --color-detournement:#5a3d7a;
+  --color-detournement-light: #9b72cf;
+
+  /* Texte */
+  --color-text:        #d4c9b0;
+  --color-text-light:  #e8e0d0;
+  --color-text-muted:  #6b7280;
+  --color-text-dim:    #4a5568;
+
+  /* Typographie */
+  --font-display: 'Cinzel', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --font-body: 'Crimson Pro', 'Palatino Linotype', Georgia, serif;
+  --font-ui: 'Inter', 'Segoe UI', system-ui, sans-serif;
+
+  /* Tailles de police */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  2.25rem;
+  --text-5xl:  3rem;
+  --text-6xl:  3.75rem;
+  --text-7xl:  4.5rem;
+
+  /* Espacement */
+  --space-1:   0.25rem;
+  --space-2:   0.5rem;
+  --space-3:   0.75rem;
+  --space-4:   1rem;
+  --space-5:   1.25rem;
+  --space-6:   1.5rem;
+  --space-8:   2rem;
+  --space-10:  2.5rem;
+  --space-12:  3rem;
+  --space-16:  4rem;
+  --space-20:  5rem;
+  --space-24:  6rem;
+  --space-32:  8rem;
+
+  /* Bordures */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Ombres */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.6);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.7);
+  --shadow-gold: 0 0 20px rgba(201,168,76,0.3);
+  --shadow-gold-strong: 0 0 40px rgba(201,168,76,0.5);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* Layout */
+  --max-width: 1280px;
+  --nav-height: 72px;
+}

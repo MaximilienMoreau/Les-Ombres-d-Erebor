@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Les 25 rôles des Ombres d'Erebor — Conseil de la Lune, Ombre Souveraine, Solitaires. Pouvoirs, interactions et particularités.">
+  <title>Les Rôles — Les Ombres d'Erebor</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/roles.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-title">Les Ombres d'Erebor</span>
+        <span class="nav-logo-sub">Jeu de déduction sociale</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html"><span class="nav-icon">🏠</span> Accueil</a></li>
+        <li><a href="rules.html"><span class="nav-icon">📖</span> Règles</a></li>
+        <li><a href="roles.html" class="active"><span class="nav-icon">🎭</span> Rôles</a></li>
+        <li><a href="interactions.html"><span class="nav-icon">🕸️</span> Interactions</a></li>
+        <li><a href="play.html"><span class="nav-icon">🎮</span> Jouer</a></li>
+        <li><a href="shop.html"><span class="nav-icon">🛒</span> Boutique</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="play.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.8rem;">🎮 Jouer</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile-drawer">
+    <a href="index.html">🏠 Accueil</a>
+    <a href="rules.html">📖 Règles du jeu</a>
+    <a href="roles.html">🎭 Les 25 rôles</a>
+    <a href="interactions.html">🕸️ Matrice d'interactions</a>
+  </div>
+
+  <!-- CONTENU -->
+  <main class="page-content roles-page">
+    <div class="container">
+
+      <!-- Hero -->
+      <div class="roles-hero">
+        <span class="section-eyebrow">25 destins</span>
+        <h1 style="color:var(--color-gold-light);text-shadow:0 0 30px rgba(201,168,76,0.4);margin-bottom:1rem;">
+          Les Rôles d'Erebor
+        </h1>
+        <p style="color:var(--color-text-muted);font-size:var(--text-lg);max-width:600px;margin:0 auto;">
+          Chaque rôle cache un pouvoir, une faiblesse et une place dans la toile d'intrigues.
+          Cliquez sur un rôle pour en apprendre plus.
+        </p>
+      </div>
+
+      <!-- Filtres -->
+      <div class="roles-filters" role="search" aria-label="Filtrer les rôles">
+        <div class="filter-group" role="group" aria-label="Filtrer par faction">
+          <span class="filter-label">Faction</span>
+          <button class="filter-btn active" data-faction="all">✦ Tous</button>
+          <button class="filter-btn" data-faction="lune">🌙 Conseil de la Lune</button>
+          <button class="filter-btn" data-faction="ombre">🌑 Ombre Souveraine</button>
+          <button class="filter-btn" data-faction="solitaire">🌀 Solitaires</button>
+        </div>
+
+        <div class="search-input-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z"/>
+          </svg>
+          <input
+            type="search"
+            id="roles-search"
+            class="roles-search"
+            placeholder="Rechercher un rôle…"
+            aria-label="Rechercher un rôle par nom ou pouvoir"
+          >
+        </div>
+      </div>
+
+      <!-- Compteur -->
+      <p class="roles-count" aria-live="polite" id="roles-count">Chargement…</p>
+
+      <!-- Grille -->
+      <div class="roles-grid" id="roles-grid" role="list" aria-label="Liste des rôles">
+        <!-- Rempli par JavaScript -->
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo">Les Ombres d'Erebor</span>
+          <p>25 rôles aux interactions complexes. Chaque partie est unique.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="rules.html">Règles</a></li>
+            <li><a href="roles.html">Rôles</a></li>
+            <li><a href="interactions.html">Interactions</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Factions</h4>
+          <ul>
+            <li><a href="#" data-filter="lune">🌙 Conseil de la Lune</a></li>
+            <li><a href="#" data-filter="ombre">🌑 Ombre Souveraine</a></li>
+            <li><a href="#" data-filter="solitaire">🌀 Solitaires</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Difficulté</h4>
+          <ul>
+            <li style="color:var(--color-text-muted);font-size:0.875rem;list-style:none;">⭐ Débutant</li>
+            <li style="color:var(--color-text-muted);font-size:0.875rem;list-style:none;">⭐⭐ Intermédiaire</li>
+            <li style="color:var(--color-text-muted);font-size:0.875rem;list-style:none;">⭐⭐⭐ Expert</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Les Ombres d'Erebor.</p>
+        <p>25 rôles · 3 factions · Une nuit sans fin.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modale -->
+  <div class="modal-overlay" id="role-modal-overlay" role="dialog" aria-modal="true" aria-label="Détail du rôle">
+    <div class="modal" id="role-modal" tabindex="-1">
+      <!-- Rempli dynamiquement -->
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/data/roles.js"></script>
+  <script src="assets/js/data/interactions.js"></script>
+  <script src="assets/js/components/nav.js"></script>
+  <script src="assets/js/components/modal.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/pages/roles.js"></script>
+
+  <script>
+    // Filtre depuis URL
+    const params = new URLSearchParams(window.location.search);
+    const factionParam = params.get('faction');
+    if (factionParam) {
+      const btn = document.querySelector(`.filter-btn[data-faction="${factionParam}"]`);
+      if (btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+    }
+
+    // Liens footer filtres
+    document.querySelectorAll('[data-filter]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const f = link.dataset.filter;
+        const btn = document.querySelector(`.filter-btn[data-faction="${f}"]`);
+        if (btn) btn.click();
+      });
+    });
+  </script>
+
+</body>
+</html>

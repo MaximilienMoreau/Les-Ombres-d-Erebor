@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Achetez Les Ombres d'Erebor — Coffret de Base, Édition Collector, Extensions. Jeu de société de déduction sociale.">
+  <title>Boutique — Les Ombres d'Erebor</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/shop.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-title">Les Ombres d'Erebor</span>
+        <span class="nav-logo-sub">Jeu de déduction sociale</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">🏠 Accueil</a></li>
+        <li><a href="rules.html">📖 Règles</a></li>
+        <li><a href="roles.html">🎭 Rôles</a></li>
+        <li><a href="interactions.html">🕸️ Interactions</a></li>
+        <li><a href="play.html">🎮 Jouer</a></li>
+        <li><a href="shop.html" class="active">🛒 Boutique</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="play.html" class="btn btn-secondary" style="padding:0.5rem 1rem;font-size:0.8rem;">🎮 Jouer</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile-drawer">
+    <a href="index.html">🏠 Accueil</a>
+    <a href="rules.html">📖 Règles du jeu</a>
+    <a href="roles.html">🎭 Les 25 rôles</a>
+    <a href="interactions.html">🕸️ Matrice d'interactions</a>
+    <a href="play.html">🎮 Jouer en ligne</a>
+    <a href="shop.html">🛒 Boutique</a>
+  </div>
+
+  <main class="page-content shop-page">
+    <div class="container">
+
+      <!-- Hero -->
+      <div class="shop-hero">
+        <span class="section-eyebrow">Version physique</span>
+        <h1>La Boutique d'Erebor</h1>
+        <p>Apportez la nuit éternelle sur votre table. Chaque coffret est conçu pour une immersion maximale.</p>
+      </div>
+
+      <!-- Garanties -->
+      <div class="shop-guarantees reveal">
+        <div class="guarantee-item"><span class="guarantee-icon">🚚</span><div class="guarantee-text"><strong>Livraison gratuite</strong>dès 50 € d'achat en France</div></div>
+        <div class="guarantee-item"><span class="guarantee-icon">🔄</span><div class="guarantee-text"><strong>Retours 30 jours</strong>Satisfait ou remboursé</div></div>
+        <div class="guarantee-item"><span class="guarantee-icon">🔒</span><div class="guarantee-text"><strong>Paiement sécurisé</strong>CB, PayPal, virement</div></div>
+        <div class="guarantee-item"><span class="guarantee-icon">🏭</span><div class="guarantee-text"><strong>Fabrication française</strong>Impression artisanale locale</div></div>
+      </div>
+
+      <!-- Layout principal -->
+      <div class="shop-layout">
+
+        <!-- Produits -->
+        <div class="products-grid" id="products-grid">
+          <!-- Rempli par JavaScript -->
+        </div>
+
+        <!-- Panier -->
+        <div class="cart-panel">
+          <div class="cart-header">
+            <h3>🛒 Panier <span class="cart-count" id="cart-count">0</span></h3>
+            <button class="cart-clear" onclick="clearCart()">Vider</button>
+          </div>
+
+          <div id="cart-empty" class="cart-empty">
+            <span class="cart-empty-icon">🌑</span>
+            <p>Votre panier est vide.<br>Ajoutez un produit pour commencer.</p>
+          </div>
+
+          <div id="cart-items" class="cart-items" style="display:none;"></div>
+
+          <div class="cart-footer">
+            <div class="cart-subtotal">
+              <span>Sous-total</span>
+              <span id="cart-subtotal">0,00 €</span>
+            </div>
+            <div class="cart-shipping">
+              <span>Livraison</span>
+              <span id="cart-shipping">Offerte dès 50 €</span>
+            </div>
+            <div class="cart-total">
+              <span class="cart-total-label">Total</span>
+              <span class="cart-total-amount" id="cart-total">0,00 €</span>
+            </div>
+            <button class="btn-checkout" id="btn-checkout" onclick="openCheckout()" disabled>
+              Finaliser la commande →
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Livraison & Infos -->
+    <div class="shipping-info">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Informations</span>
+          <h2 style="color:var(--color-gold-light);">Livraison & Garanties</h2>
+        </div>
+        <div class="shipping-grid">
+          <div class="shipping-card reveal">
+            <span class="shipping-card-icon">📦</span>
+            <h3>Expédition</h3>
+            <p>Commandes traitées en 2–3 jours ouvrés. Livraison Colissimo en France 48h. International disponible sur demande.</p>
+          </div>
+          <div class="shipping-card reveal delay-2">
+            <span class="shipping-card-icon">🎁</span>
+            <h3>Emballage Collector</h3>
+            <p>Chaque commande est emballée dans du papier de soie noir avec un message personnalisé inclus sur demande.</p>
+          </div>
+          <div class="shipping-card reveal delay-4">
+            <span class="shipping-card-icon">❓</span>
+            <h3>Questions ?</h3>
+            <p>Contactez-nous à <strong style="color:var(--color-gold);">contact@ombres-erebor.fr</strong> — réponse sous 24h garantie.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Checkout -->
+  <div class="checkout-overlay" id="checkout-overlay">
+    <div class="checkout-modal">
+      <!-- Formulaire -->
+      <div id="checkout-form-view">
+        <div class="checkout-modal-header">
+          <h2>Finaliser la commande</h2>
+          <button onclick="closeCheckout()" style="background:none;border:1px solid var(--color-border);border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--color-text-muted);font-size:1rem;">✕</button>
+        </div>
+        <div class="checkout-modal-body">
+
+          <div class="checkout-section">
+            <h3>📦 Récapitulatif</h3>
+            <div id="checkout-summary" style="background:var(--color-deep);border-radius:var(--radius-md);padding:1rem;font-size:0.875rem;color:var(--color-text-muted);"></div>
+          </div>
+
+          <div class="checkout-section">
+            <h3>👤 Coordonnées</h3>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Prénom</label>
+                <input type="text" class="form-input" id="co-firstname" placeholder="Jean" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nom</label>
+                <input type="text" class="form-input" id="co-lastname" placeholder="Dupont" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-input" id="co-email" placeholder="jean@exemple.fr" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Téléphone</label>
+              <input type="tel" class="form-input" id="co-phone" placeholder="+33 6 00 00 00 00">
+            </div>
+          </div>
+
+          <div class="checkout-section">
+            <h3>🚚 Adresse de livraison</h3>
+            <div class="form-group">
+              <label class="form-label">Adresse</label>
+              <input type="text" class="form-input" id="co-address" placeholder="12 rue des Ombres" required>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Code postal</label>
+                <input type="text" class="form-input" id="co-zip" placeholder="75001" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Ville</label>
+                <input type="text" class="form-input" id="co-city" placeholder="Paris" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="checkout-section">
+            <h3>💳 Paiement</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
+              <label style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:var(--color-deep);border:1px solid var(--color-border);border-radius:var(--radius-md);cursor:pointer;font-size:0.8rem;color:var(--color-text-muted);">
+                <input type="radio" name="payment" value="card" checked> 💳 Carte
+              </label>
+              <label style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:var(--color-deep);border:1px solid var(--color-border);border-radius:var(--radius-md);cursor:pointer;font-size:0.8rem;color:var(--color-text-muted);">
+                <input type="radio" name="payment" value="paypal"> 🅿️ PayPal
+              </label>
+              <label style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:var(--color-deep);border:1px solid var(--color-border);border-radius:var(--radius-md);cursor:pointer;font-size:0.8rem;color:var(--color-text-muted);">
+                <input type="radio" name="payment" value="virement"> 🏦 Virement
+              </label>
+            </div>
+            <div style="padding:1rem;background:rgba(201,168,76,0.06);border:1px solid var(--color-gold-dim);border-radius:var(--radius-md);font-size:0.8rem;color:var(--color-text-muted);">
+              🔒 Paiement sécurisé SSL. Vos données ne sont jamais stockées sur nos serveurs.
+            </div>
+          </div>
+
+          <button class="btn btn-primary" style="width:100%;padding:1rem;" onclick="submitOrder()">
+            🛒 Passer la commande — <span id="checkout-total-btn">0,00 €</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Confirmation -->
+      <div class="checkout-success" id="checkout-success">
+        <div class="checkout-success-icon">✅</div>
+        <h2>Commande confirmée !</h2>
+        <p style="margin-bottom:1rem;">Merci pour votre commande. Vous recevrez un email de confirmation dans quelques minutes.</p>
+        <p style="margin-bottom:2rem;font-size:0.8rem;">Expédition sous 2–3 jours ouvrés depuis notre atelier.</p>
+        <button class="btn btn-primary" onclick="closeCheckout();clearCart();">🏠 Retour à la boutique</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo">Les Ombres d'Erebor</span>
+          <p>Fabriqué avec passion pour les amateurs de jeux de déduction sociale profonds et intenses.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="rules.html">Règles</a></li>
+            <li><a href="play.html">Jouer en ligne</a></li>
+            <li><a href="shop.html">Boutique</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Produits</h4>
+          <ul>
+            <li><a href="#" onclick="scrollToProduct('base')">Coffret de Base</a></li>
+            <li><a href="#" onclick="scrollToProduct('deluxe')">Édition Collector</a></li>
+            <li><a href="#" onclick="scrollToProduct('extension')">Extension</a></li>
+            <li><a href="#" onclick="scrollToProduct('tokens')">Jetons Premium</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Service client</h4>
+          <ul>
+            <li><a href="mailto:contact@ombres-erebor.fr">Contact</a></li>
+            <li><a href="#">Livraison</a></li>
+            <li><a href="#">Retours</a></li>
+            <li><a href="#">Mentions légales</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Les Ombres d'Erebor. Tous droits réservés.</p>
+        <p>🇫🇷 Fabriqué en France · Livraison mondiale disponible</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/data/shop-products.js"></script>
+  <script src="assets/js/components/nav.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/pages/shop.js"></script>
+
+</body>
+</html>
