@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/rules.css">
+  <link rel="stylesheet" href="assets/css/lang.css">
 </head>
 <body>
 
@@ -20,29 +21,39 @@
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
         <span class="nav-logo-title">Les Ombres d'Erebor</span>
-        <span class="nav-logo-sub">Jeu de déduction sociale</span>
+        <span class="nav-logo-sub"><span class="lang-fr">Jeu de déduction sociale</span><span class="lang-en">Social deduction game</span></span>
       </a>
       <ul class="nav-links">
-        <li><a href="index.html"><span class="nav-icon">🏠</span> Accueil</a></li>
-        <li><a href="rules.html" class="active"><span class="nav-icon">📖</span> Règles</a></li>
-        <li><a href="roles.html"><span class="nav-icon">🎭</span> Rôles</a></li>
-        <li><a href="interactions.html"><span class="nav-icon">🕸️</span> Interactions</a></li>
-        <li><a href="play.html"><span class="nav-icon">🎮</span> Jouer</a></li>
-        <li><a href="shop.html"><span class="nav-icon">🛒</span> Boutique</a></li>
+        <li><a href="index.html"><span class="nav-icon">🏠</span><span data-i18n="nav.home">Accueil</span></a></li>
+        <li><a href="rules.html" class="active"><span class="nav-icon">📖</span><span data-i18n="nav.rules">Règles</span></a></li>
+        <li><a href="roles.html"><span class="nav-icon">🎭</span><span data-i18n="nav.roles">Rôles</span></a></li>
+        <li><a href="interactions.html"><span class="nav-icon">🕸️</span><span data-i18n="nav.interactions">Interactions</span></a></li>
+        <li><a href="play.html"><span class="nav-icon">🎮</span><span data-i18n="nav.play">Jouer</span></a></li>
+        <li><a href="shop.html"><span class="nav-icon">🛒</span><span data-i18n="nav.shop">Boutique</span></a></li>
       </ul>
       <div class="nav-cta">
-        <a href="play.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.8rem;">🎮 Jouer</a>
+        <a href="play.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.8rem;" data-i18n="nav.playBtn">🎮 Jouer</a>
+      </div>
+      <div class="lang-toggle" role="group" aria-label="Langue / Language">
+        <button class="lang-option active" data-lang="fr"><span class="flag">🇫🇷</span> FR</button>
+        <span class="lang-divider"></span>
+        <button class="lang-option" data-lang="en"><span class="flag">🇬🇧</span> EN</button>
       </div>
       <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
   <div class="nav-mobile-drawer">
-    <a href="index.html">🏠 Accueil</a>
-    <a href="rules.html">📖 Règles du jeu</a>
-    <a href="roles.html">🎭 Les 25 rôles</a>
-    <a href="interactions.html">🕸️ Matrice d'interactions</a>
-    <a href="play.html">🎮 Jouer en ligne</a>
-    <a href="shop.html">🛒 Boutique</a>
+    <a href="index.html">🏠 <span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="rules.html">📖 <span class="lang-fr">Règles du jeu</span><span class="lang-en">Game rules</span></a>
+    <a href="roles.html">🎭 <span class="lang-fr">Les 25 rôles</span><span class="lang-en">The 25 roles</span></a>
+    <a href="interactions.html">🕸️ <span class="lang-fr">Matrice d'interactions</span><span class="lang-en">Interaction matrix</span></a>
+    <a href="play.html">🎮 <span class="lang-fr">Jouer en ligne</span><span class="lang-en">Play online</span></a>
+    <a href="shop.html">🛒 <span class="lang-fr">Boutique</span><span class="lang-en">Shop</span></a>
+    <div class="lang-toggle" role="group" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);">
+      <button class="lang-option active" data-lang="fr" style="flex:1;"><span class="flag">🇫🇷</span> FR</button>
+      <span class="lang-divider"></span>
+      <button class="lang-option" data-lang="en" style="flex:1;"><span class="flag">🇬🇧</span> EN</button>
+    </div>
   </div>
 
   <!-- CONTENU -->
@@ -51,11 +62,11 @@
 
       <!-- Hero -->
       <div class="rules-hero">
-        <span class="section-eyebrow">Le Grimoire</span>
-        <h1 style="color:var(--color-lune-light);text-shadow:0 0 30px rgba(74,143,168,0.4);margin-bottom:1rem;">
+        <span class="section-eyebrow" data-i18n="rules.eyebrow">Le Grimoire</span>
+        <h1 style="color:var(--color-lune-light);text-shadow:0 0 30px rgba(74,143,168,0.4);margin-bottom:1rem;" data-i18n="rules.title">
           Règles du Jeu
         </h1>
-        <p style="color:var(--color-text-muted);font-size:var(--text-lg);max-width:600px;margin:0 auto;">
+        <p style="color:var(--color-text-muted);font-size:var(--text-lg);max-width:600px;margin:0 auto;" data-i18n="rules.subtitle">
           Tout ce qu'il faut savoir pour plonger dans les ténèbres d'Erebor.
           Des règles simples sur une mécanique infiniment profonde.
         </p>
@@ -66,24 +77,24 @@
 
         <!-- Sidebar navigation -->
         <aside class="chapter-nav" aria-label="Chapitres des règles">
-          <div class="chapter-nav-header">Chapitres</div>
+          <div class="chapter-nav-header"><span class="lang-fr">Chapitres</span><span class="lang-en">Chapters</span></div>
           <ul class="chapter-nav-list" role="list">
-            <li><a href="#apercu" class="active"><span class="chapter-icon">🌑</span> Aperçu</a></li>
-            <li><a href="#setup"><span class="chapter-icon">🃏</span> Configuration</a></li>
-            <li><a href="#quartiers"><span class="chapter-icon">🗺️</span> Quartiers</a></li>
-            <li><a href="#phases"><span class="chapter-icon">🌓</span> Phases de jeu</a></li>
-            <li><a href="#nuit"><span class="chapter-icon">🌑</span> Phase de Nuit</a></li>
-            <li><a href="#jour"><span class="chapter-icon">☀️</span> Phase de Jour</a></li>
-            <li><a href="#crepuscule"><span class="chapter-icon">🌅</span> Crépuscule</a></li>
-            <li><a href="#mort"><span class="chapter-icon">💀</span> La Mort</a></li>
-            <li><a href="#victoire"><span class="chapter-icon">🏆</span> Victoire</a></li>
-            <li><a href="#speciales"><span class="chapter-icon">⚡</span> Mécaniques spéciales</a></li>
-            <li><a href="#reference"><span class="chapter-icon">📋</span> Référence rapide</a></li>
+            <li><a href="#apercu" class="active"><span class="chapter-icon">🌑</span> <span class="lang-fr">Aperçu</span><span class="lang-en">Overview</span></a></li>
+            <li><a href="#setup"><span class="chapter-icon">🃏</span> <span class="lang-fr">Configuration</span><span class="lang-en">Setup</span></a></li>
+            <li><a href="#quartiers"><span class="chapter-icon">🗺️</span> <span class="lang-fr">Quartiers</span><span class="lang-en">Districts</span></a></li>
+            <li><a href="#phases"><span class="chapter-icon">🌓</span> <span class="lang-fr">Phases de jeu</span><span class="lang-en">Game Phases</span></a></li>
+            <li><a href="#nuit"><span class="chapter-icon">🌑</span> <span class="lang-fr">Phase de Nuit</span><span class="lang-en">Night Phase</span></a></li>
+            <li><a href="#jour"><span class="chapter-icon">☀️</span> <span class="lang-fr">Phase de Jour</span><span class="lang-en">Day Phase</span></a></li>
+            <li><a href="#crepuscule"><span class="chapter-icon">🌅</span> <span class="lang-fr">Crépuscule</span><span class="lang-en">Twilight</span></a></li>
+            <li><a href="#mort"><span class="chapter-icon">💀</span> <span class="lang-fr">La Mort</span><span class="lang-en">Death</span></a></li>
+            <li><a href="#victoire"><span class="chapter-icon">🏆</span> <span class="lang-fr">Victoire</span><span class="lang-en">Victory</span></a></li>
+            <li><a href="#speciales"><span class="chapter-icon">⚡</span> <span class="lang-fr">Mécaniques spéciales</span><span class="lang-en">Special Mechanics</span></a></li>
+            <li><a href="#reference"><span class="chapter-icon">📋</span> <span class="lang-fr">Référence rapide</span><span class="lang-en">Quick Reference</span></a></li>
           </ul>
         </aside>
 
-        <!-- Contenu -->
-        <div class="rules-content">
+        <!-- Contenu FR -->
+        <div class="rules-content lang-fr">
 
           <!-- APERÇU -->
           <section class="rules-section" id="apercu">
@@ -520,6 +531,300 @@
           </div>
 
         </div>
+
+        <!-- Contenu EN -->
+        <div class="rules-content lang-en">
+
+          <section class="rules-section" id="apercu-en">
+            <h2><span class="section-emoji">🌑</span> Game Overview</h2>
+            <p>
+              <strong>Shadows of Erebor</strong> is a social deduction game for 8 to 20 players,
+              playable without a game master (or with an optional GM for complex sessions).
+              A game lasts between 90 minutes and 3 hours depending on player count.
+            </p>
+            <p>
+              The game stands apart with three fundamental mechanics that make it
+              deeper — and harder — than its inspirations:
+            </p>
+            <ul>
+              <li><strong>Identities change</strong> — Corruption, role swapping, inheritance: your starting role may no longer be yours by mid-game.</li>
+              <li><strong>Space is divided</strong> — Players are split into 2 or 3 districts with distinct rules. Not everyone can hear each other.</li>
+              <li><strong>Death is not the end</strong> — Eliminated players become wandering Spirits and can still influence the game.</li>
+            </ul>
+            <div class="callout info">
+              <div class="callout-icon">💡</div>
+              <div class="callout-body">
+                <h4>Tip for new players</h4>
+                <p>For a first game, we recommend 8 players using only "Beginner" difficulty roles. Add "Intermediate" and "Expert" roles as you gain experience.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr>
+
+          <section class="rules-section" id="setup-en">
+            <h2><span class="section-emoji">🃏</span> Setup</h2>
+            <h3>Player count and role distribution</h3>
+            <p>
+              The distribution of secret roles is calculated based on player count.
+              Each player has a <strong>public role</strong> (their visible function in the city)
+              and a <strong>secret role</strong> (their true alignment and power).
+            </p>
+            <table class="config-table">
+              <thead>
+                <tr>
+                  <th>Players</th>
+                  <th>🌙 Council of the Moon</th>
+                  <th>🌑 Shadows</th>
+                  <th>🌀 Loners</th>
+                  <th>Districts</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>8</td><td>5</td><td>2</td><td>1</td><td>2</td></tr>
+                <tr><td>10</td><td>6</td><td>3</td><td>1</td><td>2</td></tr>
+                <tr><td>12</td><td>7</td><td>3</td><td>2</td><td>2-3</td></tr>
+                <tr><td>15</td><td>9</td><td>4</td><td>2</td><td>3</td></tr>
+                <tr><td>18</td><td>11</td><td>5</td><td>2</td><td>3</td></tr>
+                <tr><td>20</td><td>12</td><td>5</td><td>3</td><td>3</td></tr>
+              </tbody>
+            </table>
+            <h3>Game preparation</h3>
+            <ol>
+              <li>Select secret roles appropriate to the player count and group experience.</li>
+              <li>Give each player a public role (visible to all) and a secret role (strictly confidential).</li>
+              <li>Physically divide players into 2 or 3 groups and designate their districts.</li>
+              <li>Each player reads their secret role without revealing it.</li>
+              <li>The Shadows recognise each other during a secret initial phase (eyes closed).</li>
+              <li>The first Night phase begins.</li>
+            </ol>
+            <div class="callout warning">
+              <div class="callout-icon">⚠️</div>
+              <div class="callout-body">
+                <h4>Role balance</h4>
+                <p>Do not mix too many Expert roles in the same game. A single Eclipsed Seer and a single Shadow's Hand are enough to create maximum tension.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr>
+
+          <section class="rules-section" id="quartiers-en">
+            <h2><span class="section-emoji">🗺️</span> Districts</h2>
+            <p>
+              The play space is divided into <strong>2 or 3 physical districts</strong>
+              (separate rooms, distinct tables, or designated zones). This division is at the heart
+              of all strategy.
+            </p>
+            <h3>District rules</h3>
+            <ul>
+              <li><strong>Discussions are confined</strong> — You may only speak freely with players in your district.</li>
+              <li><strong>Some powers are limited</strong> — Certain roles can only act within their own district or a specific district.</li>
+              <li><strong>Prisoner exchanges</strong> — At regular intervals (between each Twilight phase), districts exchange 1 to 2 players according to a defined protocol.</li>
+              <li><strong>The struggle for control</strong> — Having a majority of players in a district can activate certain effects or events.</li>
+            </ul>
+            <h3>Inter-district exchanges</h3>
+            <p>
+              After each Twilight, each district designates an "envoy" who will join the adjacent district.
+              Shadows can try to place their agents strategically.
+              Loners (like the Midnight Whip) can force exchanges.
+            </p>
+            <div class="callout info">
+              <div class="callout-icon">🗺️</div>
+              <div class="callout-body">
+                <h4>Communication between districts</h4>
+                <p>The only authorised communications between districts are the Celestial Messenger's messages (which can be intercepted) and public announcements during the Day Phase.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr>
+
+          <section class="rules-section" id="phases-en">
+            <h2><span class="section-emoji">🌓</span> Turn structure</h2>
+            <p>Each game round consists of <strong>three phases</strong>, played in this fixed order:</p>
+            <div class="phase-cards">
+              <div class="phase-card nuit">
+                <div class="phase-card-header">
+                  <div class="phase-number">1</div>
+                  <div class="phase-card-title">🌑 Night</div>
+                </div>
+                <div class="phase-card-body">
+                  <p>All players close their eyes. Secret powers activate in a predefined order. Assassinations, heals, espionage, corruption — everything happens in darkness.</p>
+                </div>
+              </div>
+              <div class="phase-card jour">
+                <div class="phase-card-header">
+                  <div class="phase-number">2</div>
+                  <div class="phase-card-title">☀️ Day</div>
+                </div>
+                <div class="phase-card-body">
+                  <p>The night's results are revealed. Players discuss, accuse, defend. A public vote determines whether a player is executed. Public Trials may occur.</p>
+                </div>
+              </div>
+              <div class="phase-card crepuscule">
+                <div class="phase-card-header">
+                  <div class="phase-number">3</div>
+                  <div class="phase-card-title">🌅 Twilight</div>
+                </div>
+                <div class="phase-card-body">
+                  <p>A random global event occurs (drawn at random): flood, curse, creature appearance… These events can overturn all current strategies. District exchanges take place.</p>
+                </div>
+              </div>
+            </div>
+            <p>A game lasts between <strong>5 and 8 rounds</strong> depending on the pace of eliminations. The limit is announced at the start: if the Council of the Moon has not eliminated all Shadows by the last Twilight, the Sovereign Shadow wins automatically.</p>
+          </section>
+
+          <hr>
+
+          <section class="rules-section" id="nuit-en">
+            <h2><span class="section-emoji">🌑</span> Night Phase</h2>
+            <p>The night is the most tactical phase. All eyes are closed. The GM (or a token system) wakes roles in a precise order.</p>
+            <h3>Nocturnal activation order</h3>
+            <ol>
+              <li><strong>Nightmare Sculptor</strong> — Designates their target (who loses their power this night).</li>
+              <li><strong>Shadow's Hand</strong> — Performs a corruption if it is their turn.</li>
+              <li><strong>Abyss Whisper</strong> — Chooses their disinformation target.</li>
+              <li><strong>False Oracle</strong> — Sends their false visions.</li>
+              <li><strong>Veiled Assassin</strong> — Designates their victim.</li>
+              <li><strong>Shadow Hunter</strong> — Designates their target (if acting).</li>
+              <li><strong>Moon Priestess</strong> — Heals a player.</li>
+              <li><strong>Eclipsed Seer</strong> — Uses their unique power (if still available).</li>
+              <li><strong>Herald of the Dawn</strong> — Receives their binary information.</li>
+              <li><strong>Master of Archives</strong> — Receives an alignment fragment.</li>
+              <li><strong>Celestial Messenger</strong> — Sends their message.</li>
+              <li><strong>Secret Collector</strong> — Eavesdrops on a private conversation.</li>
+              <li><strong>Silent Assassin</strong> — Uses their unique kill (if acting).</li>
+            </ol>
+            <div class="callout warning">
+              <div class="callout-icon">⚠️</div>
+              <div class="callout-body">
+                <h4>Sculpted roles</h4>
+                <p>A player blocked by the Nightmare Sculptor cannot use their power that night, even if they are called. They must act as if they have no power: do not move, do not designate.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr>
+
+          <section class="rules-section" id="jour-en">
+            <h2><span class="section-emoji">☀️</span> Day Phase</h2>
+            <p>The day is the social phase. Results of the night are announced (deaths, effects, messages received). Players discuss, argue, accuse.</p>
+            <h3>Day sequence</h3>
+            <ol>
+              <li><strong>Announcement</strong> — The GM announces who died and any public effects from the night.</li>
+              <li><strong>Open discussion</strong> — 10 to 20 minutes (depending on player count). Players can reveal, bluff, or accuse freely.</li>
+              <li><strong>Public Trial (optional)</strong> — Any player can invoke a Trial to force two suspects to answer a question publicly.</li>
+              <li><strong>Vote</strong> — Each district votes simultaneously. The player with the most votes in their district is executed (tie: no elimination).</li>
+              <li><strong>Revelation</strong> — The executed player reveals their public role (never their secret role).</li>
+            </ol>
+            <div class="callout info">
+              <div class="callout-icon">💡</div>
+              <div class="callout-body">
+                <h4>Public role vs secret role</h4>
+                <p>When a player is eliminated, they reveal only their <strong>public role</strong> (e.g. "Blacksmith", "Merchant"). Their secret role (Shadow, Loner, etc.) is only revealed at the end of the game — unless a power forces it.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr>
+
+          <section class="rules-section" id="crepuscule-en">
+            <h2><span class="section-emoji">🌅</span> Twilight Phase</h2>
+            <p>Between each round, a Twilight Event is drawn. These events affect the entire game and can completely overturn strategies.</p>
+            <h3>Twilight Events (examples)</h3>
+            <ul>
+              <li><strong>🌊 The Flood</strong> — An entire district is submerged. Its inhabitants must flee to neighbouring districts.</li>
+              <li><strong>🪞 Mirror Curse</strong> — This night, all powers are reversed. Heals become damage, blocks become releases.</li>
+              <li><strong>👻 The Apparition</strong> — A wandering spirit manifests and can reveal an absolute truth to the assembly.</li>
+              <li><strong>🩸 Blood Pact</strong> — Two inhabitants are bound by an invisible pact. Their factions must be revealed.</li>
+              <li><strong>🌕 White Night</strong> — The full moon bathes Erebor in light. No action is possible in darkness this round.</li>
+            </ul>
+            <h3>District exchanges</h3>
+            <p>After each Twilight, 1 player from each district moves to an adjacent district. The choice can be voluntary or imposed depending on the active rules.</p>
+          </section>
+
+          <hr>
+
+          <section class="rules-section" id="mort-en">
+            <h2><span class="section-emoji">💀</span> Death</h2>
+            <p>When a player is eliminated (by vote, assassination, or ability), they become a <strong>wandering Spirit</strong>.</p>
+            <h3>Wandering Spirits</h3>
+            <ul>
+              <li>They can no longer speak or vote during the day.</li>
+              <li>They can whisper to one living player per night (a short message).</li>
+              <li>Certain roles can interact with Spirits (Soul Merchant, Mystic Apprentice).</li>
+              <li>Their secret role is only revealed at the end of the game.</li>
+            </ul>
+            <div class="callout warning">
+              <div class="callout-icon">⚠️</div>
+              <div class="callout-body">
+                <h4>Spirits and game balance</h4>
+                <p>Spirits can whisper but cannot lie about their secret role to a player who asks them directly at night. This is an honour rule — but enforcement is left to the group.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr>
+
+          <section class="rules-section" id="victoire-en">
+            <h2><span class="section-emoji">🏆</span> Victory</h2>
+            <div class="victory-cards">
+              <div class="victory-card-rules lune">
+                <h3>🌙 Council of the Moon</h3>
+                <p>Wins if all Shadows are eliminated before the end of the last round, OR if it holds a majority in every district at the final count.</p>
+              </div>
+              <div class="victory-card-rules ombre">
+                <h3>🌑 Sovereign Shadow</h3>
+                <p>Wins if corrupted or living Shadows represent at least half of the surviving players at any point — or if the Council fails its objective by the last Twilight.</p>
+              </div>
+              <div class="victory-card-rules solitaire">
+                <h3>🌀 Loners</h3>
+                <p>Each Loner has a unique personal objective, checked at the end of the game. They can win simultaneously with another faction — or alone.</p>
+              </div>
+            </div>
+            <p>Victory is announced at the end of the last round. All secret roles are then revealed and the story of the night is recounted.</p>
+          </section>
+
+          <hr>
+
+          <section class="rules-section" id="speciales-en">
+            <h2><span class="section-emoji">⚡</span> Special Mechanics</h2>
+            <h3>Corruption</h3>
+            <p>When a player is corrupted by the Shadow's Hand, they change sides silently. They retain their public role and secret role, but their objective changes. They can continue to pretend to be in the Council — while working for the Shadows.</p>
+            <h3>Role Inheritance</h3>
+            <p>The Mystic Apprentice can inherit the power of any dead player. If that player was a Shadow, the Apprentice is immediately corrupted without anyone knowing.</p>
+            <h3>Role Exchange</h3>
+            <p>The Skinchanger can permanently swap their role with another player. The two players keep their past actions but gain the future powers of their new role.</p>
+            <h3>Public Trials</h3>
+            <p>A Public Trial can be invoked during the day. Two players face each other and must answer one question publicly. The Weaver of Truth can force specific information to be revealed.</p>
+          </section>
+
+          <hr>
+
+          <section class="rules-section" id="reference-en">
+            <h2><span class="section-emoji">📋</span> Quick Reference</h2>
+            <table class="config-table">
+              <thead>
+                <tr><th>Phase</th><th>Duration</th><th>Key actions</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>🌑 Night</td><td>5–15 min</td><td>Secret powers activate in order</td></tr>
+                <tr><td>☀️ Day</td><td>10–20 min</td><td>Discussion → Trial → Vote → Elimination</td></tr>
+                <tr><td>🌅 Twilight</td><td>5 min</td><td>Random event → District exchange</td></tr>
+              </tbody>
+            </table>
+            <div class="callout info">
+              <div class="callout-icon">📱</div>
+              <div class="callout-body">
+                <h4>Online mode</h4>
+                <p>Use the <a href="play.html">Play</a> page to manage roles digitally. Each player sees their secret role on their own device. Compatible with Discord and Zoom.</p>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
       </div>
 
     </div>
@@ -530,39 +835,44 @@
     <div class="footer-inner">
       <div class="footer-grid">
         <div class="footer-brand">
-          <span class="footer-logo">Les Ombres d'Erebor</span>
-          <p>Un jeu de déduction sociale pour 8 à 20 joueurs. La nuit tombe sur Erebor.</p>
+          <span class="footer-logo" data-i18n="footer.brand">Les Ombres d'Erebor</span>
+          <p>
+            <span class="lang-fr">Un jeu de déduction sociale pour 8 à 20 joueurs. La nuit tombe sur Erebor.</span>
+            <span class="lang-en">A social deduction game for 8 to 20 players. Night falls over Erebor.</span>
+          </p>
         </div>
         <div class="footer-col">
           <h4>Navigation</h4>
           <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="rules.html">Règles</a></li>
-            <li><a href="roles.html">Rôles</a></li>
+            <li><a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a></li>
+            <li><a href="rules.html"><span class="lang-fr">Règles</span><span class="lang-en">Rules</span></a></li>
+            <li><a href="roles.html"><span class="lang-fr">Rôles</span><span class="lang-en">Roles</span></a></li>
             <li><a href="interactions.html">Interactions</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Chapitres</h4>
+          <h4><span class="lang-fr">Chapitres</span><span class="lang-en">Chapters</span></h4>
           <ul>
-            <li><a href="#setup">Configuration</a></li>
-            <li><a href="#phases">Phases de jeu</a></li>
-            <li><a href="#victoire">Victoire</a></li>
-            <li><a href="#reference">Référence rapide</a></li>
+            <li><a href="#setup"><span class="lang-fr">Configuration</span><span class="lang-en">Setup</span></a></li>
+            <li><a href="#phases"><span class="lang-fr">Phases de jeu</span><span class="lang-en">Game phases</span></a></li>
+            <li><a href="#victoire"><span class="lang-fr">Victoire</span><span class="lang-en">Victory</span></a></li>
+            <li><a href="#reference"><span class="lang-fr">Référence rapide</span><span class="lang-en">Quick reference</span></a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Factions</h4>
+          <h4><span class="lang-fr">Factions</span><span class="lang-en">Factions</span></h4>
           <ul>
-            <li><a href="roles.html?faction=lune">🌙 Conseil de la Lune</a></li>
-            <li><a href="roles.html?faction=ombre">🌑 Ombre Souveraine</a></li>
-            <li><a href="roles.html?faction=solitaire">🌀 Solitaires</a></li>
+            <li><a href="roles.html?faction=lune">🌙 <span class="lang-fr">Conseil de la Lune</span><span class="lang-en">Council of the Moon</span></a></li>
+            <li><a href="roles.html?faction=ombre">🌑 <span class="lang-fr">Ombre Souveraine</span><span class="lang-en">Sovereign Shadow</span></a></li>
+            <li><a href="roles.html?faction=solitaire">🌀 <span class="lang-fr">Solitaires</span><span class="lang-en">Loners</span></a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 Les Ombres d'Erebor.</p>
-        <p>25 rôles · 3 factions · Une nuit sans fin.</p>
+        <p class="lang-fr">© 2027 Les Ombres d'Erebor. Jeu de société de déduction sociale.</p>
+        <p class="lang-en">© 2027 Shadows of Erebor. Social deduction board game.</p>
+        <p class="text-muted lang-fr">Inspiré de Loup-Garou, Blood on the Clocktower &amp; Two Rooms and a Boom.</p>
+        <p class="text-muted lang-en">Inspired by Werewolf, Blood on the Clocktower &amp; Two Rooms and a Boom.</p>
       </div>
     </div>
   </footer>
@@ -572,6 +882,8 @@
   <script src="assets/js/data/interactions.js"></script>
   <script src="assets/js/components/nav.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/data/i18n.js"></script>
+  <script src="assets/js/components/lang.js"></script>
 
   <script>
     // Navigation active des chapitres au scroll

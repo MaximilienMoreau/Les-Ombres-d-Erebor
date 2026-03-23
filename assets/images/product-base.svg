@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="400" height="320">
+  <defs>
+    <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1420"/>
+      <stop offset="100%" style="stop-color:#06080f"/>
+    </linearGradient>
+    <linearGradient id="topGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1a2540"/>
+      <stop offset="100%" style="stop-color:#0d1930"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8c96a"/>
+      <stop offset="50%" style="stop-color:#c9a84c"/>
+      <stop offset="100%" style="stop-color:#9a7a2e"/>
+    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="shadow"><feDropShadow dx="4" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.6"/></filter>
+  </defs>
+  <ellipse cx="210" cy="295" rx="160" ry="18" fill="#000" opacity="0.5"/>
+  <polygon points="320,60 360,40 360,260 320,280" fill="#080c18" stroke="#c9a84c" stroke-width="0.5" opacity="0.8"/>
+  <rect x="60" y="60" width="260" height="220" rx="4" fill="url(#boxGrad)" filter="url(#shadow)"/>
+  <rect x="60" y="60" width="260" height="220" rx="4" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+  <rect x="68" y="68" width="244" height="204" rx="3" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
+  <circle cx="190" cy="148" r="90" fill="#4a8fa8" opacity="0.08"/>
+  <circle cx="95" cy="85" r="1.5" fill="#c9a84c" opacity="0.6"/>
+  <circle cx="280" cy="80" r="1.5" fill="#c9a84c" opacity="0.5"/>
+  <circle cx="300" cy="255" r="1.5" fill="#c9a84c" opacity="0.4"/>
+  <circle cx="190" cy="128" r="50" fill="#1a2a4a" filter="url(#glow)"/>
+  <circle cx="190" cy="128" r="50" fill="none" stroke="#4a8fa8" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="210" cy="120" r="42" fill="#0d1420"/>
+  <rect x="60" y="175" width="260" height="60" fill="#000" opacity="0.5"/>
+  <rect x="60" y="175" width="260" height="1" fill="url(#goldGrad)"/>
+  <rect x="60" y="235" width="260" height="1" fill="url(#goldGrad)"/>
+  <text x="190" y="198" text-anchor="middle" font-family="serif" font-size="11" fill="#c9a84c" letter-spacing="3" font-weight="bold" opacity="0.7">LES OMBRES DE</text>
+  <text x="190" y="225" text-anchor="middle" font-family="serif" font-size="24" fill="url(#goldGrad)" letter-spacing="4" font-weight="bold" filter="url(#glow)">EREBOR</text>
+  <rect x="60" y="240" width="260" height="40" fill="#000" opacity="0.4"/>
+  <text x="190" y="256" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c9a84c" letter-spacing="2" opacity="0.8">COFFRET DE BASE</text>
+  <text x="190" y="272" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#6a7a9a" letter-spacing="1">JEU DE DÉDUCTION SOCIALE · 8–20 JOUEURS · 14+</text>
+  <path d="M68,68 L80,68 L80,70 L70,70 L70,80 L68,80 Z" fill="#c9a84c" opacity="0.6"/>
+  <path d="M312,68 L300,68 L300,70 L310,70 L310,80 L312,80 Z" fill="#c9a84c" opacity="0.6"/>
+  <path d="M68,280 L80,280 L80,278 L70,278 L70,268 L68,268 Z" fill="#c9a84c" opacity="0.6"/>
+  <path d="M312,280 L300,280 L300,278 L310,278 L310,268 L312,268 Z" fill="#c9a84c" opacity="0.6"/>
+  <polygon points="60,60 100,40 360,40 320,60" fill="url(#topGrad)" stroke="#c9a84c" stroke-width="0.5" opacity="0.9"/>
+  <text x="210" y="54" text-anchor="middle" font-family="serif" font-size="8" fill="#c9a84c" opacity="0.7" letter-spacing="2">LES OMBRES D'EREBOR</text>
+</svg>
