@@ -67,6 +67,13 @@
   }
 }
 
+/* ---- Toggle lang-fr / lang-en via CSS ---- */
+/* Usage: ajouter class="lang-fr" ou class="lang-en" sur n'importe quel élément */
+html[lang="en"] .lang-fr,
+html[lang="fr"] .lang-en {
+  display: none !important;
+}
+
 /* Dans le menu mobile */
 .nav-mobile-drawer .lang-toggle {
   margin: 0.75rem 1.25rem;

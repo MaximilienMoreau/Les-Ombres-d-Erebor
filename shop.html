@@ -19,7 +19,7 @@
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
         <span class="nav-logo-title">Les Ombres d'Erebor</span>
-        <span class="nav-logo-sub">Jeu de déduction sociale</span>
+        <span class="nav-logo-sub"><span class="lang-fr">Jeu de déduction sociale</span><span class="lang-en">Social deduction game</span></span>
       </a>
       <ul class="nav-links">
         <li><a href="index.html"><span class="nav-icon">🏠</span><span data-i18n="nav.home">Accueil</span></a></li>
@@ -41,12 +41,12 @@
     </div>
   </nav>
   <div class="nav-mobile-drawer">
-    <a href="index.html">🏠 Accueil</a>
-    <a href="rules.html">📖 Règles du jeu</a>
-    <a href="roles.html">🎭 Les 25 rôles</a>
-    <a href="interactions.html">🕸️ Matrice d'interactions</a>
-    <a href="play.html">🎮 Jouer en ligne</a>
-    <a href="shop.html">🛒 Boutique</a>
+    <a href="index.html">🏠 <span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="rules.html">📖 <span class="lang-fr">Règles du jeu</span><span class="lang-en">Game rules</span></a>
+    <a href="roles.html">🎭 <span class="lang-fr">Les 25 rôles</span><span class="lang-en">The 25 roles</span></a>
+    <a href="interactions.html">🕸️ <span class="lang-fr">Matrice d'interactions</span><span class="lang-en">Interaction matrix</span></a>
+    <a href="play.html">🎮 <span class="lang-fr">Jouer en ligne</span><span class="lang-en">Play online</span></a>
+    <a href="shop.html">🛒 <span class="lang-fr">Boutique</span><span class="lang-en">Shop</span></a>
     <div class="lang-toggle" role="group" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);">
       <button class="lang-option active" data-lang="fr" style="flex:1;"><span class="flag">🇫🇷</span> FR</button>
       <span class="lang-divider"></span>
@@ -66,10 +66,34 @@
 
       <!-- Garanties -->
       <div class="shop-guarantees reveal">
-        <div class="guarantee-item"><span class="guarantee-icon">🚚</span><div class="guarantee-text"><strong>Livraison gratuite</strong>dès 50 € d'achat en France</div></div>
-        <div class="guarantee-item"><span class="guarantee-icon">🔄</span><div class="guarantee-text"><strong>Retours 30 jours</strong>Satisfait ou remboursé</div></div>
-        <div class="guarantee-item"><span class="guarantee-icon">🔒</span><div class="guarantee-text"><strong>Paiement sécurisé</strong>CB, PayPal, virement</div></div>
-        <div class="guarantee-item"><span class="guarantee-icon">🏭</span><div class="guarantee-text"><strong>Fabrication française</strong>Impression artisanale locale</div></div>
+        <div class="guarantee-item">
+          <span class="guarantee-icon">🚚</span>
+          <div class="guarantee-text">
+            <strong data-i18n="shop.guarantee1Title">Livraison gratuite</strong>
+            <span data-i18n="shop.guarantee1Desc">dès 50 € d'achat en France</span>
+          </div>
+        </div>
+        <div class="guarantee-item">
+          <span class="guarantee-icon">🔄</span>
+          <div class="guarantee-text">
+            <strong data-i18n="shop.guarantee2Title">Retours 30 jours</strong>
+            <span data-i18n="shop.guarantee2Desc">Satisfait ou remboursé</span>
+          </div>
+        </div>
+        <div class="guarantee-item">
+          <span class="guarantee-icon">🔒</span>
+          <div class="guarantee-text">
+            <strong data-i18n="shop.guarantee3Title">Paiement sécurisé</strong>
+            <span data-i18n="shop.guarantee3Desc">CB, PayPal, virement</span>
+          </div>
+        </div>
+        <div class="guarantee-item">
+          <span class="guarantee-icon">🏭</span>
+          <div class="guarantee-text">
+            <strong data-i18n="shop.guarantee4Title">Fabrication française</strong>
+            <span data-i18n="shop.guarantee4Desc">Impression artisanale locale</span>
+          </div>
+        </div>
       </div>
 
       <!-- Layout principal -->
@@ -89,22 +113,23 @@
 
           <div id="cart-empty" class="cart-empty">
             <span class="cart-empty-icon">🌑</span>
-            <p data-i18n="shop.cartEmpty">Votre panier est vide.<br>Ajoutez un produit pour commencer.</p>
+            <p data-i18n="shop.cartEmpty">Votre panier est vide.</p>
+            <p data-i18n="shop.cartEmptyDesc">Ajoutez un produit pour commencer.</p>
           </div>
 
           <div id="cart-items" class="cart-items" style="display:none;"></div>
 
           <div class="cart-footer">
             <div class="cart-subtotal">
-              <span>Sous-total</span>
+              <span data-i18n="shop.cartSubtotal">Sous-total</span>
               <span id="cart-subtotal">0,00 €</span>
             </div>
             <div class="cart-shipping">
-              <span>Livraison</span>
-              <span id="cart-shipping">Offerte dès 50 €</span>
+              <span data-i18n="shop.cartShipping">Livraison</span>
+              <span id="cart-shipping" data-i18n="shop.cartShippingThreshold">Offerte dès 50 €</span>
             </div>
             <div class="cart-total">
-              <span class="cart-total-label">Total</span>
+              <span class="cart-total-label" data-i18n="shop.cartTotal">Total</span>
               <span class="cart-total-amount" id="cart-total">0,00 €</span>
             </div>
             <button class="btn-checkout" id="btn-checkout" onclick="openCheckout()" disabled data-i18n="shop.cartCheckout">
@@ -120,24 +145,24 @@
     <div class="shipping-info">
       <div class="container">
         <div class="section-header">
-          <span class="section-eyebrow">Informations</span>
-          <h2 style="color:var(--color-gold-light);">Livraison & Garanties</h2>
+          <span class="section-eyebrow" data-i18n="shop.shippingEyebrow">Informations</span>
+          <h2 style="color:var(--color-gold-light);" data-i18n="shop.shippingTitle">Livraison &amp; Garanties</h2>
         </div>
         <div class="shipping-grid">
           <div class="shipping-card reveal">
             <span class="shipping-card-icon">📦</span>
-            <h3>Expédition</h3>
-            <p>Commandes traitées en 2–3 jours ouvrés. Livraison Colissimo en France 48h. International disponible sur demande.</p>
+            <h3 data-i18n="shop.shipping1Title">Expédition</h3>
+            <p data-i18n="shop.shipping1Desc">Commandes traitées en 2–3 jours ouvrés. Livraison Colissimo en France 48h. International disponible sur demande.</p>
           </div>
           <div class="shipping-card reveal delay-2">
             <span class="shipping-card-icon">🎁</span>
-            <h3>Emballage Collector</h3>
-            <p>Chaque commande est emballée dans du papier de soie noir avec un message personnalisé inclus sur demande.</p>
+            <h3 data-i18n="shop.shipping2Title">Emballage Collector</h3>
+            <p data-i18n="shop.shipping2Desc">Chaque commande est emballée dans du papier de soie noir avec un message personnalisé inclus sur demande.</p>
           </div>
           <div class="shipping-card reveal delay-4">
             <span class="shipping-card-icon">❓</span>
-            <h3>Questions ?</h3>
-            <p>Contactez-nous à <strong style="color:var(--color-gold);">contact@ombres-erebor.fr</strong> — réponse sous 24h garantie.</p>
+            <h3 data-i18n="shop.shipping3Title">Questions ?</h3>
+            <p data-i18n="shop.shipping3Desc">Contactez-nous à <strong style="color:var(--color-gold);">contact@ombres-erebor.fr</strong> — réponse sous 24h garantie.</p>
           </div>
         </div>
       </div>
@@ -156,70 +181,70 @@
         <div class="checkout-modal-body">
 
           <div class="checkout-section">
-            <h3>📦 Récapitulatif</h3>
+            <h3 data-i18n="shop.checkoutSummary">📦 Récapitulatif</h3>
             <div id="checkout-summary" style="background:var(--color-deep);border-radius:var(--radius-md);padding:1rem;font-size:0.875rem;color:var(--color-text-muted);"></div>
           </div>
 
           <div class="checkout-section">
-            <h3>👤 Coordonnées</h3>
+            <h3 data-i18n="shop.checkoutInfo">👤 Coordonnées</h3>
             <div class="form-grid-2">
               <div class="form-group">
-                <label class="form-label">Prénom</label>
-                <input type="text" class="form-input" id="co-firstname" placeholder="Jean" required>
+                <label class="form-label" data-i18n="shop.firstnameLabel">Prénom</label>
+                <input type="text" class="form-input" id="co-firstname" placeholder="Jean" data-i18n-placeholder="shop.firstnamePlaceholder" required>
               </div>
               <div class="form-group">
-                <label class="form-label">Nom</label>
-                <input type="text" class="form-input" id="co-lastname" placeholder="Dupont" required>
+                <label class="form-label" data-i18n="shop.lastnameLabel">Nom</label>
+                <input type="text" class="form-input" id="co-lastname" placeholder="Dupont" data-i18n-placeholder="shop.lastnamePlaceholder" required>
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-input" id="co-email" placeholder="jean@exemple.fr" required>
+              <label class="form-label" data-i18n="shop.emailLabel">Email</label>
+              <input type="email" class="form-input" id="co-email" placeholder="jean@exemple.fr" data-i18n-placeholder="shop.emailPlaceholder" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Téléphone</label>
-              <input type="tel" class="form-input" id="co-phone" placeholder="+33 6 00 00 00 00">
+              <label class="form-label" data-i18n="shop.phoneLabel">Téléphone</label>
+              <input type="tel" class="form-input" id="co-phone" placeholder="+33 6 00 00 00 00" data-i18n-placeholder="shop.phonePlaceholder">
             </div>
           </div>
 
           <div class="checkout-section">
-            <h3>🚚 Adresse de livraison</h3>
+            <h3 data-i18n="shop.checkoutAddress">🚚 Adresse de livraison</h3>
             <div class="form-group">
-              <label class="form-label">Adresse</label>
-              <input type="text" class="form-input" id="co-address" placeholder="12 rue des Ombres" required>
+              <label class="form-label" data-i18n="shop.addressLabel">Adresse</label>
+              <input type="text" class="form-input" id="co-address" placeholder="12 rue des Ombres" data-i18n-placeholder="shop.addressPlaceholder" required>
             </div>
             <div class="form-grid-2">
               <div class="form-group">
-                <label class="form-label">Code postal</label>
-                <input type="text" class="form-input" id="co-zip" placeholder="75001" required>
+                <label class="form-label" data-i18n="shop.zipLabel">Code postal</label>
+                <input type="text" class="form-input" id="co-zip" placeholder="75001" data-i18n-placeholder="shop.zipPlaceholder" required>
               </div>
               <div class="form-group">
-                <label class="form-label">Ville</label>
-                <input type="text" class="form-input" id="co-city" placeholder="Paris" required>
+                <label class="form-label" data-i18n="shop.cityLabel">Ville</label>
+                <input type="text" class="form-input" id="co-city" placeholder="Paris" data-i18n-placeholder="shop.cityPlaceholder" required>
               </div>
             </div>
           </div>
 
           <div class="checkout-section">
-            <h3>💳 Paiement</h3>
+            <h3 data-i18n="shop.paymentTitle">💳 Paiement</h3>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
               <label style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:var(--color-deep);border:1px solid var(--color-border);border-radius:var(--radius-md);cursor:pointer;font-size:0.8rem;color:var(--color-text-muted);">
-                <input type="radio" name="payment" value="card" checked> 💳 Carte
+                <input type="radio" name="payment" value="card" checked> <span data-i18n="shop.payCard">💳 Carte</span>
               </label>
               <label style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:var(--color-deep);border:1px solid var(--color-border);border-radius:var(--radius-md);cursor:pointer;font-size:0.8rem;color:var(--color-text-muted);">
-                <input type="radio" name="payment" value="paypal"> 🅿️ PayPal
+                <input type="radio" name="payment" value="paypal"> <span data-i18n="shop.payPaypal">🅿️ PayPal</span>
               </label>
               <label style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:var(--color-deep);border:1px solid var(--color-border);border-radius:var(--radius-md);cursor:pointer;font-size:0.8rem;color:var(--color-text-muted);">
-                <input type="radio" name="payment" value="virement"> 🏦 Virement
+                <input type="radio" name="payment" value="virement"> <span data-i18n="shop.payTransfer">🏦 Virement</span>
               </label>
             </div>
-            <div style="padding:1rem;background:rgba(201,168,76,0.06);border:1px solid var(--color-gold-dim);border-radius:var(--radius-md);font-size:0.8rem;color:var(--color-text-muted);">
+            <div style="padding:1rem;background:rgba(201,168,76,0.06);border:1px solid var(--color-gold-dim);border-radius:var(--radius-md);font-size:0.8rem;color:var(--color-text-muted);" data-i18n="shop.paySecure">
               🔒 Paiement sécurisé SSL. Vos données ne sont jamais stockées sur nos serveurs.
             </div>
           </div>
 
           <button class="btn btn-primary" style="width:100%;padding:1rem;" onclick="submitOrder()">
-            🛒 Passer la commande — <span id="checkout-total-btn">0,00 €</span>
+            <span data-i18n="shop.orderBtn">🛒 Passer la commande —</span> <span id="checkout-total-btn">0,00 €</span>
           </button>
         </div>
       </div>
@@ -228,9 +253,9 @@
       <div class="checkout-success" id="checkout-success">
         <div class="checkout-success-icon">✅</div>
         <h2 data-i18n="shop.successTitle">Commande confirmée !</h2>
-        <p style="margin-bottom:1rem;">Merci pour votre commande. Vous recevrez un email de confirmation dans quelques minutes.</p>
-        <p style="margin-bottom:2rem;font-size:0.8rem;">Expédition sous 2–3 jours ouvrés depuis notre atelier.</p>
-        <button class="btn btn-primary" onclick="closeCheckout();clearCart();">🏠 Retour à la boutique</button>
+        <p style="margin-bottom:1rem;" data-i18n="shop.successMsg">Merci pour votre commande. Vous recevrez un email de confirmation dans quelques minutes.</p>
+        <p style="margin-bottom:2rem;font-size:0.8rem;" data-i18n="shop.successShipping">Expédition sous 2–3 jours ouvrés depuis notre atelier.</p>
+        <button class="btn btn-primary" onclick="closeCheckout();clearCart();" data-i18n="shop.successBtn">🏠 Retour à la boutique</button>
       </div>
     </div>
   </div>
@@ -240,40 +265,45 @@
     <div class="footer-inner">
       <div class="footer-grid">
         <div class="footer-brand">
-          <span class="footer-logo">Les Ombres d'Erebor</span>
-          <p>Fabriqué avec passion pour les amateurs de jeux de déduction sociale profonds et intenses.</p>
+          <span class="footer-logo" data-i18n="footer.brand">Les Ombres d'Erebor</span>
+          <p>
+            <span class="lang-fr">Fabriqué avec passion pour les amateurs de jeux de déduction sociale profonds et intenses.</span>
+            <span class="lang-en">Crafted with passion for fans of deep and intense social deduction games.</span>
+          </p>
         </div>
         <div class="footer-col">
           <h4>Navigation</h4>
           <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="rules.html">Règles</a></li>
-            <li><a href="play.html">Jouer en ligne</a></li>
-            <li><a href="shop.html">Boutique</a></li>
+            <li><a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a></li>
+            <li><a href="rules.html"><span class="lang-fr">Règles</span><span class="lang-en">Rules</span></a></li>
+            <li><a href="play.html"><span class="lang-fr">Jouer en ligne</span><span class="lang-en">Play online</span></a></li>
+            <li><a href="shop.html"><span class="lang-fr">Boutique</span><span class="lang-en">Shop</span></a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Produits</h4>
+          <h4><span class="lang-fr">Produits</span><span class="lang-en">Products</span></h4>
           <ul>
-            <li><a href="#" onclick="scrollToProduct('base')">Coffret de Base</a></li>
-            <li><a href="#" onclick="scrollToProduct('deluxe')">Édition Collector</a></li>
-            <li><a href="#" onclick="scrollToProduct('extension')">Extension</a></li>
-            <li><a href="#" onclick="scrollToProduct('tokens')">Jetons Premium</a></li>
+            <li><a href="#" onclick="scrollToProduct('base')"><span class="lang-fr">Coffret de Base</span><span class="lang-en">Base Set</span></a></li>
+            <li><a href="#" onclick="scrollToProduct('deluxe')"><span class="lang-fr">Édition Collector</span><span class="lang-en">Collector Edition</span></a></li>
+            <li><a href="#" onclick="scrollToProduct('extension')"><span class="lang-fr">Extension</span><span class="lang-en">Expansion</span></a></li>
+            <li><a href="#" onclick="scrollToProduct('tokens')"><span class="lang-fr">Jetons Premium</span><span class="lang-en">Premium Tokens</span></a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Service client</h4>
+          <h4><span class="lang-fr">Service client</span><span class="lang-en">Customer service</span></h4>
           <ul>
             <li><a href="mailto:contact@ombres-erebor.fr">Contact</a></li>
-            <li><a href="#">Livraison</a></li>
-            <li><a href="#">Retours</a></li>
-            <li><a href="#">Mentions légales</a></li>
+            <li><a href="#"><span class="lang-fr">Livraison</span><span class="lang-en">Shipping</span></a></li>
+            <li><a href="#"><span class="lang-fr">Retours</span><span class="lang-en">Returns</span></a></li>
+            <li><a href="#"><span class="lang-fr">Mentions légales</span><span class="lang-en">Legal notice</span></a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 Les Ombres d'Erebor. Tous droits réservés.</p>
-        <p>🇫🇷 Fabriqué en France · Livraison mondiale disponible</p>
+        <p class="lang-fr">© 2027 Les Ombres d'Erebor. Jeu de société de déduction sociale.</p>
+        <p class="lang-en">© 2027 Shadows of Erebor. Social deduction board game.</p>
+        <p class="text-muted lang-fr">🇫🇷 Fabriqué en France · Livraison mondiale disponible</p>
+        <p class="text-muted lang-en">🇫🇷 Made in France · Worldwide shipping available</p>
       </div>
     </div>
   </footer>

@@ -20,12 +20,12 @@
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
         <span class="nav-logo-title">Les Ombres d'Erebor</span>
-        <span class="nav-logo-sub" id="nav-phase-label">Chargement...</span>
+        <span class="nav-logo-sub" id="nav-phase-label"><span class="lang-fr">Chargement...</span><span class="lang-en">Loading...</span></span>
       </a>
       <ul class="nav-links">
         <li><a href="rules.html"><span class="nav-icon">📖</span><span data-i18n="nav.rules">Règles</span></a></li>
         <li><a href="roles.html"><span class="nav-icon">🎭</span><span data-i18n="nav.roles">Rôles</span></a></li>
-        <li><a href="play.html">🚪 Quitter la partie</a></li>
+        <li><a href="play.html">🚪 <span class="lang-fr">Quitter la partie</span><span class="lang-en">Leave game</span></a></li>
       </ul>
       <div class="lang-toggle" role="group" aria-label="Langue / Language">
         <button class="lang-option active" data-lang="fr"><span class="flag">🇫🇷</span> FR</button>
@@ -36,9 +36,9 @@
     </div>
   </nav>
   <div class="nav-mobile-drawer">
-    <a href="rules.html">📖 Règles du jeu</a>
-    <a href="roles.html">🎭 Les 25 rôles</a>
-    <a href="play.html">🚪 Quitter la partie</a>
+    <a href="rules.html">📖 <span class="lang-fr">Règles du jeu</span><span class="lang-en">Game rules</span></a>
+    <a href="roles.html">🎭 <span class="lang-fr">Les 25 rôles</span><span class="lang-en">The 25 roles</span></a>
+    <a href="play.html">🚪 <span class="lang-fr">Quitter la partie</span><span class="lang-en">Leave game</span></a>
     <div class="lang-toggle" role="group" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);">
       <button class="lang-option active" data-lang="fr" style="flex:1;"><span class="flag">🇫🇷</span> FR</button>
       <span class="lang-divider"></span>
@@ -58,36 +58,36 @@
 
       <div id="tab-create" class="tab-panel active">
         <div class="setup-card create">
-          <h2>Nouvelle partie</h2>
-          <p>Vous serez le Maître du Jeu (MJ).</p>
+          <h2><span class="lang-fr">Nouvelle partie</span><span class="lang-en">New game</span></h2>
+          <p><span class="lang-fr">Vous serez le Maître du Jeu (MJ).</span><span class="lang-en">You will be the Game Master (GM).</span></p>
           <div class="form-group">
-            <label class="form-label">Votre nom</label>
+            <label class="form-label"><span class="lang-fr">Votre nom</span><span class="lang-en">Your name</span></label>
             <input type="text" class="form-input" id="setup-gm-name" placeholder="Maître du Jeu" maxlength="20">
           </div>
           <div class="form-group">
-            <span class="form-label">Sélectionnez les rôles</span>
+            <span class="form-label"><span class="lang-fr">Sélectionnez les rôles</span><span class="lang-en">Select roles</span></span>
             <div class="role-checkboxes" id="role-checkboxes-setup"></div>
           </div>
           <button class="btn btn-primary" style="width:100%;margin-top:1rem;" onclick="setupCreateRoom()">
-            🏰 Créer la salle
+            🏰 <span class="lang-fr">Créer la salle</span><span class="lang-en">Create room</span>
           </button>
         </div>
       </div>
 
       <div id="tab-join" class="tab-panel">
         <div class="setup-card join">
-          <h2>Rejoindre une partie</h2>
-          <p>Entrez le code partagé par le MJ.</p>
+          <h2><span class="lang-fr">Rejoindre une partie</span><span class="lang-en">Join a game</span></h2>
+          <p><span class="lang-fr">Entrez le code partagé par le MJ.</span><span class="lang-en">Enter the code shared by the GM.</span></p>
           <div class="form-group">
-            <label class="form-label">Votre nom</label>
+            <label class="form-label"><span class="lang-fr">Votre nom</span><span class="lang-en">Your name</span></label>
             <input type="text" class="form-input" id="setup-player-name" placeholder="Votre prénom" maxlength="20">
           </div>
           <div class="form-group">
-            <label class="form-label">Code de salle</label>
+            <label class="form-label"><span class="lang-fr">Code de salle</span><span class="lang-en">Room code</span></label>
             <input type="text" class="form-input code-input" id="setup-room-code" placeholder="XXXXXX" maxlength="6">
           </div>
           <button class="btn btn-secondary" style="width:100%;margin-top:1rem;justify-content:center;" onclick="setupJoinRoom()">
-            🚪 Rejoindre
+            🚪 <span class="lang-fr">Rejoindre</span><span class="lang-en">Join</span>
           </button>
         </div>
       </div>
@@ -98,12 +98,12 @@
   <div id="view-lobby" class="game-view" style="padding-top:var(--nav-height);">
     <div class="lobby-container">
       <div class="lobby-header">
-        <h1 class="lobby-title">Salle d'Attente</h1>
-        <p class="text-muted" style="margin-bottom:1.5rem;">Partagez ce code avec tous les joueurs :</p>
+        <h1 class="lobby-title"><span class="lang-fr">Salle d'Attente</span><span class="lang-en">Waiting Room</span></h1>
+        <p class="text-muted" style="margin-bottom:1.5rem;"><span class="lang-fr">Partagez ce code avec tous les joueurs :</span><span class="lang-en">Share this code with all players:</span></p>
         <div class="room-code-display">
           <span class="room-code-label">Code</span>
           <span class="room-code-value" id="lobby-room-code">——————</span>
-          <button class="room-code-copy" id="copy-room-code">📋 Copier</button>
+          <button class="room-code-copy" id="copy-room-code">📋 <span class="lang-fr">Copier</span><span class="lang-en">Copy</span></button>
         </div>
       </div>
 
@@ -111,31 +111,31 @@
         <!-- Liste joueurs -->
         <div class="player-list">
           <div class="player-list-header">
-            Joueurs connectés
-            <span id="player-list-count" style="font-weight:400;">0 joueur</span>
+            <span class="lang-fr">Joueurs connectés</span><span class="lang-en">Connected players</span>
+            <span id="player-list-count" style="font-weight:400;">0 <span class="lang-fr">joueur</span><span class="lang-en">player</span></span>
           </div>
           <div class="player-list-body" id="player-list-body">
             <div style="padding:2rem;text-align:center;color:var(--color-text-dim);font-size:0.875rem;">
-              En attente des joueurs...
+              <span class="lang-fr">En attente des joueurs...</span><span class="lang-en">Waiting for players...</span>
             </div>
           </div>
         </div>
 
         <!-- Contrôles MJ -->
         <div class="lobby-controls" id="gm-lobby-panel" style="display:none;">
-          <h3>⚔️ Contrôles du MJ</h3>
-          <p style="font-size:0.875rem;">Attendez que tous les joueurs aient rejoint, puis distribuez les rôles.</p>
+          <h3>⚔️ <span class="lang-fr">Contrôles du MJ</span><span class="lang-en">GM Controls</span></h3>
+          <p style="font-size:0.875rem;"><span class="lang-fr">Attendez que tous les joueurs aient rejoint, puis distribuez les rôles.</span><span class="lang-en">Wait for all players to join, then distribute the roles.</span></p>
 
           <div class="form-group" style="margin-top:1rem;">
-            <span class="form-label">Rôles pour cette partie</span>
+            <span class="form-label"><span class="lang-fr">Rôles pour cette partie</span><span class="lang-en">Roles for this game</span></span>
             <div class="role-checkboxes" id="role-checkboxes-lobby" style="max-height:180px;overflow-y:auto;"></div>
           </div>
 
           <button class="btn btn-secondary" onclick="assignRoles()" style="width:100%;">
-            🃏 Attribuer les rôles
+            🃏 <span class="lang-fr">Attribuer les rôles</span><span class="lang-en">Assign roles</span>
           </button>
           <button class="btn btn-primary" onclick="startNight()" style="width:100%;">
-            🌑 Démarrer la Nuit 1
+            🌑 <span class="lang-fr">Démarrer la Nuit 1</span><span class="lang-en">Start Night 1</span>
           </button>
         </div>
       </div>
@@ -148,7 +148,7 @@
 
       <!-- Sidebar ordre d'activation -->
       <div class="night-order-sidebar">
-        <div class="night-order-header">🌑 Ordre d'activation</div>
+        <div class="night-order-header">🌑 <span class="lang-fr">Ordre d'activation</span><span class="lang-en">Activation order</span></div>
         <ul class="night-step-list" id="night-step-list"></ul>
       </div>
 
@@ -158,11 +158,11 @@
         <div id="gm-night-content" style="display:none;">
           <div class="gm-night-panel">
             <div class="gm-night-panel-header">
-              <h3>⚔️ Grimoire du MJ — Phase de Nuit</h3>
-              <span id="night-round-label" style="font-family:var(--font-ui);font-size:0.75rem;color:var(--color-text-muted);">Tour 1</span>
+              <h3>⚔️ <span data-i18n="game.grimoire">📖 Grimoire</span> — <span class="lang-fr">Phase de Nuit</span><span class="lang-en">Night Phase</span></h3>
+              <span id="night-round-label" style="font-family:var(--font-ui);font-size:0.75rem;color:var(--color-text-muted);"><span class="lang-fr">Tour 1</span><span class="lang-en">Round 1</span></span>
             </div>
             <div class="gm-night-body" id="gm-night-body">
-              <div style="padding:2rem;text-align:center;color:var(--color-text-muted);">Chargement...</div>
+              <div style="padding:2rem;text-align:center;color:var(--color-text-muted);"><span class="lang-fr">Chargement...</span><span class="lang-en">Loading...</span></div>
             </div>
           </div>
         </div>
@@ -181,11 +181,11 @@
       <div>
         <!-- Fil d'événements -->
         <div class="event-feed">
-          <div class="event-feed-header">📣 Fil de la Journée</div>
+          <div class="event-feed-header">📣 <span class="lang-fr">Fil de la Journée</span><span class="lang-en">Day Feed</span></div>
           <div class="event-feed-body" id="event-feed-body">
             <div class="feed-entry">
               <span class="feed-icon">☀️</span>
-              <span class="feed-text gm">Le jour se lève sur Erebor...</span>
+              <span class="feed-text gm" data-i18n="game.dayRises"><span class="lang-fr">Le jour se lève sur Erebor...</span><span class="lang-en">Day breaks over Erebor…</span></span>
             </div>
           </div>
         </div>
@@ -193,14 +193,14 @@
         <!-- Vote -->
         <div class="vote-panel">
           <div class="vote-panel-header">
-            <h3>🗳️ Vote d'Accusation</h3>
-            <span class="vote-status-badge open" id="vote-status">Ouvert</span>
+            <h3>🗳️ <span class="lang-fr">Vote d'Accusation</span><span class="lang-en">Accusation Vote</span></h3>
+            <span class="vote-status-badge open" id="vote-status"><span class="lang-fr">Ouvert</span><span class="lang-en">Open</span></span>
           </div>
           <div class="vote-panel-body">
             <div id="vote-candidates" class="vote-candidates"></div>
             <div id="gm-vote-actions" style="display:none;">
               <button class="gm-btn" onclick="resolveVote()" style="margin-top:0.5rem;">
-                ⚖️ Résoudre le vote & Éliminer
+                ⚖️ <span class="lang-fr">Résoudre le vote &amp; Éliminer</span><span class="lang-en">Resolve vote &amp; Eliminate</span>
               </button>
             </div>
           </div>
@@ -211,17 +211,17 @@
       <div class="day-sidebar">
         <!-- Joueurs vivants -->
         <div class="alive-players-panel">
-          <div class="panel-header">👥 Joueurs</div>
+          <div class="panel-header">👥 <span class="lang-fr">Joueurs</span><span class="lang-en">Players</span></div>
           <div class="alive-players-list" id="alive-players-list"></div>
         </div>
 
         <!-- Contrôles MJ -->
         <div class="gm-day-controls" id="gm-day-controls" style="display:none;">
-          <h3>⚔️ Actions du MJ</h3>
-          <button class="gm-btn" onclick="resolveVote()">⚖️ Résoudre le vote</button>
-          <button class="gm-btn" onclick="continueToCrepuscule()">🌅 Lancer le Crépuscule</button>
-          <button class="gm-btn" onclick="startNight()">🌑 Passer à la nuit suivante</button>
-          <button class="gm-btn danger" onclick="checkVictory()">🏆 Vérifier la victoire</button>
+          <h3>⚔️ <span class="lang-fr">Actions du MJ</span><span class="lang-en">GM Actions</span></h3>
+          <button class="gm-btn" onclick="resolveVote()">⚖️ <span class="lang-fr">Résoudre le vote</span><span class="lang-en">Resolve vote</span></button>
+          <button class="gm-btn" onclick="continueToCrepuscule()">🌅 <span class="lang-fr">Lancer le Crépuscule</span><span class="lang-en">Start Twilight</span></button>
+          <button class="gm-btn" onclick="startNight()">🌑 <span class="lang-fr">Passer à la nuit suivante</span><span class="lang-en">Start next night</span></button>
+          <button class="gm-btn danger" onclick="checkVictory()">🏆 <span class="lang-fr">Vérifier la victoire</span><span class="lang-en">Check victory</span></button>
         </div>
       </div>
 
@@ -231,15 +231,15 @@
   <!-- ======== VUE : CRÉPUSCULE ======== -->
   <div id="view-crepuscule" class="game-view">
     <div class="crepuscule-container">
-      <h1 class="crepuscule-title">⚡ Crépuscule</h1>
+      <h1 class="crepuscule-title">⚡ <span class="lang-fr">Crépuscule</span><span class="lang-en">Twilight</span></h1>
       <div class="event-card">
         <span class="event-card-icon" id="event-icon">🌀</span>
-        <h2 class="event-card-title" id="event-title">Événement en cours...</h2>
-        <p class="event-card-desc" id="event-desc">L'obscurité d'Erebor est traversée d'un événement inattendu.</p>
+        <h2 class="event-card-title" id="event-title"><span class="lang-fr">Événement en cours...</span><span class="lang-en">Event in progress...</span></h2>
+        <p class="event-card-desc" id="event-desc"><span class="lang-fr">L'obscurité d'Erebor est traversée d'un événement inattendu.</span><span class="lang-en">The darkness of Erebor is pierced by an unexpected event.</span></p>
         <div class="event-card-effect" id="event-effect"></div>
         <div id="gm-crepuscule-actions" style="display:none;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-          <button class="btn btn-secondary" onclick="startNight()">🌑 Lancer la prochaine Nuit</button>
-          <button class="btn btn-primary" onclick="checkVictory()">🏆 Vérifier la victoire</button>
+          <button class="btn btn-secondary" onclick="startNight()">🌑 <span class="lang-fr">Lancer la prochaine Nuit</span><span class="lang-en">Start next Night</span></button>
+          <button class="btn btn-primary" onclick="checkVictory()">🏆 <span class="lang-fr">Vérifier la victoire</span><span class="lang-en">Check victory</span></button>
         </div>
       </div>
     </div>
@@ -250,19 +250,19 @@
     <div class="gameover-container">
       <div class="gameover-winner-banner lune" id="gameover-banner">
         <span class="gameover-icon" id="gameover-icon">🌙</span>
-        <div class="gameover-label">Victoire</div>
-        <h2 class="gameover-winner-name" id="gameover-winner-name">Conseil de la Lune</h2>
-        <p class="gameover-subtitle" id="gameover-subtitle">La lumière triomphe des ténèbres.</p>
+        <div class="gameover-label"><span class="lang-fr">Victoire</span><span class="lang-en">Victory</span></div>
+        <h2 class="gameover-winner-name" id="gameover-winner-name"><span class="lang-fr">Conseil de la Lune</span><span class="lang-en">Council of the Moon</span></h2>
+        <p class="gameover-subtitle" id="gameover-subtitle"><span class="lang-fr">La lumière triomphe des ténèbres.</span><span class="lang-en">Light triumphs over darkness.</span></p>
       </div>
 
       <div class="gameover-roles-reveal">
-        <div class="gameover-roles-reveal-header">🃏 Révélation des rôles</div>
+        <div class="gameover-roles-reveal-header">🃏 <span class="lang-fr">Révélation des rôles</span><span class="lang-en">Role reveal</span></div>
         <div class="role-reveal-grid" id="role-reveal-grid"></div>
       </div>
 
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-        <a href="play.html" class="btn btn-primary">🔄 Nouvelle partie</a>
-        <a href="index.html" class="btn btn-secondary">🏠 Accueil</a>
+        <a href="play.html" class="btn btn-primary">🔄 <span class="lang-fr">Nouvelle partie</span><span class="lang-en">New game</span></a>
+        <a href="index.html" class="btn btn-secondary">🏠 <span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
       </div>
     </div>
   </div>
@@ -270,14 +270,14 @@
   <!-- ======== Grimoire flottant (MJ) ======== -->
   <button class="grimoire-toggle" onclick="toggleGrimoire()" title="Grimoire du MJ">📖</button>
   <div class="grimoire-panel" id="grimoire-panel">
-    <div class="grimoire-header">📖 Grimoire du MJ</div>
+    <div class="grimoire-header" data-i18n="game.grimoire">📖 Grimoire du MJ</div>
     <div class="grimoire-body" id="grimoire-body"></div>
   </div>
 
   <!-- Barre de connexion -->
   <div class="connection-bar">
     <div class="connection-dot"></div>
-    <span class="connection-text">Connexion...</span>
+    <span class="connection-text" data-i18n="game.connecting"><span class="lang-fr">Connexion...</span><span class="lang-en">Connecting...</span></span>
   </div>
 
   <!-- Scripts -->

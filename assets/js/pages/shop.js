@@ -7,6 +7,14 @@ const CART_KEY = 'erebor_cart';
 let cart = JSON.parse(localStorage.getItem(CART_KEY) || '{}');
 // cart: { [productId]: quantity }
 
+function getLang() {
+  return (window.i18n && window.i18n.getCurrentLang) ? window.i18n.getCurrentLang() : 'fr';
+}
+function pt(p, field) {
+  const lang = getLang();
+  return (lang === 'en' && p[field + 'En']) ? p[field + 'En'] : p[field];
+}
+
 // ---- Rendu des produits ----
 function buildProducts() {
   const grid = document.getElementById('products-grid');
@@ -22,21 +30,21 @@ function buildProducts() {
     const badgeHtml = p.badge ? `<div class="product-badge ${p.badge.includes('BEST') ? 'best-seller' : 'nouveau'}">${p.badge}</div>` : '';
     const originalPrice = p.originalPrice ? `<div class="price-original">${p.originalPrice.toFixed(2).replace('.', ',')} €</div>` : '';
     const metaTags = [
-      p.players ? `<span class="product-meta-tag">👥 ${p.players}</span>` : '',
-      p.duration ? `<span class="product-meta-tag">⏱️ ${p.duration}</span>` : '',
-      p.age ? `<span class="product-meta-tag">🔞 ${p.age}</span>` : '',
+      p.players ? `<span class="product-meta-tag">👥 ${pt(p, 'players')}</span>` : '',
+      p.duration ? `<span class="product-meta-tag">⏱️ ${pt(p, 'duration')}</span>` : '',
+      p.age ? `<span class="product-meta-tag">🔞 ${pt(p, 'age')}</span>` : '',
     ].filter(Boolean).join('');
 
-    const contentsList = p.contents.map(c => `<li>${c}</li>`).join('');
+    const contentsList = (pt(p, 'contents') || p.contents).map(c => `<li>${c}</li>`).join('');
 
     card.innerHTML = `
       ${badgeHtml}
       <div class="product-inner">
         <div class="product-visual">${p.icon}</div>
         <div class="product-info">
-          <div class="product-subtitle">${p.subtitle}</div>
-          <div class="product-name">${p.name}</div>
-          <p class="product-description">${p.description}</p>
+          <div class="product-subtitle">${pt(p, 'subtitle')}</div>
+          <div class="product-name">${pt(p, 'name')}</div>
+          <p class="product-description">${pt(p, 'description')}</p>
           <div class="product-meta">${metaTags}</div>
         </div>
         <div class="product-actions">
@@ -51,13 +59,13 @@ function buildProducts() {
             <button class="qty-btn" onclick="changeQty('${p.id}', +1)">+</button>
           </div>
           <button class="btn-add-cart" id="add-${p.id}" onclick="addToCart('${p.id}')">
-            🛒 Ajouter au panier
+            ${window.i18n ? window.i18n.t('shop.addToCart') : '🛒 Ajouter au panier'}
           </button>
         </div>
       </div>
       <div class="product-contents">
         <div class="contents-toggle" onclick="toggleContents(this)">
-          Contenu de la boîte
+          ${window.i18n ? window.i18n.t('shop.contentsToggle') : 'Contenu de la boîte'}
           <span class="toggle-icon">▼</span>
         </div>
         <ul class="contents-list">${contentsList}</ul>
@@ -85,8 +93,8 @@ function addToCart(productId) {
   const btn = document.getElementById(`add-${productId}`);
   if (btn) {
     btn.classList.add('added');
-    btn.textContent = '✓ Ajouté !';
-    setTimeout(() => { btn.classList.remove('added'); btn.innerHTML = '🛒 Ajouter au panier'; }, 2000);
+    btn.textContent = window.i18n ? window.i18n.t('shop.added') : '✓ Ajouté !';
+    setTimeout(() => { btn.classList.remove('added'); btn.innerHTML = window.i18n ? window.i18n.t('shop.addToCart') : '🛒 Ajouter au panier'; }, 2000);
   }
 }
 
@@ -122,7 +130,7 @@ function renderCart() {
 
   if (countEl) countEl.textContent = totalItems;
   if (subEl)   subEl.textContent   = `${subtotal.toFixed(2).replace('.', ',')} €`;
-  if (shipEl)  shipEl.textContent  = shipping === 0 ? (subtotal > 0 ? '🎉 Offerte' : 'Offerte dès 50 €') : `${shipping.toFixed(2).replace('.', ',')} €`;
+  if (shipEl)  shipEl.textContent  = shipping === 0 ? (subtotal > 0 ? (window.i18n ? window.i18n.t('shop.cartShippingFree') : '🎉 Offerte') : (window.i18n ? window.i18n.t('shop.cartShippingThreshold') : 'Offerte dès 50 €')) : `${shipping.toFixed(2).replace('.', ',')} €`;
   if (totalEl) totalEl.textContent = `${total.toFixed(2).replace('.', ',')} €`;
   if (checkBtn) checkBtn.disabled  = entries.length === 0;
 
@@ -148,12 +156,12 @@ function renderCart() {
         <div class="cart-item-info">
           <span class="cart-item-icon">${p.icon}</span>
           <div>
-            <div class="cart-item-name">${p.name}</div>
+            <div class="cart-item-name">${pt(p, 'name')}</div>
             <div class="cart-item-qty">× ${qty}</div>
           </div>
         </div>
         <span class="cart-item-price">${linePrice} €</span>
-        <button class="cart-item-remove" onclick="removeFromCart('${id}')" title="Retirer">✕</button>
+        <button class="cart-item-remove" onclick="removeFromCart('${id}')" title="${window.i18n ? window.i18n.t('shop.cartRemove') || 'Retirer' : 'Retirer'}">✕</button>
       `;
       items.appendChild(row);
     });
@@ -221,11 +229,11 @@ function submitOrder() {
   const city      = document.getElementById('co-city')?.value.trim();
 
   if (!firstname || !lastname || !email || !address || !zip || !city) {
-    alert('Veuillez remplir tous les champs obligatoires.');
+    alert(window.i18n ? window.i18n.t('shop.alertRequired') || 'Veuillez remplir tous les champs obligatoires.' : 'Veuillez remplir tous les champs obligatoires.');
     return;
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    alert('Adresse email invalide.');
+    alert(window.i18n ? window.i18n.t('shop.alertEmail') || 'Adresse email invalide.' : 'Adresse email invalide.');
     return;
   }
 
@@ -244,6 +252,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fermer checkout en cliquant dehors
   document.getElementById('checkout-overlay')?.addEventListener('click', (e) => {
     if (e.target.id === 'checkout-overlay') closeCheckout();
+  });
+
+  document.addEventListener('langchange', () => {
+    buildProducts();
+    renderCart();
   });
 });
 

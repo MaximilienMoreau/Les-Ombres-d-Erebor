@@ -21,7 +21,7 @@
     <div class="nav-inner">
       <a href="index.html" class="nav-logo" aria-label="Les Ombres d'Erebor — Accueil">
         <span class="nav-logo-title">Les Ombres d'Erebor</span>
-        <span class="nav-logo-sub">Jeu de déduction sociale</span>
+        <span class="nav-logo-sub"><span class="lang-fr">Jeu de déduction sociale</span><span class="lang-en">Social deduction game</span></span>
       </a>
 
       <ul class="nav-links" role="list">
@@ -47,12 +47,12 @@
 
   <!-- Mobile drawer -->
   <div class="nav-mobile-drawer" role="navigation" aria-label="Navigation mobile">
-    <a href="index.html">🏠 Accueil</a>
-    <a href="rules.html">📖 Règles du jeu</a>
-    <a href="roles.html">🎭 Les 25 rôles</a>
-    <a href="interactions.html">🕸️ Matrice d'interactions</a>
-    <a href="play.html">🎮 Jouer en ligne</a>
-    <a href="shop.html">🛒 Boutique</a>
+    <a href="index.html">🏠 <span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="rules.html">📖 <span class="lang-fr">Règles du jeu</span><span class="lang-en">Game rules</span></a>
+    <a href="roles.html">🎭 <span class="lang-fr">Les 25 rôles</span><span class="lang-en">The 25 roles</span></a>
+    <a href="interactions.html">🕸️ <span class="lang-fr">Matrice d'interactions</span><span class="lang-en">Interaction matrix</span></a>
+    <a href="play.html">🎮 <span class="lang-fr">Jouer en ligne</span><span class="lang-en">Play online</span></a>
+    <a href="shop.html">🛒 <span class="lang-fr">Boutique</span><span class="lang-en">Shop</span></a>
     <div class="lang-toggle" role="group" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);">
       <button class="lang-option active" data-lang="fr" style="flex:1;"><span class="flag">🇫🇷</span> FR</button>
       <span class="lang-divider"></span>
@@ -69,7 +69,7 @@
       <div class="hero-bg" aria-hidden="true"></div>
 
       <div class="hero-content">
-        <div class="hero-eyebrow" aria-hidden="true">
+        <div class="hero-eyebrow" aria-hidden="true" data-i18n="index.heroEyebrow">
           ✦ Un royaume sous la nuit éternelle ✦
         </div>
 
@@ -78,7 +78,7 @@
           <span class="line-2">EREBOR</span>
         </h1>
 
-        <p class="hero-subtitle">
+        <p class="hero-subtitle" data-i18n="index.heroSubtitle">
           Un jeu de déduction sociale pour 8 à 20 joueurs. Trois factions. Vingt-cinq rôles.
           Une seule nuit pour découvrir qui vous pouvez encore faire confiance.
         </p>
@@ -99,7 +99,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/>
         </svg>
-        <span>Descendre</span>
+        <span data-i18n="index.scrollDown">Descendre</span>
       </div>
     </section>
 
@@ -108,19 +108,21 @@
       <div class="container">
         <div class="intro-grid">
           <div class="intro-text reveal">
-            <span class="section-eyebrow">Le jeu</span>
-            <h2 id="intro-title">Un royaume plongé dans les ténèbres</h2>
+            <span class="section-eyebrow" data-i18n="index.introEyebrow">Le jeu</span>
+            <h2 id="intro-title" data-i18n="index.introTitle">Un royaume plongé dans les ténèbres</h2>
             <p>
-              La cité fortifiée d'Erebor est assiégée de l'intérieur. Des forces occultes ont
+              <span class="lang-fr">La cité fortifiée d'Erebor est assiégée de l'intérieur. Des forces occultes ont
               infiltré ses quartiers, corrompu ses gardiens, et semé la méfiance entre ses habitants.
-              Chaque joueur porte un visage public… et un secret mortel.
+              Chaque joueur porte un visage public… et un secret mortel.</span>
+              <span class="lang-en">The fortified city of Erebor is besieged from within. Shadows have infiltrated the highest levels of the Council. Every night, disappearances. Every day, new betrayals.</span>
             </p>
             <p>
-              Contrairement aux jeux classiques, <em>Les Ombres d'Erebor</em> refuse la simplicité :
+              <span class="lang-fr">Contrairement aux jeux classiques, <em>Les Ombres d'Erebor</em> refuse la simplicité :
               les identités changent en cours de partie, les alliances sont temporaires, et même
-              votre meilleur allié d'hier peut être l'ennemi de demain.
+              votre meilleur allié d'hier peut être l'ennemi de demain.</span>
+              <span class="lang-en">In this social deduction game, you play one of 25 inhabitants of Erebor: defender, infiltrator, or loner pursuing their own goals. Your mission: survive, discover, manipulate.</span>
             </p>
-            <a href="rules.html" class="btn btn-secondary" style="margin-top:1.5rem;">En savoir plus →</a>
+            <a href="rules.html" class="btn btn-secondary" style="margin-top:1.5rem;" data-i18n="index.introBtn">En savoir plus →</a>
           </div>
 
           <div class="intro-visual reveal delay-2">
@@ -128,19 +130,19 @@
               <div class="intro-stats">
                 <div class="stat-item">
                   <div class="stat-number">25</div>
-                  <div class="stat-label">Rôles uniques</div>
+                  <div class="stat-label" data-i18n="index.stat1">25 Rôles uniques</div>
                 </div>
                 <div class="stat-item">
                   <div class="stat-number">3</div>
-                  <div class="stat-label">Factions</div>
+                  <div class="stat-label" data-i18n="index.stat2">3 Factions</div>
                 </div>
                 <div class="stat-item">
                   <div class="stat-number">8-20</div>
-                  <div class="stat-label">Joueurs</div>
+                  <div class="stat-label" data-i18n="index.stat3">8–20 Joueurs</div>
                 </div>
                 <div class="stat-item">
                   <div class="stat-number">∞</div>
-                  <div class="stat-label">Possibilités</div>
+                  <div class="stat-label" data-i18n="index.stat4">∞ Possibilités</div>
                 </div>
               </div>
             </div>
@@ -153,46 +155,49 @@
     <section class="section-factions" aria-labelledby="factions-title">
       <div class="container">
         <div class="section-header">
-          <span class="section-eyebrow">Les trois camps</span>
-          <h2 id="factions-title">Choisissez votre allégeance</h2>
-          <p>Ou plutôt — laissez le destin choisir pour vous.</p>
+          <span class="section-eyebrow" data-i18n="index.factionsEyebrow">Les trois camps</span>
+          <h2 id="factions-title" data-i18n="index.factionsTitle">Choisissez votre allégeance</h2>
+          <p data-i18n="index.factionsSubtitle">Ou plutôt — laissez le destin choisir pour vous.</p>
         </div>
 
         <div class="factions-grid">
           <div class="faction-card lune reveal">
             <span class="faction-icon">🌙</span>
-            <h3>Conseil de la Lune</h3>
-            <p class="faction-tagline">"La vérité est notre épée, la lumière notre bouclier."</p>
+            <h3 data-i18n="index.luneName">Conseil de la Lune</h3>
+            <p class="faction-tagline" data-i18n="index.luneTagline">"La vérité est notre épée, la lumière notre bouclier."</p>
             <p>
-              Les défenseurs d'Erebor. Leurs pouvoirs permettent de détecter, protéger et révéler
+              <span class="lang-fr">Les défenseurs d'Erebor. Leurs pouvoirs permettent de détecter, protéger et révéler
               les Ombres tapis dans la cité. Mais leurs informations sont souvent incomplètes,
-              falsifiées… ou utilisées contre eux.
+              falsifiées… ou utilisées contre eux.</span>
+              <span class="lang-en">The defenders of Erebor. United and organised, they seek to expose the Shadows before corruption takes hold.</span>
             </p>
-            <span class="faction-count">10 rôles</span>
+            <span class="faction-count" data-i18n="index.luneRoles">10 rôles</span>
           </div>
 
           <div class="faction-card ombre reveal delay-2">
             <span class="faction-icon">🌑</span>
-            <h3>Ombre Souveraine</h3>
-            <p class="faction-tagline">"Le mensonge parfait est indiscernable de la vérité."</p>
+            <h3 data-i18n="index.ombreName">Ombre Souveraine</h3>
+            <p class="faction-tagline" data-i18n="index.ombreTagline">"Le mensonge parfait est indiscernable de la vérité."</p>
             <p>
-              Les infiltrés, les corrupteurs, les assassins. Ils usurpent les identités, réécrivent
+              <span class="lang-fr">Les infiltrés, les corrupteurs, les assassins. Ils usurpent les identités, réécrivent
               les informations et sèment la méfiance. Leur force est de ne pas être vus — jusqu'à
-              ce qu'il soit trop tard.
+              ce qu'il soit trop tard.</span>
+              <span class="lang-en">The infiltrators, corruptors, and masters of deception. Their strength: making you doubt your allies.</span>
             </p>
-            <span class="faction-count">8 rôles</span>
+            <span class="faction-count" data-i18n="index.ombreRoles">8 rôles</span>
           </div>
 
           <div class="faction-card solitaire reveal delay-4">
             <span class="faction-icon">🌀</span>
-            <h3>Solitaires</h3>
-            <p class="faction-tagline">"Je ne joue pas dans votre partie. J'ai la mienne."</p>
+            <h3 data-i18n="index.solitaireName">Solitaires</h3>
+            <p class="faction-tagline" data-i18n="index.solitaireTagline">"Je ne joue pas dans votre partie. J'ai la mienne."</p>
             <p>
-              Ni bons ni mauvais, ces joueurs poursuivent des objectifs personnels secrets.
+              <span class="lang-fr">Ni bons ni mauvais, ces joueurs poursuivent des objectifs personnels secrets.
               Ils peuvent aider n'importe quel camp en apparence, mais ils ne servent que leur
-              propre agenda — parfois jusqu'à renverser toute la partie.
+              propre agenda — parfois jusqu'à renverser toute la partie.</span>
+              <span class="lang-en">Neither good nor evil, they pursue complex personal objectives that can upend the entire game.</span>
             </p>
-            <span class="faction-count">7 rôles</span>
+            <span class="faction-count" data-i18n="index.solitaireRoles">7 rôles</span>
           </div>
         </div>
       </div>
@@ -202,37 +207,49 @@
     <section class="section-howto" aria-labelledby="howto-title">
       <div class="container">
         <div class="section-header">
-          <span class="section-eyebrow">Comment jouer</span>
-          <h2 id="howto-title">Une nuit ne ressemble jamais à une autre</h2>
+          <span class="section-eyebrow" data-i18n="index.howEyebrow">Comment jouer</span>
+          <h2 id="howto-title" data-i18n="index.howTitle">Une nuit ne ressemble jamais à une autre</h2>
         </div>
 
         <div class="howto-grid">
           <div class="howto-step reveal">
             <div class="step-number">1</div>
             <span class="step-icon">🃏</span>
-            <h3>Distribution des rôles</h3>
-            <p>Chaque joueur reçoit un rôle public (sa "fonction" en ville) et un rôle secret (son alignement et pouvoir réel).</p>
+            <h3 data-i18n="index.step1Title">Distribution des rôles</h3>
+            <p>
+              <span class="lang-fr">Chaque joueur reçoit un rôle public (sa "fonction" en ville) et un rôle secret (son alignement et pouvoir réel).</span>
+              <span class="lang-en">Each player secretly receives a role. The Game Master knows all identities — players only know their own.</span>
+            </p>
           </div>
 
           <div class="howto-step reveal delay-1">
             <div class="step-number">2</div>
             <span class="step-icon">🌑</span>
-            <h3>La Nuit tombe</h3>
-            <p>Dans le noir, les pouvoirs s'activent. Assassinats, corruptions, espionnages, soins — chaque joueur agit selon son rôle.</p>
+            <h3 data-i18n="index.step2Title">La Nuit tombe</h3>
+            <p>
+              <span class="lang-fr">Dans le noir, les pouvoirs s'activent. Assassinats, corruptions, espionnages, soins — chaque joueur agit selon son rôle.</span>
+              <span class="lang-en">Roles activate in a precise order. Shadows act, defenders investigate.</span>
+            </p>
           </div>
 
           <div class="howto-step reveal delay-2">
             <div class="step-number">3</div>
             <span class="step-icon">☀️</span>
-            <h3>Le Jour se lève</h3>
-            <p>Accusations, procès, votes. Les informations révélées sont partielles, contestées, parfois fausses. Qui croire ?</p>
+            <h3 data-i18n="index.step3Title">Le Jour se lève</h3>
+            <p>
+              <span class="lang-fr">Accusations, procès, votes. Les informations révélées sont partielles, contestées, parfois fausses. Qui croire ?</span>
+              <span class="lang-en">Discussion, accusations, votes. Each district debates separately.</span>
+            </p>
           </div>
 
           <div class="howto-step reveal delay-3">
             <div class="step-number">4</div>
             <span class="step-icon">🏆</span>
-            <h3>La Victoire</h3>
-            <p>Le Conseil élimine toutes les Ombres, ou les Ombres corrompent la majorité — ou un Solitaire accomplit sa quête personnelle.</p>
+            <h3 data-i18n="index.step4Title">La Victoire</h3>
+            <p>
+              <span class="lang-fr">Le Conseil élimine toutes les Ombres, ou les Ombres corrompent la majorité — ou un Solitaire accomplit sa quête personnelle.</span>
+              <span class="lang-en">After 5 to 8 rounds, or when conditions are met: one faction wins.</span>
+            </p>
           </div>
         </div>
       </div>
@@ -242,9 +259,9 @@
     <section class="section-roles-preview" aria-labelledby="preview-title">
       <div class="container">
         <div class="section-header">
-          <span class="section-eyebrow">Les rôles</span>
-          <h2 id="preview-title">Vingt-cinq destins, une même nuit</h2>
-          <p>Chaque rôle dispose d'un pouvoir unique qui interagit avec les autres.</p>
+          <span class="section-eyebrow" data-i18n="index.rolesEyebrow">Les rôles</span>
+          <h2 id="preview-title" data-i18n="index.rolesTitle">Vingt-cinq destins, une même nuit</h2>
+          <p data-i18n="index.rolesDesc">Chaque rôle dispose d'un pouvoir unique qui interagit avec les autres.</p>
         </div>
       </div>
 
@@ -253,7 +270,7 @@
       </div>
 
       <div class="roles-cta">
-        <a href="roles.html" class="btn btn-primary">Voir tous les rôles →</a>
+        <a href="roles.html" class="btn btn-primary" data-i18n="index.rolesBtn">Voir tous les rôles →</a>
       </div>
     </section>
 
@@ -261,35 +278,38 @@
     <section class="section-victory" aria-labelledby="victory-title">
       <div class="container">
         <div class="section-header">
-          <span class="section-eyebrow">Conditions de victoire</span>
-          <h2 id="victory-title">Trois chemins vers la gloire</h2>
+          <span class="section-eyebrow" data-i18n="index.victoryEyebrow">Conditions de victoire</span>
+          <h2 id="victory-title" data-i18n="index.victoryTitle">Trois chemins vers la gloire</h2>
         </div>
 
         <div class="victory-grid">
           <div class="victory-card lune reveal">
             <span class="victory-icon">🌙</span>
-            <h3>Conseil de la Lune</h3>
+            <h3 data-i18n="index.luneName">Conseil de la Lune</h3>
             <p>
-              Éliminer toutes les Ombres avant le lever du Soleil (nombre limité de tours).
-              La victoire collective — mais chaque erreur de vote rapproche la défaite.
+              <span class="lang-fr">Éliminer toutes les Ombres avant le lever du Soleil (nombre limité de tours).
+              La victoire collective — mais chaque erreur de vote rapproche la défaite.</span>
+              <span class="lang-en">Eliminate all Shadows before sunrise, or achieve a majority within the Council across all districts.</span>
             </p>
           </div>
 
           <div class="victory-card ombre reveal delay-2">
             <span class="victory-icon">🌑</span>
-            <h3>Ombre Souveraine</h3>
+            <h3 data-i18n="index.ombreName">Ombre Souveraine</h3>
             <p>
-              Corrompre ou éliminer la majorité des joueurs avant la fin du jeu.
-              La victoire par l'infiltration — chaque corruption non détectée est un pas de plus.
+              <span class="lang-fr">Corrompre ou éliminer la majorité des joueurs avant la fin du jeu.
+              La victoire par l'infiltration — chaque corruption non détectée est un pas de plus.</span>
+              <span class="lang-en">Corrupt or eliminate the majority of Council members to seize control of Erebor.</span>
             </p>
           </div>
 
           <div class="victory-card solitaire reveal delay-4">
             <span class="victory-icon">🌀</span>
-            <h3>Solitaires</h3>
+            <h3 data-i18n="index.solitaireName">Solitaires</h3>
             <p>
-              Remplir un objectif personnel unique, souvent contradictoire avec les deux autres camps.
-              La victoire impossible — ou inattendue.
+              <span class="lang-fr">Remplir un objectif personnel unique, souvent contradictoire avec les deux autres camps.
+              La victoire impossible — ou inattendue.</span>
+              <span class="lang-en">Fulfil a unique personal objective — often in secret, sometimes at the expense of both other factions.</span>
             </p>
           </div>
         </div>
@@ -299,12 +319,12 @@
     <!-- CTA FINAL -->
     <section class="section-cta-final" aria-labelledby="cta-title">
       <div class="container">
-        <h2 class="cta-final-title" id="cta-title">Prêt à plonger dans les ténèbres ?</h2>
-        <p class="cta-final-sub">Maîtrisez les règles. Découvrez les rôles. Déchiffrez la toile d'interactions.</p>
+        <h2 class="cta-final-title" id="cta-title" data-i18n="index.ctaTitle">Prêt à plonger dans les ténèbres ?</h2>
+        <p class="cta-final-sub" data-i18n="index.ctaSubtitle">Maîtrisez les règles. Découvrez les rôles. Déchiffrez la toile d'interactions.</p>
         <div class="cta-final-actions">
-          <a href="rules.html" class="btn btn-primary">📖 Lire les règles</a>
-          <a href="roles.html" class="btn btn-secondary">🎭 Explorer les rôles</a>
-          <a href="interactions.html" class="btn btn-secondary">🕸️ Voir la matrice</a>
+          <a href="rules.html" class="btn btn-primary" data-i18n="index.ctaRules">📖 Lire les règles</a>
+          <a href="roles.html" class="btn btn-secondary" data-i18n="index.ctaRolesBtn">🎭 Explorer les rôles</a>
+          <a href="interactions.html" class="btn btn-secondary" data-i18n="index.ctaMatrix">🕸️ Voir la matrice</a>
         </div>
       </div>
     </section>
@@ -316,43 +336,48 @@
     <div class="footer-inner">
       <div class="footer-grid">
         <div class="footer-brand">
-          <span class="footer-logo">Les Ombres d'Erebor</span>
-          <p>Un jeu de déduction sociale inspiré du Loup-Garou, Blood on the Clocktower et Two Rooms and a Boom. 25 rôles. 3 factions. Une nuit sans fin.</p>
+          <span class="footer-logo" data-i18n="footer.brand">Les Ombres d'Erebor</span>
+          <p>
+            <span class="lang-fr">Un jeu de déduction sociale inspiré du Loup-Garou, Blood on the Clocktower et Two Rooms and a Boom. 25 rôles. 3 factions. Une nuit sans fin.</span>
+            <span class="lang-en">A social deduction game inspired by Werewolf, Blood on the Clocktower and Two Rooms and a Boom. 25 roles. 3 factions. One endless night.</span>
+          </p>
         </div>
 
         <div class="footer-col">
           <h4>Navigation</h4>
           <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="rules.html">Règles</a></li>
-            <li><a href="roles.html">Rôles</a></li>
+            <li><a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a></li>
+            <li><a href="rules.html"><span class="lang-fr">Règles</span><span class="lang-en">Rules</span></a></li>
+            <li><a href="roles.html"><span class="lang-fr">Rôles</span><span class="lang-en">Roles</span></a></li>
             <li><a href="interactions.html">Interactions</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>Factions</h4>
+          <h4><span class="lang-fr">Factions</span><span class="lang-en">Factions</span></h4>
           <ul>
-            <li><a href="roles.html?faction=lune">🌙 Conseil de la Lune</a></li>
-            <li><a href="roles.html?faction=ombre">🌑 Ombre Souveraine</a></li>
-            <li><a href="roles.html?faction=solitaire">🌀 Solitaires</a></li>
+            <li><a href="roles.html?faction=lune">🌙 <span class="lang-fr">Conseil de la Lune</span><span class="lang-en">Council of the Moon</span></a></li>
+            <li><a href="roles.html?faction=ombre">🌑 <span class="lang-fr">Ombre Souveraine</span><span class="lang-en">Sovereign Shadow</span></a></li>
+            <li><a href="roles.html?faction=solitaire">🌀 <span class="lang-fr">Solitaires</span><span class="lang-en">Loners</span></a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>Le jeu</h4>
+          <h4><span class="lang-fr">Le jeu</span><span class="lang-en">The game</span></h4>
           <ul>
-            <li><a href="rules.html#setup">Configuration</a></li>
-            <li><a href="rules.html#phases">Phases de jeu</a></li>
-            <li><a href="rules.html#victoire">Victoire</a></li>
-            <li><a href="rules.html#reference">Référence rapide</a></li>
+            <li><a href="rules.html#setup"><span class="lang-fr">Configuration</span><span class="lang-en">Setup</span></a></li>
+            <li><a href="rules.html#phases"><span class="lang-fr">Phases de jeu</span><span class="lang-en">Game phases</span></a></li>
+            <li><a href="rules.html#victoire"><span class="lang-fr">Victoire</span><span class="lang-en">Victory</span></a></li>
+            <li><a href="rules.html#reference"><span class="lang-fr">Référence rapide</span><span class="lang-en">Quick reference</span></a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p>© 2025 Les Ombres d'Erebor. Jeu de société de déduction sociale.</p>
-        <p class="text-muted">Inspiré de Loup-Garou, Blood on the Clocktower & Two Rooms and a Boom.</p>
+        <p class="lang-fr">© 2027 Les Ombres d'Erebor. Jeu de société de déduction sociale.</p>
+        <p class="lang-en">© 2027 Shadows of Erebor. Social deduction board game.</p>
+        <p class="text-muted lang-fr">Inspiré de Loup-Garou, Blood on the Clocktower &amp; Two Rooms and a Boom.</p>
+        <p class="text-muted lang-en">Inspired by Werewolf, Blood on the Clocktower &amp; Two Rooms and a Boom.</p>
       </div>
     </div>
   </footer>

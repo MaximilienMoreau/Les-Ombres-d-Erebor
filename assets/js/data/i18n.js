@@ -179,6 +179,9 @@ const TRANSLATIONS = {
       successBtn: '🏠 Retour à la boutique',
       addToCart: '🛒 Ajouter au panier', added: '✓ Ajouté !',
       contentsToggle: 'Contenu de la boîte',
+      cartRemove: 'Retirer',
+      alertRequired: 'Veuillez remplir tous les champs obligatoires.',
+      alertEmail: 'Adresse email invalide.',
     },
     game: {
       tabCreate: '🏰 Créer une salle', tabJoin: '🚪 Rejoindre',
@@ -362,6 +365,9 @@ const TRANSLATIONS = {
       successBtn: '🏠 Back to shop',
       addToCart: '🛒 Add to cart', added: '✓ Added!',
       contentsToggle: 'Box contents',
+      cartRemove: 'Remove',
+      alertRequired: 'Please fill in all required fields.',
+      alertEmail: 'Invalid email address.',
     },
     game: {
       tabCreate: '🏰 Create a room', tabJoin: '🚪 Join',
