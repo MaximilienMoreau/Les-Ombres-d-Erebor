@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/play.css">
+  <link rel="stylesheet" href="assets/css/lang.css">
 </head>
 <body>
 
@@ -21,15 +22,20 @@
         <span class="nav-logo-sub">Jeu de déduction sociale</span>
       </a>
       <ul class="nav-links">
-        <li><a href="index.html">🏠 Accueil</a></li>
-        <li><a href="rules.html">📖 Règles</a></li>
-        <li><a href="roles.html">🎭 Rôles</a></li>
-        <li><a href="interactions.html">🕸️ Interactions</a></li>
-        <li><a href="play.html" class="active">🎮 Jouer</a></li>
-        <li><a href="shop.html">🛒 Boutique</a></li>
+        <li><a href="index.html"><span class="nav-icon">🏠</span><span data-i18n="nav.home">Accueil</span></a></li>
+        <li><a href="rules.html"><span class="nav-icon">📖</span><span data-i18n="nav.rules">Règles</span></a></li>
+        <li><a href="roles.html"><span class="nav-icon">🎭</span><span data-i18n="nav.roles">Rôles</span></a></li>
+        <li><a href="interactions.html"><span class="nav-icon">🕸️</span><span data-i18n="nav.interactions">Interactions</span></a></li>
+        <li><a href="play.html" class="active"><span class="nav-icon">🎮</span><span data-i18n="nav.play">Jouer</span></a></li>
+        <li><a href="shop.html"><span class="nav-icon">🛒</span><span data-i18n="nav.shop">Boutique</span></a></li>
       </ul>
       <div class="nav-cta">
         <a href="shop.html" class="btn btn-secondary" style="padding:0.5rem 1rem;font-size:0.8rem;">🛒 Acheter</a>
+      </div>
+      <div class="lang-toggle" role="group" aria-label="Langue / Language">
+        <button class="lang-option active" data-lang="fr"><span class="flag">🇫🇷</span> FR</button>
+        <span class="lang-divider"></span>
+        <button class="lang-option" data-lang="en"><span class="flag">🇬🇧</span> EN</button>
       </div>
       <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
@@ -41,6 +47,11 @@
     <a href="interactions.html">🕸️ Matrice d'interactions</a>
     <a href="play.html">🎮 Jouer en ligne</a>
     <a href="shop.html">🛒 Boutique</a>
+    <div class="lang-toggle" role="group" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);">
+      <button class="lang-option active" data-lang="fr" style="flex:1;"><span class="flag">🇫🇷</span> FR</button>
+      <span class="lang-divider"></span>
+      <button class="lang-option" data-lang="en" style="flex:1;"><span class="flag">🇬🇧</span> EN</button>
+    </div>
   </div>
 
   <main class="page-content play-page">
@@ -48,9 +59,9 @@
 
       <!-- Hero -->
       <div class="play-hero">
-        <span class="section-eyebrow">Mode en ligne</span>
-        <h1>Jouer avec vos amis</h1>
-        <p>Connectez-vous via un code de salle. Chaque joueur voit son rôle secret sur son appareil pendant que vous discutez en appel vidéo.</p>
+        <span class="section-eyebrow" data-i18n="play.eyebrow">Mode en ligne</span>
+        <h1 data-i18n="play.title">Jouer avec vos amis</h1>
+        <p data-i18n="play.subtitle">Connectez-vous via un code de salle. Chaque joueur voit son rôle secret sur son appareil pendant que vous discutez en appel vidéo.</p>
         <div class="play-hero-badges">
           <span class="play-badge">🎥 Compatible Discord / Zoom</span>
           <span class="play-badge">📱 Fonctionne sur mobile</span>
@@ -251,6 +262,8 @@
   <script src="assets/js/data/roles.js"></script>
   <script src="assets/js/components/nav.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/data/i18n.js"></script>
+  <script src="assets/js/components/lang.js"></script>
 
   <script>
     // Afficher/masquer alerte Firebase

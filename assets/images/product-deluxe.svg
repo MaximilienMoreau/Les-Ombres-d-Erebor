@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="400" height="320">
+  <defs>
+    <linearGradient id="goldBoxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a1f05"/>
+      <stop offset="100%" style="stop-color:#0d0a04"/>
+    </linearGradient>
+    <linearGradient id="richGold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5e070"/>
+      <stop offset="50%" style="stop-color:#c9a84c"/>
+      <stop offset="100%" style="stop-color:#8a6820"/>
+    </linearGradient>
+    <filter id="goldGlow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="deepShadow"><feDropShadow dx="5" dy="10" stdDeviation="8" flood-color="#000" flood-opacity="0.7"/></filter>
+  </defs>
+  <ellipse cx="210" cy="298" rx="165" ry="16" fill="#000" opacity="0.6"/>
+  <polygon points="320,58 362,38 362,262 320,282" fill="#100c04" stroke="#c9a84c" stroke-width="1"/>
+  <rect x="58" y="58" width="262" height="224" rx="3" fill="url(#goldBoxGrad)" filter="url(#deepShadow)"/>
+  <rect x="58" y="58" width="262" height="224" rx="3" fill="none" stroke="url(#richGold)" stroke-width="3"/>
+  <rect x="65" y="65" width="248" height="210" rx="2" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.6"/>
+  <rect x="130" y="79" width="120" height="18" rx="9" fill="#c9a84c"/>
+  <text x="190" y="92" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#0d0a04" letter-spacing="2" font-weight="bold">✦ BEST-SELLER ✦</text>
+  <rect x="168" y="148" width="44" height="8" rx="2" fill="url(#richGold)" filter="url(#goldGlow)"/>
+  <polygon points="170,148 175,128 180,140 190,120 200,140 205,128 210,148" fill="url(#richGold)" filter="url(#goldGlow)"/>
+  <circle cx="190" cy="125" r="4" fill="#8b2635" filter="url(#goldGlow)"/>
+  <circle cx="190" cy="125" r="2" fill="#ff6080"/>
+  <circle cx="177" cy="133" r="2.5" fill="#4a8fa8"/>
+  <circle cx="203" cy="133" r="2.5" fill="#4a8fa8"/>
+  <circle cx="175" cy="152" r="2" fill="#8b2635"/>
+  <circle cx="190" cy="152" r="2.5" fill="#c9a84c" filter="url(#goldGlow)"/>
+  <circle cx="205" cy="152" r="2" fill="#8b2635"/>
+  <line x1="100" y1="115" x2="160" y2="115" stroke="url(#richGold)" stroke-width="1" opacity="0.5"/>
+  <line x1="220" y1="115" x2="280" y2="115" stroke="url(#richGold)" stroke-width="1" opacity="0.5"/>
+  <line x1="100" y1="168" x2="160" y2="168" stroke="url(#richGold)" stroke-width="1" opacity="0.5"/>
+  <line x1="220" y1="168" x2="280" y2="168" stroke="url(#richGold)" stroke-width="1" opacity="0.5"/>
+  <polygon points="75,80 81,74 87,80 81,86" fill="url(#richGold)" opacity="0.8"/>
+  <polygon points="299,80 305,74 311,80 305,86" fill="url(#richGold)" opacity="0.8"/>
+  <polygon points="75,258 81,252 87,258 81,264" fill="url(#richGold)" opacity="0.8"/>
+  <polygon points="299,258 305,252 311,258 305,264" fill="url(#richGold)" opacity="0.8"/>
+  <rect x="68" y="175" width="244" height="70" fill="#000" opacity="0.5"/>
+  <rect x="68" y="175" width="244" height="1.5" fill="url(#richGold)"/>
+  <rect x="68" y="245" width="244" height="1.5" fill="url(#richGold)"/>
+  <text x="190" y="200" text-anchor="middle" font-family="serif" font-size="10" fill="#c9a84c" letter-spacing="3" opacity="0.8">LES OMBRES DE</text>
+  <text x="190" y="228" text-anchor="middle" font-family="serif" font-size="25" fill="url(#richGold)" letter-spacing="4" font-weight="bold" filter="url(#goldGlow)">EREBOR</text>
+  <text x="190" y="255" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#e8c96a" letter-spacing="3">ÉDITION COLLECTOR</text>
+  <text x="190" y="269" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#8a7040" letter-spacing="1">NUMÉROTÉE ET SIGNÉE · 8–24 JOUEURS</text>
+  <polygon points="58,58 100,38 362,38 320,58" fill="#2a1f05" stroke="url(#richGold)" stroke-width="1"/>
+  <text x="211" y="52" text-anchor="middle" font-family="serif" font-size="8" fill="url(#richGold)" opacity="0.9" letter-spacing="2">LES OMBRES D'EREBOR — COLLECTOR</text>
+</svg>

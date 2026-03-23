@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="stylesheet" href="assets/css/lang.css">
 </head>
 <body>
 
@@ -24,21 +25,23 @@
       </a>
 
       <ul class="nav-links" role="list">
-        <li><a href="index.html" class="active"><span class="nav-icon">🏠</span> Accueil</a></li>
-        <li><a href="rules.html"><span class="nav-icon">📖</span> Règles</a></li>
-        <li><a href="roles.html"><span class="nav-icon">🎭</span> Rôles</a></li>
-        <li><a href="interactions.html"><span class="nav-icon">🕸️</span> Interactions</a></li>
-        <li><a href="play.html"><span class="nav-icon">🎮</span> Jouer</a></li>
-        <li><a href="shop.html"><span class="nav-icon">🛒</span> Boutique</a></li>
+        <li><a href="index.html" class="active"><span class="nav-icon">🏠</span> <span data-i18n="nav.home">Accueil</span></a></li>
+        <li><a href="rules.html"><span class="nav-icon">📖</span> <span data-i18n="nav.rules">Règles</span></a></li>
+        <li><a href="roles.html"><span class="nav-icon">🎭</span> <span data-i18n="nav.roles">Rôles</span></a></li>
+        <li><a href="interactions.html"><span class="nav-icon">🕸️</span> <span data-i18n="nav.interactions">Interactions</span></a></li>
+        <li><a href="play.html"><span class="nav-icon">🎮</span> <span data-i18n="nav.play">Jouer</span></a></li>
+        <li><a href="shop.html"><span class="nav-icon">🛒</span> <span data-i18n="nav.shop">Boutique</span></a></li>
       </ul>
 
       <div class="nav-cta">
-        <a href="play.html" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;">🎮 Jouer</a>
+        <a href="play.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.8rem;" data-i18n="nav.playBtn">🎮 Jouer</a>
       </div>
-
-      <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <div class="lang-toggle" role="group" aria-label="Langue / Language">
+        <button class="lang-option active" data-lang="fr"><span class="flag">🇫🇷</span> FR</button>
+        <span class="lang-divider"></span>
+        <button class="lang-option" data-lang="en"><span class="flag">🇬🇧</span> EN</button>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
 
@@ -50,6 +53,11 @@
     <a href="interactions.html">🕸️ Matrice d'interactions</a>
     <a href="play.html">🎮 Jouer en ligne</a>
     <a href="shop.html">🛒 Boutique</a>
+    <div class="lang-toggle" role="group" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);">
+      <button class="lang-option active" data-lang="fr" style="flex:1;"><span class="flag">🇫🇷</span> FR</button>
+      <span class="lang-divider"></span>
+      <button class="lang-option" data-lang="en" style="flex:1;"><span class="flag">🇬🇧</span> EN</button>
+    </div>
   </div>
 
   <!-- ============ CONTENU PRINCIPAL ============ -->
@@ -355,6 +363,8 @@
   <script src="assets/js/components/particles.js"></script>
   <script src="assets/js/components/nav.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/data/i18n.js"></script>
+  <script src="assets/js/components/lang.js"></script>
 
   <script>
     // Particules hero

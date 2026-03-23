@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/game.css">
+  <link rel="stylesheet" href="assets/css/lang.css">
 </head>
 <body>
 
@@ -22,10 +23,15 @@
         <span class="nav-logo-sub" id="nav-phase-label">Chargement...</span>
       </a>
       <ul class="nav-links">
-        <li><a href="rules.html">📖 Règles</a></li>
-        <li><a href="roles.html">🎭 Rôles</a></li>
+        <li><a href="rules.html"><span class="nav-icon">📖</span><span data-i18n="nav.rules">Règles</span></a></li>
+        <li><a href="roles.html"><span class="nav-icon">🎭</span><span data-i18n="nav.roles">Rôles</span></a></li>
         <li><a href="play.html">🚪 Quitter la partie</a></li>
       </ul>
+      <div class="lang-toggle" role="group" aria-label="Langue / Language">
+        <button class="lang-option active" data-lang="fr"><span class="flag">🇫🇷</span> FR</button>
+        <span class="lang-divider"></span>
+        <button class="lang-option" data-lang="en"><span class="flag">🇬🇧</span> EN</button>
+      </div>
       <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -33,6 +39,11 @@
     <a href="rules.html">📖 Règles du jeu</a>
     <a href="roles.html">🎭 Les 25 rôles</a>
     <a href="play.html">🚪 Quitter la partie</a>
+    <div class="lang-toggle" role="group" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);">
+      <button class="lang-option active" data-lang="fr" style="flex:1;"><span class="flag">🇫🇷</span> FR</button>
+      <span class="lang-divider"></span>
+      <button class="lang-option" data-lang="en" style="flex:1;"><span class="flag">🇬🇧</span> EN</button>
+    </div>
   </div>
 
   <!-- ======== VUE : SETUP (sans salle) ======== -->
@@ -41,8 +52,8 @@
       <h1>Rejoindre ou Créer</h1>
 
       <div class="tab-bar">
-        <button class="tab-btn active" data-tab="create">🏰 Créer une salle</button>
-        <button class="tab-btn" data-tab="join">🚪 Rejoindre</button>
+        <button class="tab-btn active" data-tab="create" data-i18n="game.tabCreate">🏰 Créer une salle</button>
+        <button class="tab-btn" data-tab="join" data-i18n="game.tabJoin">🚪 Rejoindre</button>
       </div>
 
       <div id="tab-create" class="tab-panel active">
@@ -279,6 +290,8 @@
   <script src="assets/js/components/nav.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/pages/game.js"></script>
+  <script src="assets/js/data/i18n.js"></script>
+  <script src="assets/js/components/lang.js"></script>
 
   <script>
     // Fonctions du setup inline (depuis game.html sans passer par play.html)

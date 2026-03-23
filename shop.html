@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/shop.css">
+  <link rel="stylesheet" href="assets/css/lang.css">
 </head>
 <body>
 
@@ -21,15 +22,20 @@
         <span class="nav-logo-sub">Jeu de déduction sociale</span>
       </a>
       <ul class="nav-links">
-        <li><a href="index.html">🏠 Accueil</a></li>
-        <li><a href="rules.html">📖 Règles</a></li>
-        <li><a href="roles.html">🎭 Rôles</a></li>
-        <li><a href="interactions.html">🕸️ Interactions</a></li>
-        <li><a href="play.html">🎮 Jouer</a></li>
-        <li><a href="shop.html" class="active">🛒 Boutique</a></li>
+        <li><a href="index.html"><span class="nav-icon">🏠</span><span data-i18n="nav.home">Accueil</span></a></li>
+        <li><a href="rules.html"><span class="nav-icon">📖</span><span data-i18n="nav.rules">Règles</span></a></li>
+        <li><a href="roles.html"><span class="nav-icon">🎭</span><span data-i18n="nav.roles">Rôles</span></a></li>
+        <li><a href="interactions.html"><span class="nav-icon">🕸️</span><span data-i18n="nav.interactions">Interactions</span></a></li>
+        <li><a href="play.html"><span class="nav-icon">🎮</span><span data-i18n="nav.play">Jouer</span></a></li>
+        <li><a href="shop.html" class="active"><span class="nav-icon">🛒</span><span data-i18n="nav.shop">Boutique</span></a></li>
       </ul>
       <div class="nav-cta">
-        <a href="play.html" class="btn btn-secondary" style="padding:0.5rem 1rem;font-size:0.8rem;">🎮 Jouer</a>
+        <a href="play.html" class="btn btn-secondary" style="padding:0.5rem 1rem;font-size:0.8rem;" data-i18n="nav.playBtn">🎮 Jouer</a>
+      </div>
+      <div class="lang-toggle" role="group" aria-label="Langue / Language">
+        <button class="lang-option active" data-lang="fr"><span class="flag">🇫🇷</span> FR</button>
+        <span class="lang-divider"></span>
+        <button class="lang-option" data-lang="en"><span class="flag">🇬🇧</span> EN</button>
       </div>
       <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
@@ -41,6 +47,11 @@
     <a href="interactions.html">🕸️ Matrice d'interactions</a>
     <a href="play.html">🎮 Jouer en ligne</a>
     <a href="shop.html">🛒 Boutique</a>
+    <div class="lang-toggle" role="group" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);">
+      <button class="lang-option active" data-lang="fr" style="flex:1;"><span class="flag">🇫🇷</span> FR</button>
+      <span class="lang-divider"></span>
+      <button class="lang-option" data-lang="en" style="flex:1;"><span class="flag">🇬🇧</span> EN</button>
+    </div>
   </div>
 
   <main class="page-content shop-page">
@@ -48,9 +59,9 @@
 
       <!-- Hero -->
       <div class="shop-hero">
-        <span class="section-eyebrow">Version physique</span>
-        <h1>La Boutique d'Erebor</h1>
-        <p>Apportez la nuit éternelle sur votre table. Chaque coffret est conçu pour une immersion maximale.</p>
+        <span class="section-eyebrow" data-i18n="shop.eyebrow">Version physique</span>
+        <h1 data-i18n="shop.title">La Boutique d'Erebor</h1>
+        <p data-i18n="shop.subtitle">Apportez la nuit éternelle sur votre table. Chaque coffret est conçu pour une immersion maximale.</p>
       </div>
 
       <!-- Garanties -->
@@ -72,13 +83,13 @@
         <!-- Panier -->
         <div class="cart-panel">
           <div class="cart-header">
-            <h3>🛒 Panier <span class="cart-count" id="cart-count">0</span></h3>
-            <button class="cart-clear" onclick="clearCart()">Vider</button>
+            <h3><span data-i18n="shop.cartTitle">🛒 Panier</span> <span class="cart-count" id="cart-count">0</span></h3>
+            <button class="cart-clear" onclick="clearCart()" data-i18n="shop.cartClear">Vider</button>
           </div>
 
           <div id="cart-empty" class="cart-empty">
             <span class="cart-empty-icon">🌑</span>
-            <p>Votre panier est vide.<br>Ajoutez un produit pour commencer.</p>
+            <p data-i18n="shop.cartEmpty">Votre panier est vide.<br>Ajoutez un produit pour commencer.</p>
           </div>
 
           <div id="cart-items" class="cart-items" style="display:none;"></div>
@@ -96,7 +107,7 @@
               <span class="cart-total-label">Total</span>
               <span class="cart-total-amount" id="cart-total">0,00 €</span>
             </div>
-            <button class="btn-checkout" id="btn-checkout" onclick="openCheckout()" disabled>
+            <button class="btn-checkout" id="btn-checkout" onclick="openCheckout()" disabled data-i18n="shop.cartCheckout">
               Finaliser la commande →
             </button>
           </div>
@@ -139,7 +150,7 @@
       <!-- Formulaire -->
       <div id="checkout-form-view">
         <div class="checkout-modal-header">
-          <h2>Finaliser la commande</h2>
+          <h2 data-i18n="shop.checkoutTitle">Finaliser la commande</h2>
           <button onclick="closeCheckout()" style="background:none;border:1px solid var(--color-border);border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--color-text-muted);font-size:1rem;">✕</button>
         </div>
         <div class="checkout-modal-body">
@@ -216,7 +227,7 @@
       <!-- Confirmation -->
       <div class="checkout-success" id="checkout-success">
         <div class="checkout-success-icon">✅</div>
-        <h2>Commande confirmée !</h2>
+        <h2 data-i18n="shop.successTitle">Commande confirmée !</h2>
         <p style="margin-bottom:1rem;">Merci pour votre commande. Vous recevrez un email de confirmation dans quelques minutes.</p>
         <p style="margin-bottom:2rem;font-size:0.8rem;">Expédition sous 2–3 jours ouvrés depuis notre atelier.</p>
         <button class="btn btn-primary" onclick="closeCheckout();clearCart();">🏠 Retour à la boutique</button>
@@ -271,6 +282,8 @@
   <script src="assets/js/components/nav.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/pages/shop.js"></script>
+  <script src="assets/js/data/i18n.js"></script>
+  <script src="assets/js/components/lang.js"></script>
 
 </body>
 </html>
