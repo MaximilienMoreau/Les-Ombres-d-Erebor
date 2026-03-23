@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/roles.css">
+  <link rel="stylesheet" href="assets/css/lang.css">
 </head>
 <body>
 
@@ -23,16 +24,21 @@
         <span class="nav-logo-sub">Jeu de déduction sociale</span>
       </a>
       <ul class="nav-links">
-        <li><a href="index.html"><span class="nav-icon">🏠</span> Accueil</a></li>
-        <li><a href="rules.html"><span class="nav-icon">📖</span> Règles</a></li>
-        <li><a href="roles.html" class="active"><span class="nav-icon">🎭</span> Rôles</a></li>
-        <li><a href="interactions.html"><span class="nav-icon">🕸️</span> Interactions</a></li>
-        <li><a href="play.html"><span class="nav-icon">🎮</span> Jouer</a></li>
-        <li><a href="shop.html"><span class="nav-icon">🛒</span> Boutique</a></li>
+        <li><a href="index.html"><span class="nav-icon">🏠</span> <span data-i18n="nav.home">Accueil</span></a></li>
+        <li><a href="rules.html"><span class="nav-icon">📖</span> <span data-i18n="nav.rules">Règles</span></a></li>
+        <li><a href="roles.html" class="active"><span class="nav-icon">🎭</span> <span data-i18n="nav.roles">Rôles</span></a></li>
+        <li><a href="interactions.html"><span class="nav-icon">🕸️</span> <span data-i18n="nav.interactions">Interactions</span></a></li>
+        <li><a href="play.html"><span class="nav-icon">🎮</span> <span data-i18n="nav.play">Jouer</span></a></li>
+        <li><a href="shop.html"><span class="nav-icon">🛒</span> <span data-i18n="nav.shop">Boutique</span></a></li>
       </ul>
       <div class="nav-cta">
-        <a href="play.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.8rem;">🎮 Jouer</a>
+        <a href="play.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.8rem;" data-i18n="nav.playBtn">🎮 Jouer</a>
       </div>
+      <button class="lang-toggle" onclick="void(0)" aria-label="Switch language">
+  <span class="lang-option active" data-lang="fr" onclick="i18n.setLanguage('fr')"><span class="flag">🇫🇷</span> FR</span>
+  <span class="lang-divider"></span>
+  <span class="lang-option" data-lang="en" onclick="i18n.setLanguage('en')"><span class="flag">🇬🇧</span> EN</span>
+</button>
       <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -41,6 +47,11 @@
     <a href="rules.html">📖 Règles du jeu</a>
     <a href="roles.html">🎭 Les 25 rôles</a>
     <a href="interactions.html">🕸️ Matrice d'interactions</a>
+    <button class="lang-toggle" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);" aria-label="Switch language">
+  <span class="lang-option active" data-lang="fr" onclick="i18n.setLanguage('fr')" style="flex:1;justify-content:center;"><span class="flag">🇫🇷</span> FR</span>
+  <span class="lang-divider"></span>
+  <span class="lang-option" data-lang="en" onclick="i18n.setLanguage('en')" style="flex:1;justify-content:center;"><span class="flag">🇬🇧</span> EN</span>
+</button>
   </div>
 
   <!-- CONTENU -->
@@ -49,11 +60,11 @@
 
       <!-- Hero -->
       <div class="roles-hero">
-        <span class="section-eyebrow">25 destins</span>
-        <h1 style="color:var(--color-gold-light);text-shadow:0 0 30px rgba(201,168,76,0.4);margin-bottom:1rem;">
+        <span class="section-eyebrow" data-i18n="roles.eyebrow">25 destins</span>
+        <h1 style="color:var(--color-gold-light);text-shadow:0 0 30px rgba(201,168,76,0.4);margin-bottom:1rem;" data-i18n="roles.title">
           Les Rôles d'Erebor
         </h1>
-        <p style="color:var(--color-text-muted);font-size:var(--text-lg);max-width:600px;margin:0 auto;">
+        <p style="color:var(--color-text-muted);font-size:var(--text-lg);max-width:600px;margin:0 auto;" data-i18n="roles.subtitle">
           Chaque rôle cache un pouvoir, une faiblesse et une place dans la toile d'intrigues.
           Cliquez sur un rôle pour en apprendre plus.
         </p>
@@ -62,11 +73,11 @@
       <!-- Filtres -->
       <div class="roles-filters" role="search" aria-label="Filtrer les rôles">
         <div class="filter-group" role="group" aria-label="Filtrer par faction">
-          <span class="filter-label">Faction</span>
-          <button class="filter-btn active" data-faction="all">✦ Tous</button>
-          <button class="filter-btn" data-faction="lune">🌙 Conseil de la Lune</button>
-          <button class="filter-btn" data-faction="ombre">🌑 Ombre Souveraine</button>
-          <button class="filter-btn" data-faction="solitaire">🌀 Solitaires</button>
+          <span class="filter-label" data-i18n="roles.filterLabel">Faction</span>
+          <button class="filter-btn active" data-faction="all" data-i18n="roles.filterAll">✦ Tous</button>
+          <button class="filter-btn" data-faction="lune" data-i18n="roles.filterLune">🌙 Conseil de la Lune</button>
+          <button class="filter-btn" data-faction="ombre" data-i18n="roles.filterOmbre">🌑 Ombre Souveraine</button>
+          <button class="filter-btn" data-faction="solitaire" data-i18n="roles.filterSolitaire">🌀 Solitaires</button>
         </div>
 
         <div class="search-input-wrapper">
@@ -79,12 +90,13 @@
             class="roles-search"
             placeholder="Rechercher un rôle…"
             aria-label="Rechercher un rôle par nom ou pouvoir"
+            data-i18n-placeholder="roles.searchPlaceholder"
           >
         </div>
       </div>
 
       <!-- Compteur -->
-      <p class="roles-count" aria-live="polite" id="roles-count">Chargement…</p>
+      <p class="roles-count" aria-live="polite" id="roles-count" data-i18n="roles.loading">Chargement…</p>
 
       <!-- Grille -->
       <div class="roles-grid" id="roles-grid" role="list" aria-label="Liste des rôles">
@@ -129,7 +141,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 Les Ombres d'Erebor.</p>
+        <p>© 2027 Les Ombres d'Erebor.</p>
         <p>25 rôles · 3 factions · Une nuit sans fin.</p>
       </div>
     </div>
@@ -149,6 +161,8 @@
   <script src="assets/js/components/modal.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/pages/roles.js"></script>
+  <script src="assets/js/data/i18n.js"></script>
+  <script src="assets/js/components/lang.js"></script>
 
   <script>
     // Filtre depuis URL

@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/play.css">
+  <link rel="stylesheet" href="assets/css/lang.css">
 </head>
 <body>
 
@@ -21,26 +22,36 @@
         <span class="nav-logo-sub">Jeu de déduction sociale</span>
       </a>
       <ul class="nav-links">
-        <li><a href="index.html">🏠 Accueil</a></li>
-        <li><a href="rules.html">📖 Règles</a></li>
-        <li><a href="roles.html">🎭 Rôles</a></li>
-        <li><a href="interactions.html">🕸️ Interactions</a></li>
-        <li><a href="play.html" class="active">🎮 Jouer</a></li>
-        <li><a href="shop.html">🛒 Boutique</a></li>
+        <li><a href="index.html">🏠 <span data-i18n="nav.home">Accueil</span></a></li>
+        <li><a href="rules.html">📖 <span data-i18n="nav.rules">Règles</span></a></li>
+        <li><a href="roles.html">🎭 <span data-i18n="nav.roles">Rôles</span></a></li>
+        <li><a href="interactions.html">🕸️ <span data-i18n="nav.interactions">Interactions</span></a></li>
+        <li><a href="play.html" class="active">🎮 <span data-i18n="nav.play">Jouer</span></a></li>
+        <li><a href="shop.html">🛒 <span data-i18n="nav.shop">Boutique</span></a></li>
       </ul>
       <div class="nav-cta">
-        <a href="shop.html" class="btn btn-secondary" style="padding:0.5rem 1rem;font-size:0.8rem;">🛒 Acheter</a>
+        <a href="shop.html" class="btn btn-secondary" data-i18n="nav.playBtn" style="padding:0.5rem 1rem;font-size:0.8rem;">🛒 Acheter</a>
       </div>
+      <button class="lang-toggle" onclick="void(0)" aria-label="Switch language">
+  <span class="lang-option active" data-lang="fr" onclick="i18n.setLanguage('fr')"><span class="flag">🇫🇷</span> FR</span>
+  <span class="lang-divider"></span>
+  <span class="lang-option" data-lang="en" onclick="i18n.setLanguage('en')"><span class="flag">🇬🇧</span> EN</span>
+</button>
       <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
   <div class="nav-mobile-drawer">
-    <a href="index.html">🏠 Accueil</a>
-    <a href="rules.html">📖 Règles du jeu</a>
-    <a href="roles.html">🎭 Les 25 rôles</a>
-    <a href="interactions.html">🕸️ Matrice d'interactions</a>
-    <a href="play.html">🎮 Jouer en ligne</a>
-    <a href="shop.html">🛒 Boutique</a>
+    <a href="index.html">🏠 <span data-i18n="nav.home">Accueil</span></a>
+    <a href="rules.html">📖 <span data-i18n="nav.rules">Règles du jeu</span></a>
+    <a href="roles.html">🎭 <span data-i18n="nav.roles">Les 25 rôles</span></a>
+    <a href="interactions.html">🕸️ <span data-i18n="nav.interactions">Matrice d'interactions</span></a>
+    <a href="play.html">🎮 <span data-i18n="nav.play">Jouer en ligne</span></a>
+    <a href="shop.html">🛒 <span data-i18n="nav.shop">Boutique</span></a>
+    <button class="lang-toggle" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);" aria-label="Switch language">
+  <span class="lang-option active" data-lang="fr" onclick="i18n.setLanguage('fr')" style="flex:1;justify-content:center;"><span class="flag">🇫🇷</span> FR</span>
+  <span class="lang-divider"></span>
+  <span class="lang-option" data-lang="en" onclick="i18n.setLanguage('en')" style="flex:1;justify-content:center;"><span class="flag">🇬🇧</span> EN</span>
+</button>
   </div>
 
   <main class="page-content play-page">
@@ -48,13 +59,13 @@
 
       <!-- Hero -->
       <div class="play-hero">
-        <span class="section-eyebrow">Mode en ligne</span>
-        <h1>Jouer avec vos amis</h1>
-        <p>Connectez-vous via un code de salle. Chaque joueur voit son rôle secret sur son appareil pendant que vous discutez en appel vidéo.</p>
+        <span class="section-eyebrow" data-i18n="play.eyebrow">Mode en ligne</span>
+        <h1 data-i18n="play.title">Jouer avec vos amis</h1>
+        <p data-i18n="play.subtitle">Connectez-vous via un code de salle. Chaque joueur voit son rôle secret sur son appareil pendant que vous discutez en appel vidéo.</p>
         <div class="play-hero-badges">
-          <span class="play-badge">🎥 Compatible Discord / Zoom</span>
-          <span class="play-badge">📱 Fonctionne sur mobile</span>
-          <span class="play-badge">8–20 joueurs</span>
+          <span class="play-badge" data-i18n="play.badge1">🎥 Compatible Discord / Zoom</span>
+          <span class="play-badge" data-i18n="play.badge2">📱 Fonctionne sur mobile</span>
+          <span class="play-badge" data-i18n="play.badge3">8–20 joueurs</span>
         </div>
       </div>
 
@@ -62,15 +73,15 @@
       <div class="setup-alert" id="setup-alert">
         <div class="setup-alert-icon">⚙️</div>
         <div class="setup-alert-body">
-          <h3>Configuration requise pour le mode en ligne</h3>
-          <p>Pour synchroniser les parties en temps réel entre appareils distants, configurez un projet Firebase gratuit :</p>
+          <h3 data-i18n="play.setupTitle">Configuration requise pour le mode en ligne</h3>
+          <p data-i18n="play.setupDesc">Pour synchroniser les parties en temps réel entre appareils distants, configurez un projet Firebase gratuit :</p>
           <ul class="setup-steps">
-            <li data-step="1">Créez un projet sur <strong>console.firebase.google.com</strong></li>
-            <li data-step="2">Activez <strong>Realtime Database</strong> en mode test</li>
-            <li data-step="3">Copiez votre config dans <strong>assets/js/config/firebase-config.js</strong></li>
-            <li data-step="4">Passez <strong>configured: true</strong> dans le fichier</li>
+            <li data-step="1" data-i18n="play.setupStep1">Créez un projet sur <strong>console.firebase.google.com</strong></li>
+            <li data-step="2" data-i18n="play.setupStep2">Activez <strong>Realtime Database</strong> en mode test</li>
+            <li data-step="3" data-i18n="play.setupStep3">Copiez votre config dans <strong>assets/js/config/firebase-config.js</strong></li>
+            <li data-step="4" data-i18n="play.setupStep4">Passez <strong>configured: true</strong> dans le fichier</li>
           </ul>
-          <p style="margin-top:0.75rem;font-size:0.75rem;color:var(--color-text-dim);">
+          <p data-i18n="play.setupNote" style="margin-top:0.75rem;font-size:0.75rem;color:var(--color-text-dim);">
             Sans Firebase, utilisez le <strong>mode local</strong> (toutes les cartes sur un seul appareil) décrit plus bas.
           </p>
         </div>
@@ -82,17 +93,17 @@
         <!-- Créer une salle -->
         <div class="play-card create">
           <span class="play-card-icon">🏰</span>
-          <h2>Créer une salle</h2>
-          <p>Vous serez le Maître du Jeu. Vous configurez les rôles, gérez les phases et arbitrez la partie. Les autres joueurs vous rejoignent avec le code que vous recevrez.</p>
+          <h2 data-i18n="play.createTitle">Créer une salle</h2>
+          <p data-i18n="play.createDesc">Vous serez le Maître du Jeu. Vous configurez les rôles, gérez les phases et arbitrez la partie. Les autres joueurs vous rejoignent avec le code que vous recevrez.</p>
 
           <form id="create-form">
             <div class="form-group">
-              <label class="form-label" for="gm-name">Votre nom</label>
-              <input type="text" id="gm-name" class="form-input" placeholder="Nom du Maître du Jeu" maxlength="20" required>
+              <label class="form-label" data-i18n="play.nameLabel" for="gm-name">Votre nom</label>
+              <input type="text" id="gm-name" class="form-input" placeholder="Nom du Maître du Jeu" data-i18n-placeholder="play.namePlaceholder" maxlength="20" required>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label" for="player-count">Nombre de joueurs</label>
+                <label class="form-label" data-i18n="play.playersLabel" for="player-count">Nombre de joueurs</label>
                 <select id="player-count" class="form-select">
                   <option value="8">8 joueurs</option>
                   <option value="10" selected>10 joueurs</option>
@@ -103,7 +114,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label" for="round-count">Nombre de tours</label>
+                <label class="form-label" data-i18n="play.roundsLabel" for="round-count">Nombre de tours</label>
                 <select id="round-count" class="form-select">
                   <option value="5">5 tours</option>
                   <option value="6" selected>6 tours</option>
@@ -113,27 +124,27 @@
               </div>
             </div>
             <p class="form-error" id="create-error"></p>
-            <button type="submit" class="btn btn-primary" style="width:100%;">🏰 Créer la salle</button>
+            <button type="submit" class="btn btn-primary" data-i18n="play.createBtn" style="width:100%;">🏰 Créer la salle</button>
           </form>
         </div>
 
         <!-- Rejoindre une salle -->
         <div class="play-card join">
           <span class="play-card-icon">🚪</span>
-          <h2>Rejoindre une salle</h2>
-          <p>Entrez le code de salle partagé par le Maître du Jeu. Vous rejoindrez le salon d'attente et recevrez votre rôle secret quand la partie commencera.</p>
+          <h2 data-i18n="play.joinTitle">Rejoindre une salle</h2>
+          <p data-i18n="play.joinDesc">Entrez le code de salle partagé par le Maître du Jeu. Vous rejoindrez le salon d'attente et recevrez votre rôle secret quand la partie commencera.</p>
 
           <form id="join-form">
             <div class="form-group">
               <label class="form-label" for="player-name">Votre nom</label>
-              <input type="text" id="player-name" class="form-input" placeholder="Votre prénom ou pseudo" maxlength="20" required>
+              <input type="text" id="player-name" class="form-input" placeholder="Votre prénom ou pseudo" data-i18n-placeholder="play.joinNamePlaceholder" maxlength="20" required>
             </div>
             <div class="form-group">
-              <label class="form-label" for="room-code-input">Code de salle</label>
-              <input type="text" id="room-code-input" class="form-input code-input" placeholder="XXXXXX" maxlength="6" required>
+              <label class="form-label" data-i18n="play.codeLabel" for="room-code-input">Code de salle</label>
+              <input type="text" id="room-code-input" class="form-input code-input" placeholder="XXXXXX" data-i18n-placeholder="play.codePlaceholder" maxlength="6" required>
             </div>
             <p class="form-error" id="join-error"></p>
-            <button type="submit" class="btn btn-secondary" style="width:100%;justify-content:center;">🚪 Rejoindre la partie</button>
+            <button type="submit" class="btn btn-secondary" data-i18n="play.joinBtn" style="width:100%;justify-content:center;">🚪 Rejoindre la partie</button>
           </form>
         </div>
 
@@ -142,9 +153,9 @@
       <!-- Comment ça marche -->
       <section class="how-it-works">
         <div class="section-header">
-          <span class="section-eyebrow">Fonctionnement</span>
-          <h2 style="color:var(--color-gold-light);">Comment jouer en ligne</h2>
-          <p style="color:var(--color-text-muted);">Le site gère les rôles et les votes. Vous gérez la discussion en appel vidéo.</p>
+          <span class="section-eyebrow" data-i18n="play.howEyebrow">Fonctionnement</span>
+          <h2 data-i18n="play.howTitle" style="color:var(--color-gold-light);">Comment jouer en ligne</h2>
+          <p data-i18n="play.howSubtitle" style="color:var(--color-text-muted);">Le site gère les rôles et les votes. Vous gérez la discussion en appel vidéo.</p>
         </div>
         <div class="how-steps">
           <div class="how-step reveal">
@@ -178,24 +189,24 @@
       <!-- Mode local -->
       <section class="local-mode-section">
         <div class="section-header" style="margin-bottom:2rem;">
-          <span class="section-eyebrow">Alternative</span>
-          <h2 style="color:var(--color-solitaire-light);">Mode Local — Même réseau</h2>
-          <p style="color:var(--color-text-muted);">Jouez sans configuration si tous les joueurs sont au même endroit.</p>
+          <span class="section-eyebrow" data-i18n="play.localEyebrow">Alternative</span>
+          <h2 data-i18n="play.localTitle" style="color:var(--color-solitaire-light);">Mode Local — Même réseau</h2>
+          <p data-i18n="play.localSubtitle" style="color:var(--color-text-muted);">Jouez sans configuration si tous les joueurs sont au même endroit.</p>
         </div>
         <div class="local-mode-card">
           <div class="local-mode-text">
-            <h2>Aucun compte requis</h2>
-            <p>Si tous vos joueurs sont dans la même pièce, utilisez le mode local. Un seul appareil fait office de Grimoire pour le MJ. Les cartes de rôle sont partagées individuellement (l'appareil passe de main en main au démarrage).</p>
+            <h2 data-i18n="play.localCardTitle">Aucun compte requis</h2>
+            <p data-i18n="play.localCardDesc">Si tous vos joueurs sont dans la même pièce, utilisez le mode local. Un seul appareil fait office de Grimoire pour le MJ. Les cartes de rôle sont partagées individuellement (l'appareil passe de main en main au démarrage).</p>
             <p style="margin-top:1rem;">Parfait pour les soirées de jeu où tout le monde est présent !</p>
-            <a href="game.html?mode=local" class="btn btn-secondary" style="margin-top:1.5rem;">
+            <a href="game.html?mode=local" class="btn btn-secondary" data-i18n="play.localBtn" style="margin-top:1.5rem;">
               🎮 Lancer en mode local
             </a>
           </div>
           <div class="local-mode-visual">
-            <div class="local-feature"><span class="local-feature-icon">📱</span><span class="local-feature-text">Un seul appareil pour le MJ (Grimoire)</span></div>
-            <div class="local-feature"><span class="local-feature-icon">🔐</span><span class="local-feature-text">Rôles affichés en privé à chaque joueur</span></div>
-            <div class="local-feature"><span class="local-feature-icon">🌐</span><span class="local-feature-text">Pas de connexion internet requise</span></div>
-            <div class="local-feature"><span class="local-feature-icon">⚡</span><span class="local-feature-text">Démarrage immédiat, aucune configuration</span></div>
+            <div class="local-feature"><span class="local-feature-icon">📱</span><span class="local-feature-text" data-i18n="play.localFeature1">Un seul appareil pour le MJ (Grimoire)</span></div>
+            <div class="local-feature"><span class="local-feature-icon">🔐</span><span class="local-feature-text" data-i18n="play.localFeature2">Rôles affichés en privé à chaque joueur</span></div>
+            <div class="local-feature"><span class="local-feature-icon">🌐</span><span class="local-feature-text" data-i18n="play.localFeature3">Pas de connexion internet requise</span></div>
+            <div class="local-feature"><span class="local-feature-icon">⚡</span><span class="local-feature-text" data-i18n="play.localFeature4">Démarrage immédiat, aucune configuration</span></div>
           </div>
         </div>
       </section>
@@ -237,7 +248,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 Les Ombres d'Erebor.</p>
+        <p>© 2027 Les Ombres d'Erebor.</p>
         <p>25 rôles · 3 factions · Une nuit sans fin.</p>
       </div>
     </div>
@@ -251,6 +262,8 @@
   <script src="assets/js/data/roles.js"></script>
   <script src="assets/js/components/nav.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/data/i18n.js"></script>
+  <script src="assets/js/components/lang.js"></script>
 
   <script>
     // Afficher/masquer alerte Firebase

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="400" height="280">
+  <defs>
+    <linearGradient id="extGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0e0820;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06080f;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="extTopGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1a1230;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0e0820;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purpleGold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8c96a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c9a84c;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="starBurst" cx="50%" cy="50%" r="50%" gradientUnits="objectBoundingBox">
+      <stop offset="0%" style="stop-color:#b060e0;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#b060e0;stop-opacity:0" />
+    </linearGradient>
+    <filter id="starGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="extShadow">
+      <feDropShadow dx="4" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Shadow -->
+  <ellipse cx="208" cy="265" rx="155" ry="14" fill="#000" opacity="0.5"/>
+
+  <!-- Side face -->
+  <polygon points="315,52 355,34 355,234 315,252" fill="#050610" stroke="#c9a84c" stroke-width="0.5" opacity="0.7"/>
+
+  <!-- Front face (smaller box - extension) -->
+  <rect x="58" y="52" width="257" height="200" rx="4" fill="url(#extGrad)" filter="url(#extShadow)"/>
+
+  <!-- Border -->
+  <rect x="58" y="52" width="257" height="200" rx="4" fill="none" stroke="url(#purpleGold)" stroke-width="1.5"/>
+  <rect x="65" y="59" width="243" height="186" rx="3" fill="none" stroke="#b060e0" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Purple magical glow background -->
+  <circle cx="186" cy="130" r="80" fill="url(#starBurst)" opacity="0.8"/>
+
+  <!-- NEW badge -->
+  <rect x="130" y="64" width="112" height="18" rx="9" fill="#b060e0"/>
+  <text x="186" y="77" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="#fff" letter-spacing="2" font-weight="bold">✨ NOUVEAU</text>
+
+  <!-- Central magic star / sparkle design -->
+  <!-- Large star -->
+  <path d="M186,90 L191,110 L210,105 L196,118 L210,130 L191,125 L186,145 L181,125 L162,130 L176,118 L162,105 L181,110 Z" fill="#b060e0" opacity="0.3" filter="url(#starGlow)"/>
+  <!-- Medium star -->
+  <path d="M186,97 L190,112 L204,108 L194,118 L204,128 L190,124 L186,139 L182,124 L168,128 L178,118 L168,108 L182,112 Z" fill="#c9a84c" opacity="0.6" filter="url(#starGlow)"/>
+  <!-- Bright center -->
+  <circle cx="186" cy="118" r="8" fill="#f5e070" opacity="0.9" filter="url(#starGlow)"/>
+  <circle cx="186" cy="118" r="4" fill="#fff" opacity="0.8"/>
+  <!-- Small sparkles around -->
+  <circle cx="155" cy="95" r="2" fill="#e8c96a" opacity="0.8" filter="url(#starGlow)"/>
+  <circle cx="217" cy="92" r="2.5" fill="#b060e0" opacity="0.7" filter="url(#starGlow)"/>
+  <circle cx="147" cy="130" r="1.5" fill="#e8c96a" opacity="0.6"/>
+  <circle cx="225" cy="132" r="2" fill="#b060e0" opacity="0.6"/>
+  <circle cx="160" cy="150" r="1.5" fill="#e8c96a" opacity="0.5"/>
+  <circle cx="212" cy="148" r="1.5" fill="#b060e0" opacity="0.5"/>
+
+  <!-- Stars scattered -->
+  <circle cx="80" cy="70" r="1" fill="#c9a84c" opacity="0.5"/>
+  <circle cx="90" cy="78" r="1.5" fill="#b060e0" opacity="0.4"/>
+  <circle cx="280" cy="68" r="1.5" fill="#c9a84c" opacity="0.5"/>
+  <circle cx="295" cy="80" r="1" fill="#b060e0" opacity="0.4"/>
+  <circle cx="75" cy="220" r="1" fill="#c9a84c" opacity="0.3"/>
+  <circle cx="298" cy="215" r="1.5" fill="#b060e0" opacity="0.4"/>
+
+  <!-- Title area -->
+  <rect x="58" y="155" width="257" height="55" fill="#000" opacity="0.5"/>
+  <rect x="58" y="155" width="257" height="1" fill="url(#purpleGold)"/>
+  <rect x="58" y="210" width="257" height="1" fill="url(#purpleGold)"/>
+
+  <!-- Title -->
+  <text x="186" y="177" text-anchor="middle" font-family="serif" font-size="10" fill="#c9a84c" letter-spacing="2" opacity="0.8">LES OMBRES D'EREBOR</text>
+  <text x="186" y="197" text-anchor="middle" font-family="serif" font-size="14" fill="url(#purpleGold)" letter-spacing="1" font-weight="bold" filter="url(#starGlow)">L'ÈRE DES PRODIGES</text>
+
+  <!-- Bottom info -->
+  <rect x="58" y="211" width="257" height="41" fill="#000" opacity="0.4"/>
+  <text x="186" y="227" text-anchor="middle" font-family="sans-serif" font-size="7.5" fill="#b060e0" letter-spacing="2">EXTENSION · 10 NOUVEAUX RÔLES</text>
+  <text x="186" y="242" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#6a7a9a" letter-spacing="1">NÉCESSITE LE COFFRET DE BASE · 8–24 JOUEURS · 16+</text>
+
+  <!-- Corner ornaments -->
+  <path d="M65,59 L75,59 L75,61 L67,61 L67,69 L65,69 Z" fill="#b060e0" opacity="0.6"/>
+  <path d="M308,59 L298,59 L298,61 L306,61 L306,69 L308,69 Z" fill="#b060e0" opacity="0.6"/>
+  <path d="M65,252 L75,252 L75,250 L67,250 L67,242 L65,242 Z" fill="#b060e0" opacity="0.6"/>
+  <path d="M308,252 L298,252 L298,250 L306,250 L306,242 L308,242 Z" fill="#b060e0" opacity="0.6"/>
+
+  <!-- Top face -->
+  <polygon points="58,52 100,34 355,34 315,52" fill="url(#extTopGrad)" stroke="#c9a84c" stroke-width="0.5" opacity="0.9"/>
+  <text x="207" y="47" text-anchor="middle" font-family="serif" font-size="7.5" fill="#c9a84c" opacity="0.7" letter-spacing="2">EXTENSION — L'ÈRE DES PRODIGES</text>
+</svg>

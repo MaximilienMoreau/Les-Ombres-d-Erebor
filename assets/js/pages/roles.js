@@ -68,7 +68,11 @@
     });
 
     if (countEl) {
-      countEl.innerHTML = `<strong>${visible}</strong> rôle${visible > 1 ? 's' : ''} affiché${visible > 1 ? 's' : ''}`;
+      const lang = window.i18n?.getCurrentLang() || 'fr';
+      const word = visible === 1
+        ? window.i18n?.t('roles.countSingular') || 'rôle affiché'
+        : window.i18n?.t('roles.countPlural') || 'rôles affichés';
+      countEl.innerHTML = `<strong>${visible}</strong> ${word}`;
     }
 
     if (visible === 0) {
@@ -101,4 +105,10 @@
 
   // Initial
   buildCards();
+
+  // Re-build cards when language changes
+  document.addEventListener('langchange', () => {
+    // re-build cards with new language
+    buildCards();
+  });
 })();

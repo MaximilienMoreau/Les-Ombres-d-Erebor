@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="400" height="320">
+  <defs>
+    <linearGradient id="goldBoxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a1f05;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a1208;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d0a04;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldTopGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3a2a08;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a1f05;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldSideGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#100c04;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d0a04;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="richGold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5e070;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#e8c96a;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#c9a84c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8a6820;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="crownGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5e070"/>
+      <stop offset="100%" style="stop-color:#c9a84c"/>
+    </linearGradient>
+    <filter id="goldGlow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="deepShadow">
+      <feDropShadow dx="5" dy="10" stdDeviation="8" flood-color="#000" flood-opacity="0.7"/>
+    </filter>
+    <pattern id="goldPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <rect width="20" height="20" fill="transparent"/>
+      <path d="M10,0 L10,20 M0,10 L20,10" stroke="#c9a84c" stroke-width="0.2" opacity="0.15"/>
+    </pattern>
+  </defs>
+
+  <!-- Shadow -->
+  <ellipse cx="210" cy="298" rx="165" ry="16" fill="#000" opacity="0.6"/>
+
+  <!-- Box side -->
+  <polygon points="320,58 362,38 362,262 320,282" fill="url(#goldSideGrad)" stroke="#c9a84c" stroke-width="1"/>
+  <!-- Gold stripe on side -->
+  <line x1="340" y1="42" x2="340" y2="260" stroke="url(#richGold)" stroke-width="0.5" opacity="0.6"/>
+
+  <!-- Box front face -->
+  <rect x="58" y="58" width="262" height="224" rx="3" fill="url(#goldBoxGrad)" filter="url(#deepShadow)"/>
+
+  <!-- Metallic sheen overlay -->
+  <rect x="58" y="58" width="262" height="224" rx="3" fill="url(#goldPattern)"/>
+
+  <!-- Outer gold border (thick) -->
+  <rect x="58" y="58" width="262" height="224" rx="3" fill="none" stroke="url(#richGold)" stroke-width="3"/>
+  <!-- Inner gold border -->
+  <rect x="65" y="65" width="248" height="210" rx="2" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.6"/>
+  <!-- Thin inner border -->
+  <rect x="70" y="70" width="238" height="200" rx="2" fill="none" stroke="#c9a84c" stroke-width="0.3" opacity="0.4"/>
+
+  <!-- Gold shimmer band -->
+  <rect x="58" y="130" width="262" height="40" fill="url(#richGold)" opacity="0.05"/>
+
+  <!-- Crown design center -->
+  <!-- Crown base -->
+  <rect x="168" y="148" width="44" height="8" rx="2" fill="url(#crownGrad)" filter="url(#goldGlow)"/>
+  <!-- Crown points -->
+  <polygon points="170,148 175,128 180,140 190,120 200,140 205,128 210,148" fill="url(#crownGrad)" filter="url(#goldGlow)"/>
+  <!-- Crown gems -->
+  <circle cx="190" cy="125" r="4" fill="#8b2635" filter="url(#goldGlow)"/>
+  <circle cx="190" cy="125" r="2" fill="#ff6080"/>
+  <circle cx="177" cy="133" r="2.5" fill="#4a8fa8"/>
+  <circle cx="203" cy="133" r="2.5" fill="#4a8fa8"/>
+  <!-- Crown band details -->
+  <circle cx="175" cy="152" r="2" fill="#8b2635"/>
+  <circle cx="190" cy="152" r="2.5" fill="#c9a84c" filter="url(#goldGlow)"/>
+  <circle cx="205" cy="152" r="2" fill="#8b2635"/>
+
+  <!-- Decorative lines around crown -->
+  <line x1="100" y1="115" x2="160" y2="115" stroke="url(#richGold)" stroke-width="1" opacity="0.5"/>
+  <line x1="220" y1="115" x2="280" y2="115" stroke="url(#richGold)" stroke-width="1" opacity="0.5"/>
+  <line x1="100" y1="168" x2="160" y2="168" stroke="url(#richGold)" stroke-width="1" opacity="0.5"/>
+  <line x1="220" y1="168" x2="280" y2="168" stroke="url(#richGold)" stroke-width="1" opacity="0.5"/>
+
+  <!-- Corner ornamental diamonds -->
+  <polygon points="75,80 81,74 87,80 81,86" fill="url(#richGold)" opacity="0.8"/>
+  <polygon points="299,80 305,74 311,80 305,86" fill="url(#richGold)" opacity="0.8"/>
+  <polygon points="75,258 81,252 87,258 81,264" fill="url(#richGold)" opacity="0.8"/>
+  <polygon points="299,258 305,252 311,258 305,264" fill="url(#richGold)" opacity="0.8"/>
+
+  <!-- Stars -->
+  <circle cx="92" cy="92" r="1.5" fill="#f5e070" opacity="0.7"/>
+  <circle cx="105" cy="82" r="1" fill="#f5e070" opacity="0.5"/>
+  <circle cx="285" cy="88" r="1.5" fill="#f5e070" opacity="0.6"/>
+  <circle cx="272" cy="78" r="1" fill="#f5e070" opacity="0.5"/>
+  <circle cx="90" cy="255" r="1" fill="#f5e070" opacity="0.4"/>
+  <circle cx="298" cy="248" r="1.5" fill="#f5e070" opacity="0.5"/>
+
+  <!-- Title area dark background -->
+  <rect x="68" y="175" width="244" height="70" fill="#000" opacity="0.5"/>
+  <rect x="68" y="175" width="244" height="1.5" fill="url(#richGold)"/>
+  <rect x="68" y="245" width="244" height="1.5" fill="url(#richGold)"/>
+
+  <!-- "BEST SELLER" badge -->
+  <rect x="130" y="79" width="120" height="18" rx="9" fill="#c9a84c"/>
+  <text x="190" y="92" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#0d0a04" letter-spacing="2" font-weight="bold">✦ BEST-SELLER ✦</text>
+
+  <!-- Title -->
+  <text x="190" y="200" text-anchor="middle" font-family="serif" font-size="10" fill="#c9a84c" letter-spacing="3" opacity="0.8">LES OMBRES DE</text>
+  <text x="190" y="228" text-anchor="middle" font-family="serif" font-size="25" fill="url(#richGold)" letter-spacing="4" font-weight="bold" filter="url(#goldGlow)">EREBOR</text>
+
+  <!-- Subtitle -->
+  <text x="190" y="255" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#e8c96a" letter-spacing="3">ÉDITION COLLECTOR</text>
+  <text x="190" y="269" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#8a7040" letter-spacing="1">NUMÉROTÉE ET SIGNÉE · 8–24 JOUEURS</text>
+
+  <!-- Top face -->
+  <polygon points="58,58 100,38 362,38 320,58" fill="url(#goldTopGrad)" stroke="url(#richGold)" stroke-width="1"/>
+  <text x="211" y="52" text-anchor="middle" font-family="serif" font-size="8" fill="url(#richGold)" opacity="0.9" letter-spacing="2">LES OMBRES D'EREBOR — COLLECTOR</text>
+</svg>

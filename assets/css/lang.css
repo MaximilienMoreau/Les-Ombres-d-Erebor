@@ -1,0 +1,80 @@
+/* ============================================
+   LANGUE — Bouton FR / EN
+   ============================================ */
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  height: 32px;
+  flex-shrink: 0;
+  transition: border-color var(--transition-fast);
+}
+
+.lang-toggle:hover {
+  border-color: var(--color-gold-dim);
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0 0.65rem;
+  height: 100%;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  background: transparent;
+  transition: color var(--transition-fast), background var(--transition-fast);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.lang-option .flag {
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.lang-option.active {
+  background: var(--color-gold-dim);
+  color: var(--color-gold-light);
+}
+
+.lang-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--color-border);
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .lang-toggle {
+    height: 28px;
+  }
+  .lang-option {
+    padding: 0 0.5rem;
+    font-size: 0.65rem;
+  }
+}
+
+/* Dans le menu mobile */
+.nav-mobile-drawer .lang-toggle {
+  margin: 0.75rem 1.25rem;
+  width: calc(100% - 2.5rem);
+  justify-content: center;
+  height: 40px;
+}
+
+.nav-mobile-drawer .lang-option {
+  flex: 1;
+  justify-content: center;
+  font-size: 0.8rem;
+}

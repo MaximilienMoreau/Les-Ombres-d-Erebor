@@ -461,7 +461,7 @@ async function advanceNightStep() {
 async function startDay() {
   const updates = { phase: 'day', votes: null };
   await writeRoom(updates);
-  addLog('☀️ Le jour se lève sur Erebor. Discutez et votez !', 'gm');
+  addLog(window.i18n?.t('game.dayRises') || '☀️ Le jour se lève sur Erebor…', 'gm');
 }
 
 // ---- DAY ----
@@ -776,6 +776,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// Re-render on language change
+document.addEventListener('langchange', () => { renderPhase(); });
 
 // Exposer pour HTML onclick
 window.assignRoles       = assignRoles;

@@ -29,6 +29,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-3);
 }
 
 .nav-logo {
@@ -233,7 +234,8 @@
 /* ---- Responsive ---- */
 @media (max-width: 900px) {
   .nav-links,
-  .nav-cta {
+  .nav-cta,
+  .nav-inner > .lang-toggle {
     display: none;
   }
   .nav-toggle {

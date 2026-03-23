@@ -13,30 +13,44 @@ function buildProducts() {
   if (!grid || typeof SHOP_PRODUCTS === 'undefined') return;
   grid.innerHTML = '';
 
+  const lang = window.i18n?.getCurrentLang() || 'fr';
+
   SHOP_PRODUCTS.forEach((p, i) => {
     const card = document.createElement('div');
     card.className = `product-card${p.id === 'deluxe' ? ' featured' : ''} reveal`;
     card.id = `product-${p.id}`;
     card.style.animationDelay = `${i * 0.1}s`;
 
-    const badgeHtml = p.badge ? `<div class="product-badge ${p.badge.includes('BEST') ? 'best-seller' : 'nouveau'}">${p.badge}</div>` : '';
+    const badgeText = (lang === 'en' && p.badgeEn) ? p.badgeEn : p.badge;
+    const badgeHtml = badgeText ? `<div class="product-badge ${badgeText.includes('BEST') ? 'best-seller' : 'nouveau'}">${badgeText}</div>` : '';
     const originalPrice = p.originalPrice ? `<div class="price-original">${p.originalPrice.toFixed(2).replace('.', ',')} €</div>` : '';
+
+    const pPlayers  = (lang === 'en' && p.playersEn)  ? p.playersEn  : p.players;
+    const pDuration = (lang === 'en' && p.durationEn) ? p.durationEn : p.duration;
     const metaTags = [
-      p.players ? `<span class="product-meta-tag">👥 ${p.players}</span>` : '',
-      p.duration ? `<span class="product-meta-tag">⏱️ ${p.duration}</span>` : '',
-      p.age ? `<span class="product-meta-tag">🔞 ${p.age}</span>` : '',
+      pPlayers  ? `<span class="product-meta-tag">👥 ${pPlayers}</span>`  : '',
+      pDuration ? `<span class="product-meta-tag">⏱️ ${pDuration}</span>` : '',
+      p.age     ? `<span class="product-meta-tag">🔞 ${p.age}</span>`     : '',
     ].filter(Boolean).join('');
 
-    const contentsList = p.contents.map(c => `<li>${c}</li>`).join('');
+    const contentsList = (lang === 'en' && p.contentsEn ? p.contentsEn : p.contents).map(c => `<li>${c}</li>`).join('');
+
+    const pName        = (lang === 'en' && p.nameEn)        ? p.nameEn        : p.name;
+    const pSubtitle    = (lang === 'en' && p.subtitleEn)    ? p.subtitleEn    : p.subtitle;
+    const pDescription = (lang === 'en' && p.descriptionEn) ? p.descriptionEn : p.description;
+
+    const visualHtml = p.image
+      ? `<div class="product-visual product-visual--image"><img src="${p.image}" alt="${lang === 'en' ? (p.nameEn || p.name) : p.name}" loading="lazy"></div>`
+      : `<div class="product-visual">${p.icon}</div>`;
 
     card.innerHTML = `
       ${badgeHtml}
       <div class="product-inner">
-        <div class="product-visual">${p.icon}</div>
+        ${visualHtml}
         <div class="product-info">
-          <div class="product-subtitle">${p.subtitle}</div>
-          <div class="product-name">${p.name}</div>
-          <p class="product-description">${p.description}</p>
+          <div class="product-subtitle">${pSubtitle}</div>
+          <div class="product-name">${pName}</div>
+          <p class="product-description">${pDescription}</p>
           <div class="product-meta">${metaTags}</div>
         </div>
         <div class="product-actions">
@@ -51,13 +65,13 @@ function buildProducts() {
             <button class="qty-btn" onclick="changeQty('${p.id}', +1)">+</button>
           </div>
           <button class="btn-add-cart" id="add-${p.id}" onclick="addToCart('${p.id}')">
-            🛒 Ajouter au panier
+            ${window.i18n?.t('shop.addToCart') || '🛒 Ajouter au panier'}
           </button>
         </div>
       </div>
       <div class="product-contents">
         <div class="contents-toggle" onclick="toggleContents(this)">
-          Contenu de la boîte
+          ${window.i18n?.t('shop.contentsToggle') || 'Contenu de la boîte'}
           <span class="toggle-icon">▼</span>
         </div>
         <ul class="contents-list">${contentsList}</ul>
@@ -85,8 +99,8 @@ function addToCart(productId) {
   const btn = document.getElementById(`add-${productId}`);
   if (btn) {
     btn.classList.add('added');
-    btn.textContent = '✓ Ajouté !';
-    setTimeout(() => { btn.classList.remove('added'); btn.innerHTML = '🛒 Ajouter au panier'; }, 2000);
+    btn.textContent = window.i18n?.t('shop.added') || '✓ Ajouté !';
+    setTimeout(() => { btn.classList.remove('added'); btn.innerHTML = window.i18n?.t('shop.addToCart') || '🛒 Ajouter au panier'; }, 2000);
   }
 }
 
@@ -141,6 +155,7 @@ function renderCart() {
       const p = SHOP_PRODUCTS.find(p => p.id === id);
       if (!p) return;
       const linePrice = (p.price * qty).toFixed(2).replace('.', ',');
+      const pName = (window.i18n?.getCurrentLang() === 'en' && p.nameEn) ? p.nameEn : p.name;
 
       const row = document.createElement('div');
       row.className = 'cart-item';
@@ -148,7 +163,7 @@ function renderCart() {
         <div class="cart-item-info">
           <span class="cart-item-icon">${p.icon}</span>
           <div>
-            <div class="cart-item-name">${p.name}</div>
+            <div class="cart-item-name">${pName}</div>
             <div class="cart-item-qty">× ${qty}</div>
           </div>
         </div>
@@ -186,8 +201,9 @@ function openCheckout() {
 
     summary.innerHTML = entries.map(([id, qty]) => {
       const p = SHOP_PRODUCTS.find(p => p.id === id);
+      const pName = (window.i18n?.getCurrentLang() === 'en' && p?.nameEn) ? p.nameEn : p?.name;
       return `<div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;">
-        <span>${p?.icon} ${p?.name} × ${qty}</span>
+        <span>${p?.icon} ${pName} × ${qty}</span>
         <strong style="color:var(--color-gold);">${(p ? p.price * qty : 0).toFixed(2).replace('.', ',')} €</strong>
       </div>`;
     }).join('') + `
@@ -245,6 +261,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('checkout-overlay')?.addEventListener('click', (e) => {
     if (e.target.id === 'checkout-overlay') closeCheckout();
   });
+});
+
+document.addEventListener('langchange', () => {
+  buildProducts();
+  renderCart();
 });
 
 // Exposer pour HTML

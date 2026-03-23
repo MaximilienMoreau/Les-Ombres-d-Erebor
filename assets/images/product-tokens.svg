@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="velvetGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0f0f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d0808;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="woodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B6914;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#c9a84c;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#a07830;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7a5a20;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="darkWood" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a3010;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a1808;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="tokenShineFr" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5e070;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B6914;stop-opacity:1" />
+    </linearGradient>
+    <filter id="tokenGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bagShadow">
+      <feDropShadow dx="4" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <!-- Shadow -->
+  <ellipse cx="200" cy="288" rx="150" ry="12" fill="#000" opacity="0.5"/>
+
+  <!-- ===== VELVET POUCH ===== -->
+  <!-- Pouch body -->
+  <path d="M110,80 Q80,100 75,160 Q72,210 100,250 Q130,275 200,278 Q270,275 300,250 Q328,210 325,160 Q320,100 290,80 Q250,65 200,63 Q150,65 110,80 Z" fill="url(#velvetGrad)" filter="url(#bagShadow)"/>
+
+  <!-- Pouch texture/sheen -->
+  <path d="M135,95 Q110,115 108,165 Q107,200 125,235" fill="none" stroke="#3a1a1a" stroke-width="15" opacity="0.4"/>
+  <path d="M155,78 Q140,85 132,100" fill="none" stroke="#2a0808" stroke-width="8" opacity="0.3"/>
+
+  <!-- Velvet highlight -->
+  <path d="M130,88 Q110,108 108,155 Q107,195 122,228" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.15"/>
+  <path d="M170,68 Q155,72 143,82" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.15"/>
+
+  <!-- Pouch border -->
+  <path d="M110,80 Q80,100 75,160 Q72,210 100,250 Q130,275 200,278 Q270,275 300,250 Q328,210 325,160 Q320,100 290,80 Q250,65 200,63 Q150,65 110,80 Z" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Drawstring area -->
+  <ellipse cx="200" cy="72" rx="62" ry="20" fill="#2a1515" stroke="#c9a84c" stroke-width="1" opacity="0.9"/>
+  <ellipse cx="200" cy="68" rx="58" ry="16" fill="#1a0f0f" stroke="#c9a84c" stroke-width="0.5" opacity="0.7"/>
+
+  <!-- Drawstring cords -->
+  <path d="M155,64 Q145,48 140,35" stroke="#c9a84c" stroke-width="2" fill="none" opacity="0.8"/>
+  <path d="M245,64 Q255,48 260,35" stroke="#c9a84c" stroke-width="2" fill="none" opacity="0.8"/>
+  <!-- Knot -->
+  <circle cx="200" cy="30" r="5" fill="#c9a84c"/>
+  <path d="M140,35 Q165,20 200,30 Q235,20 260,35" stroke="#c9a84c" stroke-width="2" fill="none"/>
+
+  <!-- Monogram / symbol on pouch -->
+  <!-- Moon symbol -->
+  <circle cx="190" cy="175" r="28" fill="#1a0f0f" opacity="0.8"/>
+  <circle cx="190" cy="175" r="28" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+  <circle cx="200" cy="169" r="23" fill="#2a1515"/>
+  <!-- Crescent visible -->
+  <circle cx="190" cy="175" r="24" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+  <!-- Moon lune hint -->
+  <path d="M178,162 Q168,175 178,188 Q188,175 185,162 Z" fill="#c9a84c" opacity="0.3" filter="url(#tokenGlow)"/>
+
+  <!-- "OE" monogram simplified -->
+  <text x="193" y="180" text-anchor="middle" font-family="serif" font-size="18" fill="#c9a84c" opacity="0.6" font-style="italic">Ω</text>
+
+  <!-- ===== SCATTERED TOKENS (foreground) ===== -->
+  <!-- Token 1 - large, front center -->
+  <ellipse cx="200" cy="235" rx="26" ry="7" fill="#000" opacity="0.5"/>
+  <circle cx="200" cy="225" r="24" fill="url(#darkWood)"/>
+  <circle cx="200" cy="225" r="24" fill="url(#woodGrad)" opacity="0.8"/>
+  <circle cx="200" cy="225" r="24" fill="none" stroke="#f5e070" stroke-width="2"/>
+  <circle cx="200" cy="225" r="19" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.6"/>
+  <text x="200" y="230" text-anchor="middle" font-family="serif" font-size="14" fill="#000" font-weight="bold">☽</text>
+  <circle cx="200" cy="225" r="22" fill="none" stroke="#f5e070" stroke-width="0.3" opacity="0.4"/>
+
+  <!-- Token 2 - left -->
+  <ellipse cx="145" cy="258" rx="20" ry="5" fill="#000" opacity="0.4"/>
+  <circle cx="145" cy="250" r="18" fill="url(#darkWood)"/>
+  <circle cx="145" cy="250" r="18" fill="url(#woodGrad)" opacity="0.7"/>
+  <circle cx="145" cy="250" r="18" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+  <text x="145" y="255" text-anchor="middle" font-family="serif" font-size="11" fill="#000" font-weight="bold">✦</text>
+
+  <!-- Token 3 - right -->
+  <ellipse cx="258" cy="256" rx="20" ry="5" fill="#000" opacity="0.4"/>
+  <circle cx="258" cy="248" r="18" fill="url(#darkWood)"/>
+  <circle cx="258" cy="248" r="18" fill="url(#woodGrad)" opacity="0.7"/>
+  <circle cx="258" cy="248" r="18" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+  <text x="258" y="253" text-anchor="middle" font-family="serif" font-size="11" fill="#000">☀</text>
+
+  <!-- Token 4 - small left back -->
+  <circle cx="110" cy="230" r="12" fill="url(#woodGrad)" opacity="0.6"/>
+  <circle cx="110" cy="230" r="12" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+  <text x="110" y="234" text-anchor="middle" font-family="serif" font-size="8" fill="#000">👁</text>
+
+  <!-- Token 5 - small right back -->
+  <circle cx="290" cy="232" r="12" fill="url(#woodGrad)" opacity="0.6"/>
+  <circle cx="290" cy="232" r="12" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+  <text x="290" y="236" text-anchor="middle" font-family="serif" font-size="8" fill="#000">⚡</text>
+
+  <!-- Label on front -->
+  <rect x="95" y="118" width="210" height="38" rx="4" fill="#000" opacity="0.6"/>
+  <rect x="95" y="118" width="210" height="38" rx="4" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+  <text x="200" y="134" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c9a84c" letter-spacing="2" opacity="0.8">LES OMBRES D'EREBOR</text>
+  <text x="200" y="149" text-anchor="middle" font-family="serif" font-size="13" fill="#f5e070" letter-spacing="2" font-weight="bold" filter="url(#tokenGlow)">JETONS PREMIUM</text>
+
+  <!-- "Set en bois laqué" label -->
+  <text x="200" y="270" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#c9a84c" opacity="0.7" letter-spacing="1">SET EN BOIS LAQUÉ · 80 PIÈCES</text>
+</svg>
