@@ -65,6 +65,9 @@ function buildProducts() {
     `;
 
     grid.appendChild(card);
+    setTimeout(() => {
+      card.classList.add('visible');
+    }, 50);
   });
 }
 

@@ -471,6 +471,10 @@
   transform: none;
   box-shadow: none;
 }
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ---- Checkout modal ---- */
 .checkout-overlay {
