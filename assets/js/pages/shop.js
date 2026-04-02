@@ -21,7 +21,7 @@ function buildProducts() {
   if (!grid || typeof SHOP_PRODUCTS === 'undefined') return;
   grid.innerHTML = '';
 
-  SHOP_PRODUCTS.forEach((p, i) => {
+  SHOP_PRODUCTS.filter(p => !p.draft).forEach((p, i) => {
     const card = document.createElement('div');
     card.className = `product-card${p.id === 'deluxe' ? ' featured' : ''} reveal`;
     card.id = `product-${p.id}`;

@@ -1,5 +1,12 @@
 /* ============================================
    PRODUITS — Boutique Les Ombres d'Erebor
+   ============================================
+
+   Pour publier un produit : retirer la ligne `draft: true`
+   Pour le remettre en brouillon : rajouter `draft: true`
+
+   Produits actifs    : Coffret de Base
+   Produits brouillon : Édition Collector, Extension L'Ère des Prodiges, Jetons Premium
    ============================================ */
 
 const SHOP_PRODUCTS = [
@@ -44,6 +51,7 @@ const SHOP_PRODUCTS = [
     quantity: 1,
   },
   {
+    draft: true, // Retirer cette ligne pour publier
     id: 'deluxe',
     name: "Édition Collector",
     subtitle: "L'expérience ultime",
@@ -84,6 +92,7 @@ const SHOP_PRODUCTS = [
     quantity: 1,
   },
   {
+    draft: true, // Retirer cette ligne pour publier
     id: 'extension',
     name: "Extension : L'Ère des Prodiges",
     subtitle: "10 nouveaux rôles inédits",
@@ -120,6 +129,7 @@ const SHOP_PRODUCTS = [
     quantity: 1,
   },
   {
+    draft: true, // Retirer cette ligne pour publier
     id: 'tokens',
     name: "Jetons Premium",
     subtitle: "Set en bois laqué",

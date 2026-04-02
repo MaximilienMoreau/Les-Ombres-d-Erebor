@@ -23,63 +23,85 @@
   }
   function t(k) { return window.i18n?.t(k) || k; }
 
+  const FACTION_META = {
+    lune:      { emoji: '🌙', key: 'common.factionLune' },
+    ombre:     { emoji: '🌑', key: 'common.factionOmbre' },
+    solitaire: { emoji: '🌀', key: 'common.factionSolitaire' },
+  };
+
+  function matchesSearch(role) {
+    return role.name.toLowerCase().includes(currentSearch)
+        || role.shortPower.toLowerCase().includes(currentSearch)
+        || (role.nameEn && role.nameEn.toLowerCase().includes(currentSearch))
+        || (role.shortPowerEn && role.shortPowerEn.toLowerCase().includes(currentSearch));
+  }
+
+  function buildCard(role, indexInGroup) {
+    const factionLabel = {
+      lune:      t('common.factionLune'),
+      ombre:     t('common.factionOmbre'),
+      solitaire: t('common.factionSolitaire'),
+    };
+    const diffLabel = {
+      beginner: t('common.diffBeginner'),
+      advanced: t('common.diffAdvanced'),
+      expert:   t('common.diffExpert'),
+    };
+    const card = document.createElement('div');
+    card.className = `role-card ${role.faction} reveal`;
+    card.style.animationDelay = `${(indexInGroup % 8) * 0.05}s`;
+    card.setAttribute('data-role', role.id);
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-label', `${t('roles.ariaRole')} ${rl(role, 'name')}`);
+    card.innerHTML = `
+      <div class="role-card-top"></div>
+      <div class="role-card-body">
+        <div class="role-icon-wrapper">${role.icon}</div>
+        <div class="role-name">${rl(role, 'name')}</div>
+        <p class="role-power-short">${rl(role, 'shortPower')}</p>
+      </div>
+      <div class="role-card-footer">
+        <span class="faction-badge ${role.faction}">${factionLabel[role.faction]}</span>
+        <span class="difficulty-badge ${role.difficulty}">${diffLabel[role.difficulty]}</span>
+      </div>
+    `;
+    card.addEventListener('click', () => modal.open(role));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); modal.open(role); }
+    });
+    return card;
+  }
+
   // Construire les cartes
   function buildCards() {
     grid.innerHTML = '';
     let visible = 0;
+    const factions = currentFaction === 'all' ? ['lune', 'ombre', 'solitaire'] : [currentFaction];
+    const groupHeadings = currentFaction === 'all';
 
-    ROLES.forEach((role, index) => {
-      const matchFaction = currentFaction === 'all' || role.faction === currentFaction;
-      const matchSearch  = role.name.toLowerCase().includes(currentSearch)
-                        || role.shortPower.toLowerCase().includes(currentSearch)
-                        || (role.nameEn && role.nameEn.toLowerCase().includes(currentSearch))
-                        || (role.shortPowerEn && role.shortPowerEn.toLowerCase().includes(currentSearch));
+    factions.forEach(faction => {
+      const factionRoles = ROLES.filter(r => r.faction === faction && matchesSearch(r));
+      if (factionRoles.length === 0) return;
 
-      if (!matchFaction || !matchSearch) return;
-      visible++;
+      if (groupHeadings) {
+        const heading = document.createElement('div');
+        heading.className = `roles-faction-heading ${faction}`;
+        heading.innerHTML = `
+          <span class="roles-faction-heading-icon">${FACTION_META[faction].emoji}</span>
+          <span class="roles-faction-heading-name">${t(FACTION_META[faction].key)}</span>
+          <span class="roles-faction-heading-count">${factionRoles.length}</span>
+        `;
+        grid.appendChild(heading);
+      }
 
-      const card = document.createElement('div');
-      card.className = `role-card ${role.faction} reveal`;
-      card.style.animationDelay = `${(visible % 8) * 0.05}s`;
-      card.setAttribute('data-role', role.id);
-      card.setAttribute('role', 'button');
-      card.setAttribute('tabindex', '0');
-      card.setAttribute('aria-label', `${t('roles.ariaRole')} ${rl(role, 'name')}`);
-
-      const factionLabel = {
-        lune:      t('common.factionLune'),
-        ombre:     t('common.factionOmbre'),
-        solitaire: t('common.factionSolitaire'),
-      };
-      const diffLabel = {
-        beginner: t('common.diffBeginner'),
-        advanced: t('common.diffAdvanced'),
-        expert:   t('common.diffExpert'),
-      };
-
-      card.innerHTML = `
-        <div class="role-card-top"></div>
-        <div class="role-card-body">
-          <div class="role-icon-wrapper">${role.icon}</div>
-          <div class="role-name">${rl(role, 'name')}</div>
-          <p class="role-power-short">${rl(role, 'shortPower')}</p>
-        </div>
-        <div class="role-card-footer">
-          <span class="faction-badge ${role.faction}">${factionLabel[role.faction]}</span>
-          <span class="difficulty-badge ${role.difficulty}">${diffLabel[role.difficulty]}</span>
-        </div>
-      `;
-
-      card.addEventListener('click', () => modal.open(role));
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); modal.open(role); }
-      });
-
-      grid.appendChild(card);
-
-      // Déclencher le reveal
-      requestAnimationFrame(() => {
-        setTimeout(() => card.classList.add('visible'), (visible % 8) * 50);
+      factionRoles.forEach((role, i) => {
+        visible++;
+        const card = buildCard(role, i);
+        grid.appendChild(card);
+        requestAnimationFrame(() => {
+          setTimeout(() => card.classList.add('visible'), (i % 8) * 50);
+        });
       });
     });
 

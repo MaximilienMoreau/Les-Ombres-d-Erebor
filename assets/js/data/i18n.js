@@ -20,6 +20,8 @@ const TRANSLATIONS = {
     index: {
       heroEyebrow: 'Un royaume sous la nuit éternelle',
       heroSubtitle: "Un jeu de déduction sociale pour 8 à 20 joueurs. Trois factions. Vingt-cinq rôles. Une seule nuit pour découvrir qui vous pouvez encore faire confiance.",
+      heroReadRules: '📖 Lire les règles',
+      heroDiscoverRoles: '🎭 Découvrir les rôles',
       scrollDown: 'Descendre',
       introEyebrow: 'Le jeu',
       introTitle: 'Un royaume plongé dans les ténèbres',
@@ -270,6 +272,8 @@ const TRANSLATIONS = {
     index: {
       heroEyebrow: 'A kingdom under eternal night',
       heroSubtitle: "A social deduction game for 8 to 20 players. Three factions. Twenty-five roles. One night to discover who you can still trust.",
+      heroReadRules: '📖 Read the rules',
+      heroDiscoverRoles: '🎭 Discover the roles',
       scrollDown: 'Scroll down',
       introEyebrow: 'The game',
       introTitle: 'A kingdom plunged into darkness',

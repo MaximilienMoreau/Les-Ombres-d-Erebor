@@ -137,6 +137,39 @@
   gap: var(--space-5);
 }
 
+/* ---- En-tête de faction ---- */
+.roles-faction-heading {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8) 0 var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-1);
+}
+.roles-faction-heading:first-child {
+  padding-top: var(--space-2);
+}
+.roles-faction-heading-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.roles-faction-heading-name {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.roles-faction-heading.lune .roles-faction-heading-name      { color: var(--color-lune-light); }
+.roles-faction-heading.ombre .roles-faction-heading-name     { color: var(--color-ombre-light); }
+.roles-faction-heading.solitaire .roles-faction-heading-name { color: var(--color-solitaire-light); }
+.roles-faction-heading-count {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-text-dim);
+  margin-left: auto;
+}
+
 /* ---- Carte de rôle ---- */
 .role-card {
   background: var(--color-surface);

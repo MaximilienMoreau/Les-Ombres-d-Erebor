@@ -90,8 +90,8 @@
         </div>
 
         <div class="hero-actions">
-          <a href="rules.html" class="btn btn-primary">📖 Lire les règles</a>
-          <a href="roles.html" class="btn btn-secondary">🎭 Découvrir les rôles</a>
+          <a href="rules.html" class="btn btn-primary" data-i18n="index.heroReadRules">📖 Lire les règles</a>
+          <a href="roles.html" class="btn btn-secondary" data-i18n="index.heroDiscoverRoles">🎭 Découvrir les rôles</a>
         </div>
       </div>
 
@@ -393,24 +393,27 @@
     // Particules hero
     new ParticleSystem('hero-canvas');
 
-    // Strip de rôles en aperçu (6 rôles représentatifs)
-    const previewIds = ['herald', 'assassin', 'pretresse', 'changeur', 'oracles', 'marchand'];
-    const strip = document.getElementById('roles-strip-home');
-    if (strip && typeof ROLES !== 'undefined') {
-      const previewRoles = ROLES.filter(r => previewIds.includes(r.id));
-      // Ajouter tous les rôles pour défilement
+    // Strip de rôles en aperçu
+    function buildRolesStrip() {
+      const strip = document.getElementById('roles-strip-home');
+      if (!strip || typeof ROLES === 'undefined') return;
+      const lang = (window.i18n && window.i18n.getCurrentLang) ? window.i18n.getCurrentLang() : 'fr';
+      const rl = (role, field) => (lang === 'en' && role[field + 'En']) ? role[field + 'En'] : role[field];
+      strip.innerHTML = '';
       ROLES.forEach(role => {
         const card = document.createElement('a');
         card.href = `roles.html#${role.id}`;
         card.className = 'role-preview-card';
         card.innerHTML = `
           <span class="role-preview-icon">${role.icon}</span>
-          <div class="role-preview-name">${role.name}</div>
-          <p class="role-preview-power">${role.shortPower}</p>
+          <div class="role-preview-name">${rl(role, 'name')}</div>
+          <p class="role-preview-power">${rl(role, 'shortPower')}</p>
         `;
         strip.appendChild(card);
       });
     }
+    buildRolesStrip();
+    document.addEventListener('langchange', buildRolesStrip);
 
     // Faction filter depuis URL
     const params = new URLSearchParams(window.location.search);
