@@ -10,6 +10,12 @@
 
   if (typeof ROLES === 'undefined' || typeof INTERACTIONS === 'undefined') return;
 
+  function rl(role, field) {
+    const lang = window.i18n?.getCurrentLang?.() || 'fr';
+    return (lang === 'en' && role[field + 'En']) ? role[field + 'En'] : role[field];
+  }
+  function t(k) { return window.i18n?.t(k) || k; }
+
   // ---- Construction de la matrice desktop ----
   if (tableContainer) {
     buildMatrix();
@@ -35,7 +41,7 @@
     // Coin vide
     const corner = document.createElement('th');
     corner.className = 'matrix-corner';
-    corner.setAttribute('aria-label', 'Rôles');
+    corner.setAttribute('aria-label', t('interactions.ariaRoles'));
     headerRow.appendChild(corner);
 
     // Colonnes (axe Y)
@@ -44,8 +50,8 @@
       th.className = 'matrix-col-header';
       th.setAttribute('scope', 'col');
       th.innerHTML = `
-        <div class="col-header-inner" data-role="${role.id}" title="${role.name}">
-          <span class="col-header-text">${role.icon} ${role.name}</span>
+        <div class="col-header-inner" data-role="${role.id}" title="${rl(role, 'name')}">
+          <span class="col-header-text">${role.icon} ${rl(role, 'name')}</span>
         </div>
       `;
       headerRow.appendChild(th);
@@ -65,9 +71,9 @@
       rowTh.className = 'matrix-row-header';
       rowTh.setAttribute('scope', 'row');
       rowTh.innerHTML = `
-        <div class="row-header-inner" data-role="${rowRole.id}" title="${rowRole.name}">
+        <div class="row-header-inner" data-role="${rowRole.id}" title="${rl(rowRole, 'name')}">
           <span class="row-icon">${rowRole.icon}</span>
-          <span class="row-name">${rowRole.name}</span>
+          <span class="row-name">${rl(rowRole, 'name')}</span>
         </div>
       `;
       tr.appendChild(rowTh);
@@ -87,14 +93,14 @@
           if (inter) {
             td.className = `matrix-cell ${inter.type}`;
             td.setAttribute('data-interaction', JSON.stringify({
-              rowName: rowRole.name, colName: colRole.name,
+              rowName: rl(rowRole, 'name'), colName: rl(colRole, 'name'),
               rowIcon: rowRole.icon, colIcon: colRole.icon,
               type: inter.type, emoji: inter.emoji,
-              desc: inter.description,
+              desc: (window.i18n?.getCurrentLang?.() === 'en' && inter.descriptionEn) ? inter.descriptionEn : inter.description,
             }));
             td.innerHTML = `<div class="cell-inner">${inter.emoji}</div>`;
             td.setAttribute('tabindex', '0');
-            td.setAttribute('aria-label', `${rowRole.name} — ${colRole.name}: ${inter.type}`);
+            td.setAttribute('aria-label', `${rl(rowRole, 'name')} — ${rl(colRole, 'name')}: ${inter.type}`);
           } else {
             td.className = 'matrix-cell none';
             td.innerHTML = `<div class="cell-inner"></div>`;
@@ -129,9 +135,9 @@
 
       const data = JSON.parse(cell.dataset.interaction);
       const typeLabels = {
-        synergie: '🤝 Synergie',
-        conflit:  '⚔️ Conflit',
-        detournement: '🔄 Détournement',
+        synergie:     t('interactions.typeSynergie'),
+        conflit:      t('interactions.typeConflit'),
+        detournement: t('interactions.typeDetournement'),
       };
 
       tooltip.innerHTML = `
@@ -216,9 +222,9 @@
   // ---- Mobile ----
   function buildMobileSelect() {
     const grouped = [
-      { label: 'Conseil de la Lune', roles: ROLES.filter(r => r.faction === 'lune') },
-      { label: 'Ombre Souveraine',   roles: ROLES.filter(r => r.faction === 'ombre') },
-      { label: 'Solitaires',         roles: ROLES.filter(r => r.faction === 'solitaire') },
+      { label: t('interactions.mobileGroupLune'),      roles: ROLES.filter(r => r.faction === 'lune') },
+      { label: t('interactions.mobileGroupOmbre'),     roles: ROLES.filter(r => r.faction === 'ombre') },
+      { label: t('interactions.mobileGroupSolitaire'), roles: ROLES.filter(r => r.faction === 'solitaire') },
     ];
 
     grouped.forEach(g => {
@@ -227,7 +233,7 @@
       g.roles.forEach(role => {
         const opt = document.createElement('option');
         opt.value = role.id;
-        opt.textContent = `${role.icon} ${role.name}`;
+        opt.textContent = `${role.icon} ${rl(role, 'name')}`;
         optgroup.appendChild(opt);
       });
       mobileSelect.appendChild(optgroup);
@@ -247,26 +253,32 @@
     const relevant = INTERACTIONS.filter(i => i.roles.includes(roleId));
 
     if (relevant.length === 0) {
-      mobileList.innerHTML = '<p style="color:var(--color-text-muted);text-align:center;padding:2rem;">Aucune interaction répertoriée.</p>';
+      mobileList.innerHTML = `<p style="color:var(--color-text-muted);text-align:center;padding:2rem;">${t('interactions.noInteraction')}</p>`;
       return;
     }
 
-    const typeLabels = { synergie: 'Synergie', conflit: 'Conflit', detournement: 'Détournement' };
+    const typeLabels = {
+      synergie:     t('interactions.typeSynergie'),
+      conflit:      t('interactions.typeConflit'),
+      detournement: t('interactions.typeDetournement'),
+    };
 
     relevant.forEach(inter => {
       const partnerId = inter.roles.find(r => r !== roleId);
       const partner   = ROLES.find(r => r.id === partnerId);
       if (!partner) return;
 
+      const desc = (window.i18n?.getCurrentLang?.() === 'en' && inter.descriptionEn) ? inter.descriptionEn : inter.description;
+
       const card = document.createElement('div');
       card.className = `mobile-interaction-card ${inter.type}`;
       card.innerHTML = `
         <div class="card-icon">${inter.emoji}</div>
         <div class="card-body">
-          <div class="card-title">${partner.icon} ${partner.name}
+          <div class="card-title">${partner.icon} ${rl(partner, 'name')}
             <span class="interaction-tag ${inter.type}" style="margin-left:8px;">${typeLabels[inter.type]}</span>
           </div>
-          <p class="card-desc">${inter.description}</p>
+          <p class="card-desc">${desc}</p>
         </div>
       `;
       mobileList.appendChild(card);
@@ -284,5 +296,17 @@
   };
   Object.entries(statEls).forEach(([k, el]) => {
     if (el) el.textContent = stats[k];
+  });
+
+  // ---- Rebuild on language change ----
+  document.addEventListener('langchange', () => {
+    if (tableContainer) {
+      tableContainer.innerHTML = '';
+      buildMatrix();
+    }
+    if (mobileSelect && mobileList) {
+      mobileSelect.innerHTML = '';
+      buildMobileSelect();
+    }
   });
 })();

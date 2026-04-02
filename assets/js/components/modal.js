@@ -55,57 +55,74 @@ class RoleModal {
   }
 
   buildContent(role) {
-    const factionLabel = { lune: 'Conseil de la Lune', ombre: 'Ombre Souveraine', solitaire: 'Solitaire' };
-    const diffLabel    = { beginner: 'Débutant', advanced: 'Intermédiaire', expert: 'Expert' };
-    const diffEmoji    = { beginner: '⭐', advanced: '⭐⭐', expert: '⭐⭐⭐' };
+    const lang = window.i18n?.getCurrentLang?.() || 'fr';
+    function rl(r, field) {
+      return (lang === 'en' && r[field + 'En']) ? r[field + 'En'] : r[field];
+    }
+    const t = (k) => window.i18n?.t(k) || k;
 
-    // Construire les interactions
-    const interactionTags = this.buildInteractionTags(role);
+    const factionLabel = {
+      lune:      t('common.factionLune'),
+      ombre:     t('common.factionOmbre'),
+      solitaire: t('common.factionSolitaire'),
+    };
+    const diffLabel = {
+      beginner: t('common.diffBeginner'),
+      advanced: t('common.diffAdvanced'),
+      expert:   t('common.diffExpert'),
+    };
+    const diffEmoji = { beginner: '⭐', advanced: '⭐⭐', expert: '⭐⭐⭐' };
+
+    const interactionTags = this.buildInteractionTags(role, lang);
 
     return `
-      <button class="modal-close" aria-label="Fermer">✕</button>
+    <button class="modal-close" aria-label="${t('modal.close')}">✕</button>
 
-      <div class="modal-header">
-        <div class="modal-icon">${role.icon}</div>
-        <div class="modal-title-group">
-          <h2>${role.name}</h2>
-          <div class="modal-meta">
-            <span class="faction-badge ${role.faction}">${factionLabel[role.faction]}</span>
-            <span class="difficulty-badge ${role.difficulty}" title="Difficulté">
-              ${diffEmoji[role.difficulty]} ${diffLabel[role.difficulty]}
-            </span>
-          </div>
+    <div class="modal-header">
+      <div class="modal-icon">${role.icon}</div>
+      <div class="modal-title-group">
+        <h2>${rl(role, 'name')}</h2>
+        <div class="modal-meta">
+          <span class="faction-badge ${role.faction}">${factionLabel[role.faction]}</span>
+          <span class="difficulty-badge ${role.difficulty}" title="${t('modal.difficultyTitle')}">
+            ${diffEmoji[role.difficulty]} ${diffLabel[role.difficulty]}
+          </span>
         </div>
       </div>
+    </div>
 
-      <div class="modal-body">
-        <div class="modal-section">
-          <h4>📖 Lore</h4>
-          <p class="modal-lore">${role.lore}</p>
-        </div>
-
-        <div class="modal-section">
-          <h4>⚡ Pouvoir</h4>
-          <p class="modal-power-text">${role.fullPower}</p>
-        </div>
-
-        ${role.particularite ? `
-        <div class="modal-section">
-          <h4>⚠️ Particularité</h4>
-          <p class="modal-power-text" style="color: var(--color-gold);">${role.particularite}</p>
-        </div>` : ''}
-
-        ${interactionTags ? `
-        <div class="modal-section">
-          <h4>🔗 Interactions notables</h4>
-          <div class="modal-tags">${interactionTags}</div>
-        </div>` : ''}
+    <div class="modal-body">
+      <div class="modal-section">
+        <h4>📖 Lore</h4>
+        <p class="modal-lore">${rl(role, 'lore')}</p>
       </div>
-    `;
+
+      <div class="modal-section">
+        <h4>${t('modal.sectionPower')}</h4>
+        <p class="modal-power-text">${rl(role, 'fullPower')}</p>
+      </div>
+
+      ${role.particularite ? `
+      <div class="modal-section">
+        <h4>${t('modal.sectionParticularity')}</h4>
+        <p class="modal-power-text" style="color: var(--color-gold);">${rl(role, 'particularite')}</p>
+      </div>` : ''}
+
+      ${interactionTags ? `
+      <div class="modal-section">
+        <h4>${t('modal.sectionInteractions')}</h4>
+        <div class="modal-tags">${interactionTags}</div>
+      </div>` : ''}
+    </div>
+  `;
   }
 
-  buildInteractionTags(role) {
+  buildInteractionTags(role, lang) {
     if (typeof INTERACTIONS === 'undefined' || typeof ROLES === 'undefined') return '';
+    const t = (k) => window.i18n?.t(k) || k;
+    function rl(r, field) {
+      return (lang === 'en' && r[field + 'En']) ? r[field + 'En'] : r[field];
+    }
 
     const tags = [];
     INTERACTIONS.forEach(inter => {
@@ -115,13 +132,15 @@ class RoleModal {
       if (!partner) return;
 
       const label = inter.type === 'synergie'
-        ? `🤝 avec ${partner.icon} ${partner.name}`
+        ? `🤝 ${t('modal.interactionWith')} ${partner.icon} ${rl(partner, 'name')}`
         : inter.type === 'conflit'
-        ? `⚔️ contre ${partner.icon} ${partner.name}`
-        : `🔄 détourne ${partner.icon} ${partner.name}`;
+        ? `⚔️ ${t('modal.interactionAgainst')} ${partner.icon} ${rl(partner, 'name')}`
+        : `🔄 ${t('modal.interactionSubverts')} ${partner.icon} ${rl(partner, 'name')}`;
+
+      const desc = (lang === 'en' && inter.descriptionEn) ? inter.descriptionEn : inter.description;
 
       tags.push(`
-        <span class="interaction-tag ${inter.type}" title="${inter.description}"
+        <span class="interaction-tag ${inter.type}" title="${desc}"
               data-partner="${partnerId}">
           ${label}
         </span>
