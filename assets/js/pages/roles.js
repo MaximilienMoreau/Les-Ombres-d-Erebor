@@ -17,6 +17,12 @@
   // Instancier la modale
   const modal = new RoleModal();
 
+  function rl(role, field) {
+    const lang = window.i18n?.getCurrentLang?.() || 'fr';
+    return (lang === 'en' && role[field + 'En']) ? role[field + 'En'] : role[field];
+  }
+  function t(k) { return window.i18n?.t(k) || k; }
+
   // Construire les cartes
   function buildCards() {
     grid.innerHTML = '';
@@ -25,7 +31,9 @@
     ROLES.forEach((role, index) => {
       const matchFaction = currentFaction === 'all' || role.faction === currentFaction;
       const matchSearch  = role.name.toLowerCase().includes(currentSearch)
-                        || role.shortPower.toLowerCase().includes(currentSearch);
+                        || role.shortPower.toLowerCase().includes(currentSearch)
+                        || (role.nameEn && role.nameEn.toLowerCase().includes(currentSearch))
+                        || (role.shortPowerEn && role.shortPowerEn.toLowerCase().includes(currentSearch));
 
       if (!matchFaction || !matchSearch) return;
       visible++;
@@ -36,17 +44,25 @@
       card.setAttribute('data-role', role.id);
       card.setAttribute('role', 'button');
       card.setAttribute('tabindex', '0');
-      card.setAttribute('aria-label', `Voir le rôle ${role.name}`);
+      card.setAttribute('aria-label', `${t('roles.ariaRole')} ${rl(role, 'name')}`);
 
-      const factionLabel = { lune: 'Conseil de la Lune', ombre: 'Ombre Souveraine', solitaire: 'Solitaire' };
-      const diffLabel    = { beginner: 'Débutant', advanced: 'Intermédiaire', expert: 'Expert' };
+      const factionLabel = {
+        lune:      t('common.factionLune'),
+        ombre:     t('common.factionOmbre'),
+        solitaire: t('common.factionSolitaire'),
+      };
+      const diffLabel = {
+        beginner: t('common.diffBeginner'),
+        advanced: t('common.diffAdvanced'),
+        expert:   t('common.diffExpert'),
+      };
 
       card.innerHTML = `
         <div class="role-card-top"></div>
         <div class="role-card-body">
           <div class="role-icon-wrapper">${role.icon}</div>
-          <div class="role-name">${role.name}</div>
-          <p class="role-power-short">${role.shortPower}</p>
+          <div class="role-name">${rl(role, 'name')}</div>
+          <p class="role-power-short">${rl(role, 'shortPower')}</p>
         </div>
         <div class="role-card-footer">
           <span class="faction-badge ${role.faction}">${factionLabel[role.faction]}</span>
@@ -68,14 +84,14 @@
     });
 
     if (countEl) {
-      countEl.innerHTML = `<strong>${visible}</strong> rôle${visible > 1 ? 's' : ''} affiché${visible > 1 ? 's' : ''}`;
+      countEl.innerHTML = `<strong>${visible}</strong> ${visible > 1 ? t('roles.countPlural') : t('roles.countSingular')}`;
     }
 
     if (visible === 0) {
       grid.innerHTML = `
         <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-muted);">
           <div style="font-size:3rem;margin-bottom:1rem;">🌑</div>
-          <p>Aucun rôle ne correspond à votre recherche.</p>
+          <p>${t('roles.emptySearch')}</p>
         </div>
       `;
     }
@@ -101,4 +117,7 @@
 
   // Initial
   buildCards();
+
+  // Rebuild on language change
+  document.addEventListener('langchange', () => buildCards());
 })();

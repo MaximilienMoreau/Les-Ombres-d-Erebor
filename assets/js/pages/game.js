@@ -2,33 +2,44 @@
    GAME ENGINE — Les Ombres d'Erebor (Online)
    ============================================ */
 
+// ---- Helpers i18n ----
+function t(k, ...args) {
+  let str = window.i18n?.t(k) || k;
+  args.forEach(a => { str = str.replace('%d', a).replace('%s', a); });
+  return str;
+}
+function rl(role, field) {
+  const lang = window.i18n?.getCurrentLang?.() || 'fr';
+  return (lang === 'en' && role[field + 'En']) ? role[field + 'En'] : role[field];
+}
+
 // ---- Événements Crépuscule ----
 const CREPUSCULE_EVENTS = [
-  { id: 'inondation',   icon: '🌊', title: "L'Inondation",          desc: "Un quartier entier est submergé. Ses habitants doivent fuir vers les quartiers voisins.",                            effect: "Le MJ redistribue un quartier entier vers les autres." },
-  { id: 'miroir',       icon: '🪞', title: "La Malédiction du Miroir", desc: "Cette nuit, tous les pouvoirs sont inversés. Les soins deviennent des dégâts, les blocages libèrent.",           effect: "La prochaine nuit, tous les effets nocturnes sont inversés." },
-  { id: 'apparition',   icon: '👻', title: "L'Apparition",           desc: "Un esprit errant se manifeste et peut révéler une vérité absolue à l'assemblée.",                                   effect: "Un Esprit errant choisit de révéler son rôle ou une information." },
-  { id: 'pacte',        icon: '🩸', title: "Le Pacte de Sang",        desc: "Deux habitants sont liés par un pacte invisible. Leurs factions doivent être révélées.",                           effect: "Le MJ désigne 2 joueurs aléatoires qui révèlent leur faction (pas leur rôle)." },
-  { id: 'nuit-blanche', icon: '🌕', title: "La Nuit Blanche",        desc: "La lune pleine baigne Erebor de lumière. Impossible d'agir dans l'obscurité ce tour.",                             effect: "Pas de phase de Nuit ce tour. Les Ombres perdent leur action." },
-  { id: 'exil',         icon: '⛓️', title: "Le Grand Exil",          desc: "Un habitant est banni de la ville pour un tour entier. Il ne peut ni agir ni voter.",                               effect: "Le MJ exile un joueur aléatoire pendant un tour." },
-  { id: 'oracle',       icon: '🔮', title: "La Vision Collective",   desc: "Une prophétie se répand dans tous les quartiers. Chaque joueur reçoit un fragment d'information anonyme.",          effect: "Le MJ envoie un indice (vrai ou faux) à tous les joueurs." },
-  { id: 'festin',       icon: '🍷', title: "Le Festin des Ombres",   desc: "Les Ombres peuvent agir deux fois cette nuit. Le Conseil doit redoubler de vigilance.",                             effect: "Les Ombres peuvent soumettre 2 actions cette nuit." },
+  { id: 'inondation',   icon: '🌊', title: "L'Inondation",             titleEn: "The Flood",            desc: "Un quartier entier est submergé. Ses habitants doivent fuir vers les quartiers voisins.",                            descEn: "An entire district is submerged. Its inhabitants must flee to neighbouring districts.",                effect: "Le MJ redistribue un quartier entier vers les autres.",           effectEn: "The GM redistributes an entire district to the others." },
+  { id: 'miroir',       icon: '🪞', title: "La Malédiction du Miroir",  titleEn: "The Mirror Curse",     desc: "Cette nuit, tous les pouvoirs sont inversés. Les soins deviennent des dégâts, les blocages libèrent.",           descEn: "Tonight, all powers are reversed. Healing becomes damage, blocks become releases.",                      effect: "La prochaine nuit, tous les effets nocturnes sont inversés.",     effectEn: "The next night, all nocturnal effects are inverted." },
+  { id: 'apparition',   icon: '👻', title: "L'Apparition",              titleEn: "The Apparition",       desc: "Un esprit errant se manifeste et peut révéler une vérité absolue à l'assemblée.",                                   descEn: "A wandering spirit manifests and may reveal an absolute truth to the assembly.",                         effect: "Un Esprit errant choisit de révéler son rôle ou une information.", effectEn: "A Wandering Spirit chooses to reveal their role or a piece of information." },
+  { id: 'pacte',        icon: '🩸', title: "Le Pacte de Sang",           titleEn: "The Blood Pact",       desc: "Deux habitants sont liés par un pacte invisible. Leurs factions doivent être révélées.",                           descEn: "Two inhabitants are bound by an invisible pact. Their factions must be revealed.",                       effect: "Le MJ désigne 2 joueurs aléatoires qui révèlent leur faction (pas leur rôle).", effectEn: "The GM designates 2 random players who reveal their faction (not their role)." },
+  { id: 'nuit-blanche', icon: '🌕', title: "La Nuit Blanche",           titleEn: "The White Night",      desc: "La lune pleine baigne Erebor de lumière. Impossible d'agir dans l'obscurité ce tour.",                             descEn: "The full moon bathes Erebor in light. Acting in the dark is impossible this turn.",                      effect: "Pas de phase de Nuit ce tour. Les Ombres perdent leur action.",   effectEn: "No Night phase this turn. The Shadows lose their action." },
+  { id: 'exil',         icon: '⛓️', title: "Le Grand Exil",             titleEn: "The Great Exile",      desc: "Un habitant est banni de la ville pour un tour entier. Il ne peut ni agir ni voter.",                               descEn: "An inhabitant is banished from the city for an entire turn. They can neither act nor vote.",              effect: "Le MJ exile un joueur aléatoire pendant un tour.",                effectEn: "The GM exiles a random player for one turn." },
+  { id: 'oracle',       icon: '🔮', title: "La Vision Collective",      titleEn: "The Collective Vision", desc: "Une prophétie se répand dans tous les quartiers. Chaque joueur reçoit un fragment d'information anonyme.",          descEn: "A prophecy spreads across all districts. Each player receives an anonymous fragment of information.",    effect: "Le MJ envoie un indice (vrai ou faux) à tous les joueurs.",       effectEn: "The GM sends a hint (true or false) to all players." },
+  { id: 'festin',       icon: '🍷', title: "Le Festin des Ombres",      titleEn: "The Shadow Feast",     desc: "Les Ombres peuvent agir deux fois cette nuit. Le Conseil doit redoubler de vigilance.",                             descEn: "The Shadows may act twice this night. The Council must be doubly vigilant.",                             effect: "Les Ombres peuvent soumettre 2 actions cette nuit.",              effectEn: "The Shadows may submit 2 actions this night." },
 ];
 
 const NIGHT_ORDER = [
-  { id: 'sculpteur',   name: 'Sculpteur de Cauchemars', icon: '😱', prompt: "Choisit un joueur à bloquer cette nuit (perd son pouvoir).",        needsTarget: true },
-  { id: 'mainombre',   name: "Main de l'Ombre",         icon: '🖤', prompt: "Peut corrompre un joueur du Conseil (irréversible).",               needsTarget: true },
-  { id: 'murmure',     name: "Murmure de l'Abysse",     icon: '🌑', prompt: "Choisit un joueur pour lui envoyer une fausse information demain.", needsTarget: true },
-  { id: 'fauxoracle',  name: 'Fausse Oracle',           icon: '🔮', prompt: "Envoie une fausse vision à un joueur.",                            needsTarget: true },
-  { id: 'assassin',    name: 'Assassin Voilé',          icon: '🗡️', prompt: "Élimine un joueur dans son quartier.",                             needsTarget: true },
-  { id: 'chasseur',    name: "Chasseur de l'Ombre",     icon: '🏹', prompt: "Peut cibler un joueur pour le tuer (risque mortel si innocent).",   needsTarget: true, optional: true },
-  { id: 'gardien',     name: 'Gardien de la Porte',     icon: '🚪', prompt: "Bloque un joueur dans son quartier (ne peut pas se déplacer).",    needsTarget: true },
-  { id: 'pretresse',   name: 'Prêtresse de la Lune',    icon: '🌙', prompt: "Protège un joueur de la mort cette nuit.",                         needsTarget: true },
-  { id: 'voyant',      name: 'Voyant Éclipsé',          icon: '👁️', prompt: "Révèle le rôle exact d'un joueur (usage unique).",                 needsTarget: true, oneTime: true },
-  { id: 'herald',      name: "Héraut de l'Aube",        icon: '🌅', prompt: "Reçoit : y a-t-il une Ombre dans son quartier ? (oui/non)",        needsTarget: false, gmResolved: true },
-  { id: 'archives',    name: 'Maître des Archives',     icon: '📜', prompt: "Reçoit un fragment d'alignement sur un joueur aléatoire.",         needsTarget: false, gmResolved: true },
-  { id: 'messager',    name: 'Messager Céleste',        icon: '🕊️', prompt: "Envoie un message secret à un joueur dans un autre quartier.",     needsTarget: true },
-  { id: 'collectionneur', name: 'Collectionneur',       icon: '🗃️', prompt: "Écoute une conversation privée entre deux joueurs.",              needsTarget: true },
-  { id: 'assassinmuet', name: 'Assassin Muet',          icon: '🤫', prompt: "Peut utiliser son unique meurtre cette nuit.",                     needsTarget: true, optional: true },
+  { id: 'sculpteur',    name: 'Sculpteur de Cauchemars', nameEn: 'Nightmare Sculptor',   icon: '😱', prompt: "Choisit un joueur à bloquer cette nuit (perd son pouvoir).",        promptEn: "Choose a player to block tonight (loses their power).",           needsTarget: true },
+  { id: 'mainombre',    name: "Main de l'Ombre",         nameEn: "Shadow's Hand",        icon: '🖤', prompt: "Peut corrompre un joueur du Conseil (irréversible).",               promptEn: "Can corrupt a Council member (irreversible).",                     needsTarget: true },
+  { id: 'murmure',      name: "Murmure de l'Abysse",     nameEn: "Abyss Whisper",        icon: '🌑', prompt: "Choisit un joueur pour lui envoyer une fausse information demain.", promptEn: "Choose a player to send false information to tomorrow.",           needsTarget: true },
+  { id: 'fauxoracle',   name: 'Fausse Oracle',           nameEn: 'False Oracle',         icon: '🔮', prompt: "Envoie une fausse vision à un joueur.",                            promptEn: "Send a false vision to a player.",                                 needsTarget: true },
+  { id: 'assassin',     name: 'Assassin Voilé',          nameEn: 'Veiled Assassin',      icon: '🗡️', prompt: "Élimine un joueur dans son quartier.",                             promptEn: "Eliminate a player in your district.",                             needsTarget: true },
+  { id: 'chasseur',     name: "Chasseur de l'Ombre",     nameEn: "Shadow Hunter",        icon: '🏹', prompt: "Peut cibler un joueur pour le tuer (risque mortel si innocent).",   promptEn: "Can target a player to kill them (lethal risk if innocent).",      needsTarget: true, optional: true },
+  { id: 'gardien',      name: 'Gardien de la Porte',     nameEn: 'Gate Warden',          icon: '🚪', prompt: "Bloque un joueur dans son quartier (ne peut pas se déplacer).",    promptEn: "Block a player in their district (cannot move).",                  needsTarget: true },
+  { id: 'pretresse',    name: 'Prêtresse de la Lune',    nameEn: 'Moon Priestess',       icon: '🌙', prompt: "Protège un joueur de la mort cette nuit.",                         promptEn: "Protect a player from death tonight.",                             needsTarget: true },
+  { id: 'voyant',       name: 'Voyant Éclipsé',          nameEn: 'Eclipsed Seer',        icon: '👁️', prompt: "Révèle le rôle exact d'un joueur (usage unique).",                 promptEn: "Reveal a player's exact role (one-time use).",                     needsTarget: true, oneTime: true },
+  { id: 'herald',       name: "Héraut de l'Aube",        nameEn: "Herald of the Dawn",   icon: '🌅', prompt: "Reçoit : y a-t-il une Ombre dans son quartier ? (oui/non)",        promptEn: "Receives: is there a Shadow in your district? (yes/no)",          needsTarget: false, gmResolved: true },
+  { id: 'archives',     name: 'Maître des Archives',     nameEn: 'Master of Archives',   icon: '📜', prompt: "Reçoit un fragment d'alignement sur un joueur aléatoire.",         promptEn: "Receives an alignment fragment about a random player.",            needsTarget: false, gmResolved: true },
+  { id: 'messager',     name: 'Messager Céleste',        nameEn: 'Celestial Messenger',  icon: '🕊️', prompt: "Envoie un message secret à un joueur dans un autre quartier.",     promptEn: "Send a secret message to a player in another district.",           needsTarget: true },
+  { id: 'collectionneur', name: 'Collectionneur',        nameEn: 'Collector',            icon: '🗃️', prompt: "Écoute une conversation privée entre deux joueurs.",              promptEn: "Listen to a private conversation between two players.",            needsTarget: true },
+  { id: 'assassinmuet', name: 'Assassin Muet',           nameEn: 'Silent Assassin',      icon: '🤫', prompt: "Peut utiliser son unique meurtre cette nuit.",                     promptEn: "Can use their single kill tonight.",                               needsTarget: true, optional: true },
 ];
 
 // ---- App State ----
@@ -106,13 +117,13 @@ function updateConnectionBar() {
 
   if (STATE.isLocal) {
     dot.className  = 'connection-dot local';
-    text.textContent = `Mode local · Salle : ${STATE.roomCode || '—'}`;
+    text.textContent = `${t('game.connectionLocal')} ${STATE.roomCode || '—'}`;
   } else if (db) {
     dot.className  = 'connection-dot';
-    text.textContent = `Connecté · Salle : ${STATE.roomCode}`;
+    text.textContent = `${t('game.connectionOnline')} ${STATE.roomCode}`;
   } else {
     dot.className  = 'connection-dot offline';
-    text.textContent = 'Non connecté';
+    text.textContent = t('game.connectionOffline');
   }
 }
 
@@ -202,7 +213,7 @@ function renderLobby() {
   // Nombre de joueurs connectés
   const count = Object.keys(STATE.players).length;
   const countEl = document.getElementById('player-list-count');
-  if (countEl) countEl.textContent = `${count} joueur${count > 1 ? 's' : ''} connecté${count > 1 ? 's' : ''}`;
+  if (countEl) countEl.textContent = `${count} ${count > 1 ? t('game.playerCountPlural') : t('game.playerCount')}`;
 }
 
 function renderPlayerList() {
@@ -217,7 +228,7 @@ function renderPlayerList() {
     row.innerHTML = `
       <div class="player-avatar unassigned">${initial}</div>
       <span class="player-name">${p.name}</span>
-      <span class="player-status-tag ${p.isGM ? 'gm' : 'waiting'}">${p.isGM ? '⚔️ MJ' : '⏳ Attente'}</span>
+      <span class="player-status-tag ${p.isGM ? 'gm' : 'waiting'}">${p.isGM ? '⚔️ MJ' : t('game.waitingStatus')}</span>
     `;
     list.appendChild(row);
   });
@@ -230,7 +241,7 @@ async function assignRoles() {
   const selectedRoles = Array.from(checkedBoxes).map(cb => cb.value);
 
   if (selectedRoles.length < playerIds.length) {
-    alert(`Sélectionnez au moins ${playerIds.length} rôles pour les joueurs.`);
+    alert(t('game.alertRolesRequired', playerIds.length));
     return;
   }
 
@@ -245,7 +256,7 @@ async function assignRoles() {
   updates[`players/${STATE.playerId}/roleId`] = 'gm';
 
   await writeRoom(updates);
-  addLog('🃏 Les rôles ont été attribués. La nuit va tomber...', 'gm');
+  addLog(t('game.logRolesAssigned'), 'gm');
 }
 
 // ---- Démarrer la nuit (MJ) ----
@@ -265,7 +276,7 @@ async function startNight() {
   });
 
   await writeRoom(updates);
-  addLog(`🌑 Tour ${STATE.round + 1} — La nuit tombe sur Erebor...`, 'gm');
+  addLog(t('game.logNightFalls', STATE.round + 1), 'gm');
 }
 
 // ---- NIGHT ----
@@ -294,7 +305,7 @@ function renderNightOrder() {
     li.className = `night-step-item ${index < STATE.nightStep ? 'done' : index === STATE.nightStep ? 'current' : 'pending'}`;
     li.innerHTML = `
       <span class="step-icon">${step.icon}</span>
-      <span class="step-name">${step.name}</span>
+      <span class="step-name">${rl(step, 'name')}</span>
       <div class="step-check"></div>
     `;
     list.appendChild(li);
@@ -312,8 +323,8 @@ function renderGMNightPanel() {
     panel.innerHTML = `
       <div style="text-align:center;padding:2rem;">
         <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
-        <h3 style="color:var(--color-synergie-light);margin-bottom:1rem;">Toutes les actions nocturnes sont résolues</h3>
-        <button class="gm-btn" onclick="startDay()" style="margin:0 auto;max-width:300px;">☀️ Lancer la phase de Jour</button>
+        <h3 style="color:var(--color-synergie-light);margin-bottom:1rem;">${t('game.allNightActionsResolved')}</h3>
+        <button class="gm-btn" onclick="startDay()" style="margin:0 auto;max-width:300px;">${t('game.startDayBtn')}</button>
       </div>
     `;
     return;
@@ -328,22 +339,22 @@ function renderGMNightPanel() {
         <span class="submission-actor">${p.name}</span>
         <span class="submission-arrow">→</span>
         <span class="submission-target">${target}</span>
-        <span class="submission-status">✓ Soumis</span>
+        <span class="submission-status">${t('game.actionSubmitted')}</span>
       </div>`;
     }).join('');
 
   panel.innerHTML = `
     <div class="current-role-prompt">
-      <h4>${step.icon} ${step.name}</h4>
-      <p>${step.prompt}</p>
+      <h4>${step.icon} ${rl(step, 'name')}</h4>
+      <p>${rl(step, 'prompt')}</p>
     </div>
     ${submissions ? `<div class="night-action-submissions">${submissions}</div>` : ''}
     <div style="display:flex;gap:1rem;flex-wrap:wrap;">
       <button class="gm-btn" onclick="advanceNightStep()" style="flex:1;">
-        ✓ Action résolue → Suivant
+        ${t('game.actionResolved')}
       </button>
       ${step.gmResolved ? `<button class="gm-btn" onclick="gmResolvePassive('${step.id}')" style="flex:1;">
-        📤 Envoyer l'info passive
+        ${t('game.sendPassiveInfo')}
       </button>` : ''}
     </div>
   `;
@@ -359,18 +370,22 @@ function renderPlayerNightPanel() {
   if (!me) return;
 
   const roleData = ROLES.find(r => r.id === me.roleId);
-  const factionLabel = { lune: 'Conseil de la Lune', ombre: 'Ombre Souveraine', solitaire: 'Solitaire' };
+  const factionLabel = {
+    lune:      t('common.factionLune'),
+    ombre:     t('common.factionOmbre'),
+    solitaire: t('common.factionSolitaire'),
+  };
 
   // Carte de rôle
   let html = '';
   if (roleData) {
     html += `
       <div class="role-reveal-card ${roleData.faction}">
-        <div class="role-reveal-eyebrow">Votre rôle secret</div>
+        <div class="role-reveal-eyebrow">${t('game.yourSecretRole')}</div>
         <span class="role-reveal-icon">${roleData.icon}</span>
-        <h2 class="role-reveal-name">${roleData.name}</h2>
+        <h2 class="role-reveal-name">${rl(roleData, 'name')}</h2>
         <span class="faction-badge ${roleData.faction}" style="margin:0 auto 1rem;">${factionLabel[roleData.faction]}</span>
-        <p class="role-reveal-power">${roleData.shortPower}</p>
+        <p class="role-reveal-power">${rl(roleData, 'shortPower')}</p>
         ${roleData.faction === 'solitaire' ? `<div class="role-reveal-objective">🎯 ${roleData.shortPower}</div>` : ''}
       </div>
     `;
@@ -384,7 +399,7 @@ function renderPlayerNightPanel() {
     html += `
       <div class="night-waiting">
         <div class="night-waiting-icon">🌙</div>
-        <p>Votre action a été enregistrée. Attendez la résolution de la phase nocturne.</p>
+        <p>${t('game.actionRegistered')}</p>
       </div>
     `;
   } else if (isMyTurn && currentStep.needsTarget) {
@@ -399,12 +414,12 @@ function renderPlayerNightPanel() {
 
     html += `
       <div class="night-action-form">
-        <h3>⚡ Votre action : ${currentStep.name}</h3>
-        <p>${currentStep.prompt}</p>
+        <h3>${t('game.yourAction')} ${rl(currentStep, 'name')}</h3>
+        <p>${rl(currentStep, 'prompt')}</p>
         <div class="target-grid">${alivePlayers}</div>
-        ${currentStep.optional ? `<button class="btn btn-secondary" onclick="skipNightAction()" style="width:100%;margin-bottom:0.5rem;">Passer mon action</button>` : ''}
+        ${currentStep.optional ? `<button class="btn btn-secondary" onclick="skipNightAction()" style="width:100%;margin-bottom:0.5rem;">${t('game.skipAction')}</button>` : ''}
         <button class="btn btn-primary" onclick="submitNightAction()" style="width:100%;" id="submit-night-btn" disabled>
-          ✓ Confirmer l'action
+          ${t('game.confirmAction')}
         </button>
       </div>
     `;
@@ -412,7 +427,7 @@ function renderPlayerNightPanel() {
     html += `
       <div class="night-waiting">
         <div class="night-waiting-icon">🌙</div>
-        <p>${isMyTurn ? "C'est votre tour..." : "Ce n'est pas encore votre tour. Attendez dans l'obscurité."}</p>
+        <p>${isMyTurn ? t('game.yourTurn') : t('game.notYourTurn')}</p>
       </div>
     `;
   }
@@ -461,7 +476,7 @@ async function advanceNightStep() {
 async function startDay() {
   const updates = { phase: 'day', votes: null };
   await writeRoom(updates);
-  addLog('☀️ Le jour se lève sur Erebor. Discutez et votez !', 'gm');
+  addLog(t('game.logDayRises'), 'gm');
 }
 
 // ---- DAY ----
@@ -489,7 +504,7 @@ function addLog(text, type = 'normal') {
   entry.innerHTML = `
     <span class="feed-icon">${icon}</span>
     <span class="feed-text ${type}">${text}</span>
-    <span class="feed-ts">${new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</span>
+    <span class="feed-ts">${new Date().toLocaleTimeString(window.i18n?.getCurrentLang?.() === 'en' ? 'en-GB' : 'fr-FR', { hour: '2-digit', minute: '2-digit' })}</span>
   `;
   body.appendChild(entry);
   body.scrollTop = body.scrollHeight;
@@ -519,7 +534,7 @@ function renderVotePanel() {
       item.innerHTML = `
         <span class="vote-candidate-name">👤 ${p.name}</span>
         ${STATE.isGM ? `<div class="vote-bar-wrapper"><div class="vote-bar" style="width:${pct}%"></div></div><span class="vote-count-text">${voteCount}</span>` : ''}
-        ${!STATE.isGM && !arrested ? `<button class="btn btn-secondary" onclick="submitVote('${uid}')" style="padding:0.25rem 0.75rem;font-size:0.75rem;">Accuser</button>` : ''}
+        ${!STATE.isGM && !arrested ? `<button class="btn btn-secondary" onclick="submitVote('${uid}')" style="padding:0.25rem 0.75rem;font-size:0.75rem;">${t('game.accuseBtn')}</button>` : ''}
       `;
       panel.appendChild(item);
     });
@@ -541,10 +556,10 @@ async function resolveVote() {
   if (topId && STATE.players[topId]) {
     const name = STATE.players[topId].name;
     await writeRoom({ [`players/${topId}/isAlive`]: false });
-    addLog(`💀 ${name} a été exécuté par vote du peuple.`, 'death');
+    addLog(`💀 ${name} ${t('game.logPlayerExecuted')}`, 'death');
     await checkVictory();
   } else {
-    addLog('🤝 Égalité — aucun joueur n\'est exécuté.', 'normal');
+    addLog(t('game.logTie'), 'normal');
   }
 }
 
@@ -561,7 +576,7 @@ function renderAlivePlayers() {
     row.innerHTML = `
       <div class="alive-indicator ${status}"></div>
       <span class="alive-player-name">${p.name}</span>
-      <span class="alive-player-status">${p.isAlive ? 'En vie' : '💀 Mort'}</span>
+      <span class="alive-player-status">${p.isAlive ? t('game.alive') : t('game.dead')}</span>
     `;
     list.appendChild(row);
   });
@@ -577,7 +592,9 @@ function renderGMDayControls() {
 async function startCrepuscule() {
   const event = CREPUSCULE_EVENTS[Math.floor(Math.random() * CREPUSCULE_EVENTS.length)];
   await writeRoom({ phase: 'crepuscule', event });
-  addLog(`🌅 Crépuscule : ${event.title}`, 'event');
+  const lang = window.i18n?.getCurrentLang?.() || 'fr';
+  const evTitle = (lang === 'en' && event.titleEn) ? event.titleEn : event.title;
+  addLog(`${t('game.logCrepuscule')} ${evTitle}`, 'event');
 }
 
 function renderCrepuscule() {
@@ -590,10 +607,11 @@ function renderCrepuscule() {
   const descEl  = document.getElementById('event-desc');
   const effectEl = document.getElementById('event-effect');
 
+  const lang = window.i18n?.getCurrentLang?.() || 'fr';
   if (iconEl)   iconEl.textContent  = ev.icon;
-  if (titleEl)  titleEl.textContent = ev.title;
-  if (descEl)   descEl.textContent  = ev.desc;
-  if (effectEl) effectEl.textContent = `Effet : ${ev.effect}`;
+  if (titleEl)  titleEl.textContent = (lang === 'en' && ev.titleEn) ? ev.titleEn : ev.title;
+  if (descEl)   descEl.textContent  = (lang === 'en' && ev.descEn) ? ev.descEn : ev.desc;
+  if (effectEl) effectEl.textContent = `${t('game.eventEffect')} ${(lang === 'en' && ev.effectEn) ? ev.effectEn : ev.effect}`;
 }
 
 async function continueToCrepuscule() {
@@ -617,11 +635,11 @@ async function checkVictory() {
   });
 
   if (ombre.length === 0) {
-    await writeRoom({ phase: 'gameover', winner: { faction: 'lune', name: 'Conseil de la Lune' } });
+    await writeRoom({ phase: 'gameover', winner: { faction: 'lune' } });
   } else if (ombre.length >= lune.length) {
-    await writeRoom({ phase: 'gameover', winner: { faction: 'ombre', name: 'Ombre Souveraine' } });
+    await writeRoom({ phase: 'gameover', winner: { faction: 'ombre' } });
   } else if (STATE.round >= STATE.config.roundCount) {
-    await writeRoom({ phase: 'gameover', winner: { faction: 'ombre', name: 'Ombre Souveraine (temps écoulé)' } });
+    await writeRoom({ phase: 'gameover', winner: { faction: 'ombre', timeout: true } });
   }
 }
 
@@ -643,16 +661,25 @@ function applyGameover(winner) {
   const subtitleEl = document.getElementById('gameover-subtitle');
 
   if (banner) banner.className = `gameover-winner-banner ${winner.faction}`;
-  if (nameEl) nameEl.textContent = winner.name;
+
+  const factionNames = {
+    lune:      t('common.factionLune'),
+    ombre:     t('common.factionOmbre'),
+    solitaire: t('common.factionSolitaire'),
+  };
+  const winnerName = factionNames[winner.faction] || winner.faction;
+  if (nameEl) nameEl.textContent = winner.timeout
+    ? `${winnerName} (${window.i18n?.getCurrentLang?.() === 'en' ? 'time out' : 'temps écoulé'})`
+    : winnerName;
 
   const icons = { lune: '🌙', ombre: '🌑', solitaire: '🌀' };
   const iconEl = document.getElementById('gameover-icon');
   if (iconEl) iconEl.textContent = icons[winner.faction] || '🏆';
 
   const subtitles = {
-    lune:   'La lumière triomphe des ténèbres. Erebor est sauvée.',
-    ombre:  'Les Ombres ont gagné. Erebor sombre dans la nuit éternelle.',
-    solitaire: 'Un destin solitaire s\'accomplit hors des lignes de faction.'
+    lune:      t('game.victoryLune'),
+    ombre:     t('game.victoryOmbre'),
+    solitaire: t('game.victorySolitaire'),
   };
   if (subtitleEl) subtitleEl.textContent = subtitles[winner.faction] || '';
 
@@ -691,7 +718,7 @@ function updateGrimoire() {
     row.innerHTML = `
       <span class="g-icon">${roleData?.icon || '❓'}</span>
       <span class="g-player">${p.name}</span>
-      <span class="g-role">${roleData?.name || 'Non assigné'}</span>
+      <span class="g-role">${roleData ? rl(roleData, 'name') : t('game.notAssigned')}</span>
       <div class="g-status ${statusClass}"></div>
     `;
     body.appendChild(row);
@@ -772,7 +799,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('copy-room-code')?.addEventListener('click', () => {
     navigator.clipboard.writeText(STATE.roomCode || '').then(() => {
       const btn = document.getElementById('copy-room-code');
-      if (btn) { btn.textContent = '✓ Copié !'; setTimeout(() => btn.textContent = '📋 Copier', 2000); }
+      if (btn) { btn.textContent = t('game.copied'); setTimeout(() => btn.textContent = t('game.copyCode'), 2000); }
     });
   });
 });
@@ -791,6 +818,6 @@ window.continueToCrepuscule = continueToCrepuscule;
 window.continueToNextNight  = continueToNextNight;
 window.toggleGrimoire    = toggleGrimoire;
 window.gmResolvePassive  = function(roleId) {
-  const msg = prompt(`Message pour le joueur "${roleId}" (info passive) :`);
+  const msg = prompt(t('game.passiveInfoPrompt', roleId));
   if (msg) addLog(`[Info MJ → ${roleId}] ${msg}`, 'gm');
 };
