@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Politique de confidentialité des Ombres d'Erebor — Comment nous collectons, utilisons et protégeons vos données personnelles.">
+  <title>Politique de Confidentialité — Les Ombres d'Erebor</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/rules.css">
+  <link rel="stylesheet" href="assets/css/lang.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-title">Les Ombres d'Erebor</span>
+        <span class="nav-logo-sub"><span class="lang-fr">Jeu de déduction sociale</span><span class="lang-en">Social deduction game</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html"><span class="nav-icon">🏠</span><span data-i18n="nav.home">Accueil</span></a></li>
+        <li><a href="rules.html"><span class="nav-icon">📖</span><span data-i18n="nav.rules">Règles</span></a></li>
+        <li><a href="roles.html"><span class="nav-icon">🎭</span><span data-i18n="nav.roles">Rôles</span></a></li>
+        <li><a href="interactions.html"><span class="nav-icon">🕸️</span><span data-i18n="nav.interactions">Interactions</span></a></li>
+        <li><a href="play.html"><span class="nav-icon">🎮</span><span data-i18n="nav.play">Jouer</span></a></li>
+        <li><a href="shop.html"><span class="nav-icon">🛒</span><span data-i18n="nav.shop">Boutique</span></a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="play.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.8rem;" data-i18n="nav.playBtn">🎮 Jouer</a>
+      </div>
+      <div class="lang-toggle" role="group" aria-label="Langue / Language">
+        <button class="lang-option active" data-lang="fr"><span class="flag">🇫🇷</span> FR</button>
+        <span class="lang-divider"></span>
+        <button class="lang-option" data-lang="en"><span class="flag">🇬🇧</span> EN</button>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile-drawer">
+    <a href="index.html">🏠 <span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="rules.html">📖 <span class="lang-fr">Règles du jeu</span><span class="lang-en">Game rules</span></a>
+    <a href="roles.html">🎭 <span class="lang-fr">Les 25 rôles</span><span class="lang-en">The 25 roles</span></a>
+    <a href="interactions.html">🕸️ <span class="lang-fr">Matrice d'interactions</span><span class="lang-en">Interaction matrix</span></a>
+    <a href="play.html">🎮 <span class="lang-fr">Jouer en ligne</span><span class="lang-en">Play online</span></a>
+    <a href="shop.html">🛒 <span class="lang-fr">Boutique</span><span class="lang-en">Shop</span></a>
+    <div class="lang-toggle" role="group" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);">
+      <button class="lang-option active" data-lang="fr" style="flex:1;"><span class="flag">🇫🇷</span> FR</button>
+      <span class="lang-divider"></span>
+      <button class="lang-option" data-lang="en" style="flex:1;"><span class="flag">🇬🇧</span> EN</button>
+    </div>
+  </div>
+
+  <!-- CONTENU -->
+  <main class="page-content rules-page">
+    <div class="container">
+
+      <!-- Hero -->
+      <div class="rules-hero">
+        <span class="section-eyebrow">
+          <span class="lang-fr">Documents légaux</span>
+          <span class="lang-en">Legal documents</span>
+        </span>
+        <h1 style="color:var(--color-gold-light);text-shadow:0 0 30px rgba(201,168,76,0.3);margin-bottom:1rem;">
+          <span class="lang-fr">Politique de Confidentialité</span>
+          <span class="lang-en">Privacy Policy</span>
+        </h1>
+        <p style="color:var(--color-text-muted);font-size:var(--text-lg);max-width:680px;margin:0 auto;">
+          <span class="lang-fr">Dernière mise à jour : 6 avril 2026. Conforme au Règlement Général sur la Protection des Données (RGPD / UE 2016/679) et à la loi Informatique et Libertés.</span>
+          <span class="lang-en">Last updated: April 6, 2026. Compliant with the General Data Protection Regulation (GDPR / EU 2016/679) and the French Data Protection Act.</span>
+        </p>
+      </div>
+
+      <!-- Layout deux colonnes -->
+      <div class="rules-layout">
+
+        <!-- Sidebar -->
+        <aside class="chapter-nav" aria-label="Sommaire">
+          <div class="chapter-nav-header">
+            <span class="lang-fr">Sommaire</span>
+            <span class="lang-en">Contents</span>
+          </div>
+          <ul class="chapter-nav-list">
+            <li><a href="#responsable"><span class="chapter-icon">🏛️</span><span class="lang-fr">Responsable du traitement</span><span class="lang-en">Data Controller</span></a></li>
+            <li><a href="#collecte"><span class="chapter-icon">📋</span><span class="lang-fr">Données collectées</span><span class="lang-en">Data Collected</span></a></li>
+            <li><a href="#finalites"><span class="chapter-icon">🎯</span><span class="lang-fr">Finalités et bases légales</span><span class="lang-en">Purposes & Legal Basis</span></a></li>
+            <li><a href="#conservation"><span class="chapter-icon">⏳</span><span class="lang-fr">Durée de conservation</span><span class="lang-en">Retention Period</span></a></li>
+            <li><a href="#destinataires"><span class="chapter-icon">🔗</span><span class="lang-fr">Destinataires des données</span><span class="lang-en">Data Recipients</span></a></li>
+            <li><a href="#transferts"><span class="chapter-icon">🌍</span><span class="lang-fr">Transferts hors UE</span><span class="lang-en">Transfers outside EU</span></a></li>
+            <li><a href="#droits"><span class="chapter-icon">⚖️</span><span class="lang-fr">Vos droits</span><span class="lang-en">Your Rights</span></a></li>
+            <li><a href="#cookies"><span class="chapter-icon">🍪</span><span class="lang-fr">Cookies</span><span class="lang-en">Cookies</span></a></li>
+            <li><a href="#mineurs"><span class="chapter-icon">🔒</span><span class="lang-fr">Mineurs</span><span class="lang-en">Minors</span></a></li>
+            <li><a href="#contact-privacy"><span class="chapter-icon">✉️</span><span class="lang-fr">Nous contacter</span><span class="lang-en">Contact Us</span></a></li>
+          </ul>
+        </aside>
+
+        <!-- Contenu principal -->
+        <div class="rules-content">
+
+          <!-- 1. Responsable -->
+          <section class="rules-section" id="responsable">
+            <h2>
+              <span class="section-emoji">🏛️</span>
+              <span class="lang-fr">1. Responsable du traitement</span>
+              <span class="lang-en">1. Data Controller</span>
+            </h2>
+            <div class="lang-fr">
+              <p>Le responsable du traitement des données à caractère personnel collectées via le site <strong>Les Ombres d'Erebor</strong> est :</p>
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);margin:var(--space-6) 0;">
+                <p style="margin:0;line-height:2;"><strong>Les Ombres d'Erebor</strong><br>
+                Créateur indépendant — France<br>
+                Email : <a href="mailto:contact@ombres-erebor.fr" style="color:var(--color-gold);">contact@ombres-erebor.fr</a>
+                </p>
+              </div>
+              <p>En tant qu'éditeur basé en France, nous sommes soumis au droit français et au Règlement Général sur la Protection des Données (RGPD, UE 2016/679). La Commission Nationale de l'Informatique et des Libertés (CNIL) est notre autorité de contrôle.</p>
+            </div>
+            <div class="lang-en">
+              <p>The data controller for personal data collected via the <strong>Les Ombres d'Erebor</strong> website is:</p>
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);margin:var(--space-6) 0;">
+                <p style="margin:0;line-height:2;"><strong>Les Ombres d'Erebor</strong><br>
+                Independent Creator — France<br>
+                Email: <a href="mailto:contact@ombres-erebor.fr" style="color:var(--color-gold);">contact@ombres-erebor.fr</a>
+                </p>
+              </div>
+              <p>As a publisher based in France, we are subject to French law and the General Data Protection Regulation (GDPR, EU 2016/679). The Commission Nationale de l'Informatique et des Libertés (CNIL) is our supervisory authority.</p>
+            </div>
+          </section>
+
+          <!-- 2. Données collectées -->
+          <section class="rules-section" id="collecte">
+            <h2>
+              <span class="section-emoji">📋</span>
+              <span class="lang-fr">2. Données collectées</span>
+              <span class="lang-en">2. Data Collected</span>
+            </h2>
+            <div class="lang-fr">
+              <p>Selon votre utilisation du site, nous pouvons collecter les données suivantes :</p>
+            </div>
+            <div class="lang-en">
+              <p>Depending on how you use the site, we may collect the following data:</p>
+            </div>
+
+            <div style="display:grid;gap:var(--space-4);margin:var(--space-6) 0;">
+
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <h4 style="color:var(--color-gold-light);margin-bottom:var(--space-3);font-family:var(--font-ui);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:0.1em;">
+                  <span class="lang-fr">Données de navigation</span>
+                  <span class="lang-en">Browsing data</span>
+                </h4>
+                <ul style="color:var(--color-text-muted);font-size:var(--text-sm);margin:0;padding-left:var(--space-5);">
+                  <li class="lang-fr">Adresse IP (anonymisée après 24h)</li>
+                  <li class="lang-en">IP address (anonymised after 24h)</li>
+                  <li class="lang-fr">Type de navigateur et système d'exploitation</li>
+                  <li class="lang-en">Browser type and operating system</li>
+                  <li class="lang-fr">Pages visitées, durée de visite, liens cliqués</li>
+                  <li class="lang-en">Pages visited, visit duration, links clicked</li>
+                  <li class="lang-fr">Pays d'origine (déterminé par l'IP, non la géolocalisation GPS)</li>
+                  <li class="lang-en">Country of origin (determined from IP, not GPS geolocation)</li>
+                </ul>
+              </div>
+
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <h4 style="color:var(--color-gold-light);margin-bottom:var(--space-3);font-family:var(--font-ui);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:0.1em;">
+                  <span class="lang-fr">Compte de jeu en ligne</span>
+                  <span class="lang-en">Online game account</span>
+                </h4>
+                <ul style="color:var(--color-text-muted);font-size:var(--text-sm);margin:0;padding-left:var(--space-5);">
+                  <li class="lang-fr">Nom d'utilisateur (pseudonyme choisi)</li>
+                  <li class="lang-en">Username (chosen pseudonym)</li>
+                  <li class="lang-fr">Adresse email</li>
+                  <li class="lang-en">Email address</li>
+                  <li class="lang-fr">Données de partie (rôles joués, résultats, statistiques)</li>
+                  <li class="lang-en">Game data (roles played, results, statistics)</li>
+                  <li class="lang-fr">Messages échangés dans les parties en ligne</li>
+                  <li class="lang-en">Messages exchanged during online games</li>
+                </ul>
+              </div>
+
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <h4 style="color:var(--color-gold-light);margin-bottom:var(--space-3);font-family:var(--font-ui);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:0.1em;">
+                  <span class="lang-fr">Commandes (Boutique)</span>
+                  <span class="lang-en">Orders (Shop)</span>
+                </h4>
+                <ul style="color:var(--color-text-muted);font-size:var(--text-sm);margin:0;padding-left:var(--space-5);">
+                  <li class="lang-fr">Nom, prénom, adresse postale, numéro de téléphone</li>
+                  <li class="lang-en">First name, last name, postal address, phone number</li>
+                  <li class="lang-fr">Adresse email (confirmation de commande)</li>
+                  <li class="lang-en">Email address (order confirmation)</li>
+                  <li class="lang-fr">Données de paiement (traitées par notre prestataire sécurisé — nous ne stockons aucun numéro de carte)</li>
+                  <li class="lang-en">Payment data (processed by our secure provider — we store no card numbers)</li>
+                  <li class="lang-fr">Historique de commandes</li>
+                  <li class="lang-en">Order history</li>
+                </ul>
+              </div>
+            </div>
+
+            <div style="background:rgba(74,143,168,0.08);border:1px solid var(--color-lune-dim);border-radius:var(--radius-xl);padding:var(--space-5);margin-top:var(--space-4);">
+              <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted);">
+                ℹ️ <strong style="color:var(--color-lune-light);">
+                  <span class="lang-fr">Principe de minimisation</span>
+                  <span class="lang-en">Data minimisation</span>
+                </strong><br>
+                <span class="lang-fr">Conformément à l'article 5 du RGPD, nous ne collectons que les données strictement nécessaires à chaque finalité. Aucun profilage commercial automatisé n'est effectué.</span>
+                <span class="lang-en">In accordance with Article 5 of the GDPR, we only collect data strictly necessary for each purpose. No automated commercial profiling is carried out.</span>
+              </p>
+            </div>
+          </section>
+
+          <!-- 3. Finalités -->
+          <section class="rules-section" id="finalites">
+            <h2>
+              <span class="section-emoji">🎯</span>
+              <span class="lang-fr">3. Finalités et bases légales</span>
+              <span class="lang-en">3. Purposes & Legal Basis</span>
+            </h2>
+
+            <div style="overflow-x:auto;margin:var(--space-6) 0;">
+              <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm);">
+                <thead>
+                  <tr style="background:var(--color-surface-2);border-bottom:2px solid var(--color-border);">
+                    <th style="padding:var(--space-4);text-align:left;color:var(--color-gold-light);font-family:var(--font-ui);text-transform:uppercase;letter-spacing:0.08em;font-size:var(--text-xs);">
+                      <span class="lang-fr">Finalité</span><span class="lang-en">Purpose</span>
+                    </th>
+                    <th style="padding:var(--space-4);text-align:left;color:var(--color-gold-light);font-family:var(--font-ui);text-transform:uppercase;letter-spacing:0.08em;font-size:var(--text-xs);">
+                      <span class="lang-fr">Base légale (RGPD art. 6)</span><span class="lang-en">Legal basis (GDPR art. 6)</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid var(--color-border);">
+                    <td style="padding:var(--space-4);color:var(--color-text-muted);">
+                      <span class="lang-fr">Fournir le service de jeu en ligne</span>
+                      <span class="lang-en">Providing the online game service</span>
+                    </td>
+                    <td style="padding:var(--space-4);color:var(--color-lune-light);">
+                      <span class="lang-fr">Exécution du contrat (art. 6.1.b)</span>
+                      <span class="lang-en">Performance of contract (art. 6.1.b)</span>
+                    </td>
+                  </tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:rgba(255,255,255,0.01);">
+                    <td style="padding:var(--space-4);color:var(--color-text-muted);">
+                      <span class="lang-fr">Traitement des commandes et livraisons</span>
+                      <span class="lang-en">Order processing and delivery</span>
+                    </td>
+                    <td style="padding:var(--space-4);color:var(--color-lune-light);">
+                      <span class="lang-fr">Exécution du contrat (art. 6.1.b)</span>
+                      <span class="lang-en">Performance of contract (art. 6.1.b)</span>
+                    </td>
+                  </tr>
+                  <tr style="border-bottom:1px solid var(--color-border);">
+                    <td style="padding:var(--space-4);color:var(--color-text-muted);">
+                      <span class="lang-fr">Statistiques anonymes d'utilisation (amélioration du jeu)</span>
+                      <span class="lang-en">Anonymous usage statistics (game improvement)</span>
+                    </td>
+                    <td style="padding:var(--space-4);color:var(--color-lune-light);">
+                      <span class="lang-fr">Intérêt légitime (art. 6.1.f)</span>
+                      <span class="lang-en">Legitimate interest (art. 6.1.f)</span>
+                    </td>
+                  </tr>
+                  <tr style="border-bottom:1px solid var(--color-border);background:rgba(255,255,255,0.01);">
+                    <td style="padding:var(--space-4);color:var(--color-text-muted);">
+                      <span class="lang-fr">Envoi d'une newsletter ou communications marketing</span>
+                      <span class="lang-en">Newsletter or marketing communications</span>
+                    </td>
+                    <td style="padding:var(--space-4);color:var(--color-gold);">
+                      <span class="lang-fr">Consentement (art. 6.1.a) — révocable à tout moment</span>
+                      <span class="lang-en">Consent (art. 6.1.a) — revocable at any time</span>
+                    </td>
+                  </tr>
+                  <tr style="border-bottom:1px solid var(--color-border);">
+                    <td style="padding:var(--space-4);color:var(--color-text-muted);">
+                      <span class="lang-fr">Conformité aux obligations légales (comptabilité, fiscalité)</span>
+                      <span class="lang-en">Compliance with legal obligations (accounting, tax)</span>
+                    </td>
+                    <td style="padding:var(--space-4);color:var(--color-lune-light);">
+                      <span class="lang-fr">Obligation légale (art. 6.1.c)</span>
+                      <span class="lang-en">Legal obligation (art. 6.1.c)</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:var(--space-4);color:var(--color-text-muted);">
+                      <span class="lang-fr">Cookies analytiques (si acceptés)</span>
+                      <span class="lang-en">Analytics cookies (if accepted)</span>
+                    </td>
+                    <td style="padding:var(--space-4);color:var(--color-gold);">
+                      <span class="lang-fr">Consentement (art. 6.1.a)</span>
+                      <span class="lang-en">Consent (art. 6.1.a)</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- 4. Conservation -->
+          <section class="rules-section" id="conservation">
+            <h2>
+              <span class="section-emoji">⏳</span>
+              <span class="lang-fr">4. Durée de conservation</span>
+              <span class="lang-en">4. Retention Period</span>
+            </h2>
+            <div style="display:grid;gap:var(--space-3);margin:var(--space-6) 0;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <div>
+                  <p style="margin:0;font-size:var(--text-sm);font-weight:600;color:var(--color-text);">
+                    <span class="lang-fr">Compte de jeu</span><span class="lang-en">Game account</span>
+                  </p>
+                  <p style="margin:0;font-size:var(--text-xs);color:var(--color-text-muted);">
+                    <span class="lang-fr">Données de partie, pseudonyme</span><span class="lang-en">Game data, username</span>
+                  </p>
+                </div>
+                <div style="display:flex;align-items:center;">
+                  <span style="color:var(--color-gold-light);font-family:var(--font-ui);font-size:var(--text-sm);">
+                    <span class="lang-fr">Jusqu'à suppression du compte + 30 jours</span>
+                    <span class="lang-en">Until account deletion + 30 days</span>
+                  </span>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <div>
+                  <p style="margin:0;font-size:var(--text-sm);font-weight:600;color:var(--color-text);">
+                    <span class="lang-fr">Commandes</span><span class="lang-en">Orders</span>
+                  </p>
+                  <p style="margin:0;font-size:var(--text-xs);color:var(--color-text-muted);">
+                    <span class="lang-fr">Coordonnées, adresse, historique</span><span class="lang-en">Contact info, address, history</span>
+                  </p>
+                </div>
+                <div style="display:flex;align-items:center;">
+                  <span style="color:var(--color-gold-light);font-family:var(--font-ui);font-size:var(--text-sm);">
+                    <span class="lang-fr">10 ans (obligation comptable — art. L.123-22 Code de commerce)</span>
+                    <span class="lang-en">10 years (accounting obligation — French Commercial Code)</span>
+                  </span>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <div>
+                  <p style="margin:0;font-size:var(--text-sm);font-weight:600;color:var(--color-text);">
+                    <span class="lang-fr">Logs de navigation</span><span class="lang-en">Browsing logs</span>
+                  </p>
+                  <p style="margin:0;font-size:var(--text-xs);color:var(--color-text-muted);">
+                    <span class="lang-fr">IP anonymisée, pages visitées</span><span class="lang-en">Anonymised IP, pages visited</span>
+                  </p>
+                </div>
+                <div style="display:flex;align-items:center;">
+                  <span style="color:var(--color-gold-light);font-family:var(--font-ui);font-size:var(--text-sm);">
+                    <span class="lang-fr">13 mois maximum (recommandation CNIL)</span>
+                    <span class="lang-en">13 months maximum (CNIL recommendation)</span>
+                  </span>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <div>
+                  <p style="margin:0;font-size:var(--text-sm);font-weight:600;color:var(--color-text);">
+                    <span class="lang-fr">Newsletter / marketing</span><span class="lang-en">Newsletter / marketing</span>
+                  </p>
+                  <p style="margin:0;font-size:var(--text-xs);color:var(--color-text-muted);">
+                    <span class="lang-fr">Email, préférences</span><span class="lang-en">Email, preferences</span>
+                  </p>
+                </div>
+                <div style="display:flex;align-items:center;">
+                  <span style="color:var(--color-gold-light);font-family:var(--font-ui);font-size:var(--text-sm);">
+                    <span class="lang-fr">Jusqu'au retrait du consentement ou 3 ans d'inactivité</span>
+                    <span class="lang-en">Until consent withdrawal or 3 years of inactivity</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 5. Destinataires -->
+          <section class="rules-section" id="destinataires">
+            <h2>
+              <span class="section-emoji">🔗</span>
+              <span class="lang-fr">5. Destinataires des données</span>
+              <span class="lang-en">5. Data Recipients</span>
+            </h2>
+            <div class="lang-fr">
+              <p>Vos données ne sont jamais vendues. Elles peuvent être transmises aux sous-traitants suivants, dans la stricte limite de leurs missions :</p>
+            </div>
+            <div class="lang-en">
+              <p>Your data is never sold. It may be shared with the following sub-processors, strictly limited to their tasks:</p>
+            </div>
+            <div style="display:grid;gap:var(--space-3);margin:var(--space-6) 0;">
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);display:grid;grid-template-columns:auto 1fr;gap:var(--space-4);align-items:center;">
+                <div style="width:40px;height:40px;background:var(--color-surface-2);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🔥</div>
+                <div>
+                  <strong style="color:var(--color-text);">Firebase (Google LLC)</strong>
+                  <p style="margin:0;font-size:var(--text-xs);color:var(--color-text-muted);">
+                    <span class="lang-fr">Authentification et base de données du jeu en ligne. Données stockées dans l'UE (région europe-west). Google est soumis aux clauses contractuelles types CE.</span>
+                    <span class="lang-en">Authentication and online game database. Data stored in the EU (europe-west region). Google is bound by EU Standard Contractual Clauses.</span>
+                  </p>
+                </div>
+              </div>
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);display:grid;grid-template-columns:auto 1fr;gap:var(--space-4);align-items:center;">
+                <div style="width:40px;height:40px;background:var(--color-surface-2);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🚚</div>
+                <div>
+                  <strong style="color:var(--color-text);">
+                    <span class="lang-fr">Transporteurs (La Poste, DHL, etc.)</span>
+                    <span class="lang-en">Carriers (La Poste, DHL, etc.)</span>
+                  </strong>
+                  <p style="margin:0;font-size:var(--text-xs);color:var(--color-text-muted);">
+                    <span class="lang-fr">Nom, adresse de livraison uniquement. Nécessaire à l'exécution de votre commande.</span>
+                    <span class="lang-en">Name and delivery address only. Required for order fulfilment.</span>
+                  </p>
+                </div>
+              </div>
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);display:grid;grid-template-columns:auto 1fr;gap:var(--space-4);align-items:center;">
+                <div style="width:40px;height:40px;background:var(--color-surface-2);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.2rem;">💳</div>
+                <div>
+                  <strong style="color:var(--color-text);">
+                    <span class="lang-fr">Prestataire de paiement</span>
+                    <span class="lang-en">Payment provider</span>
+                  </strong>
+                  <p style="margin:0;font-size:var(--text-xs);color:var(--color-text-muted);">
+                    <span class="lang-fr">Les données bancaires sont traitées directement par notre prestataire certifié PCI-DSS. Nous n'avons jamais accès à vos coordonnées bancaires complètes.</span>
+                    <span class="lang-en">Banking data is processed directly by our PCI-DSS certified provider. We never have access to your full banking details.</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div style="background:rgba(201,168,76,0.06);border:1px solid var(--color-gold-dim);border-radius:var(--radius-xl);padding:var(--space-5);">
+              <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted);">
+                ℹ️ <span class="lang-fr">Tous nos sous-traitants sont contractuellement tenus de respecter le RGPD et de n'utiliser vos données qu'aux fins pour lesquelles elles ont été transmises.</span>
+                <span class="lang-en">All our sub-processors are contractually required to comply with the GDPR and to use your data only for the purposes for which it was shared.</span>
+              </p>
+            </div>
+          </section>
+
+          <!-- 6. Transferts hors UE -->
+          <section class="rules-section" id="transferts">
+            <h2>
+              <span class="section-emoji">🌍</span>
+              <span class="lang-fr">6. Transferts de données hors UE</span>
+              <span class="lang-en">6. Data Transfers Outside the EU</span>
+            </h2>
+            <div class="lang-fr">
+              <p>Certains de nos sous-traitants (notamment Google/Firebase) peuvent traiter des données hors de l'Union européenne. Dans ce cas, nous nous assurons que les transferts sont encadrés par :</p>
+              <ul>
+                <li>Les <strong>clauses contractuelles types</strong> adoptées par la Commission européenne ;</li>
+                <li>Ou une <strong>décision d'adéquation</strong> reconnaissant le niveau de protection du pays destinataire.</li>
+              </ul>
+              <p>Pour les résidents de l'UE, ces garanties sont exigées par les articles 44 à 49 du RGPD.</p>
+            </div>
+            <div class="lang-en">
+              <p>Some of our sub-processors (particularly Google/Firebase) may process data outside the European Union. In such cases, we ensure transfers are covered by:</p>
+              <ul>
+                <li><strong>Standard Contractual Clauses</strong> adopted by the European Commission;</li>
+                <li>Or an <strong>adequacy decision</strong> recognising the level of protection of the recipient country.</li>
+              </ul>
+              <p>For EU residents, these guarantees are required under Articles 44 to 49 of the GDPR.</p>
+            </div>
+          </section>
+
+          <!-- 7. Droits -->
+          <section class="rules-section" id="droits">
+            <h2>
+              <span class="section-emoji">⚖️</span>
+              <span class="lang-fr">7. Vos droits</span>
+              <span class="lang-en">7. Your Rights</span>
+            </h2>
+            <div class="lang-fr">
+              <p>En vertu du RGPD et de la loi Informatique et Libertés, vous disposez des droits suivants concernant vos données personnelles :</p>
+            </div>
+            <div class="lang-en">
+              <p>Under the GDPR and the French Data Protection Act, you have the following rights regarding your personal data:</p>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin:var(--space-6) 0;">
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <h4 style="color:var(--color-lune-light);margin-bottom:var(--space-2);font-size:var(--text-sm);">
+                  <span class="lang-fr">Droit d'accès (art. 15)</span>
+                  <span class="lang-en">Right of access (art. 15)</span>
+                </h4>
+                <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted);">
+                  <span class="lang-fr">Obtenir une copie de toutes les données que nous détenons sur vous.</span>
+                  <span class="lang-en">Obtain a copy of all data we hold about you.</span>
+                </p>
+              </div>
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <h4 style="color:var(--color-lune-light);margin-bottom:var(--space-2);font-size:var(--text-sm);">
+                  <span class="lang-fr">Droit de rectification (art. 16)</span>
+                  <span class="lang-en">Right to rectification (art. 16)</span>
+                </h4>
+                <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted);">
+                  <span class="lang-fr">Corriger des données inexactes ou incomplètes.</span>
+                  <span class="lang-en">Correct inaccurate or incomplete data.</span>
+                </p>
+              </div>
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <h4 style="color:var(--color-lune-light);margin-bottom:var(--space-2);font-size:var(--text-sm);">
+                  <span class="lang-fr">Droit à l'effacement (art. 17) — « droit à l'oubli »</span>
+                  <span class="lang-en">Right to erasure (art. 17) — "right to be forgotten"</span>
+                </h4>
+                <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted);">
+                  <span class="lang-fr">Demander la suppression de vos données, sous réserve de nos obligations légales de conservation.</span>
+                  <span class="lang-en">Request deletion of your data, subject to our legal retention obligations.</span>
+                </p>
+              </div>
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <h4 style="color:var(--color-lune-light);margin-bottom:var(--space-2);font-size:var(--text-sm);">
+                  <span class="lang-fr">Droit à la portabilité (art. 20)</span>
+                  <span class="lang-en">Right to data portability (art. 20)</span>
+                </h4>
+                <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted);">
+                  <span class="lang-fr">Recevoir vos données dans un format structuré et lisible par machine pour les transférer à un autre service.</span>
+                  <span class="lang-en">Receive your data in a structured, machine-readable format to transfer to another service.</span>
+                </p>
+              </div>
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <h4 style="color:var(--color-lune-light);margin-bottom:var(--space-2);font-size:var(--text-sm);">
+                  <span class="lang-fr">Droit à la limitation (art. 18)</span>
+                  <span class="lang-en">Right to restriction (art. 18)</span>
+                </h4>
+                <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted);">
+                  <span class="lang-fr">Suspendre le traitement de vos données dans certaines circonstances.</span>
+                  <span class="lang-en">Suspend the processing of your data in certain circumstances.</span>
+                </p>
+              </div>
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <h4 style="color:var(--color-lune-light);margin-bottom:var(--space-2);font-size:var(--text-sm);">
+                  <span class="lang-fr">Droit d'opposition (art. 21)</span>
+                  <span class="lang-en">Right to object (art. 21)</span>
+                </h4>
+                <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted);">
+                  <span class="lang-fr">S'opposer au traitement fondé sur l'intérêt légitime (notamment la prospection commerciale).</span>
+                  <span class="lang-en">Object to processing based on legitimate interest (especially direct marketing).</span>
+                </p>
+              </div>
+            </div>
+
+            <div style="background:var(--color-surface);border:1px solid var(--color-gold-dim);border-radius:var(--radius-xl);padding:var(--space-6);margin-top:var(--space-4);">
+              <h4 style="color:var(--color-gold-light);margin-bottom:var(--space-3);font-size:var(--text-base);">
+                <span class="lang-fr">Comment exercer vos droits ?</span>
+                <span class="lang-en">How to exercise your rights?</span>
+              </h4>
+              <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-3);">
+                <span class="lang-fr">Envoyez un email à <a href="mailto:contact@ombres-erebor.fr" style="color:var(--color-gold);">contact@ombres-erebor.fr</a> en précisant votre demande. Nous répondons dans un délai maximum d'<strong style="color:var(--color-text);">un mois</strong> (art. 12 RGPD). Une pièce d'identité peut vous être demandée pour vérifier votre identité.</span>
+                <span class="lang-en">Send an email to <a href="mailto:contact@ombres-erebor.fr" style="color:var(--color-gold);">contact@ombres-erebor.fr</a> specifying your request. We respond within a maximum of <strong style="color:var(--color-text);">one month</strong> (GDPR art. 12). We may request proof of identity to verify your request.</span>
+              </p>
+              <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin:0;">
+                <span class="lang-fr">Si vous estimez que vos droits ne sont pas respectés, vous avez le droit d'introduire une réclamation auprès de la <strong style="color:var(--color-text);">CNIL</strong> (Commission Nationale de l'Informatique et des Libertés) : <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener" style="color:var(--color-gold);">www.cnil.fr/fr/plaintes</a></span>
+                <span class="lang-en">If you believe your rights are not being respected, you have the right to lodge a complaint with the <strong style="color:var(--color-text);">CNIL</strong> (French Data Protection Authority): <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener" style="color:var(--color-gold);">www.cnil.fr/fr/plaintes</a>. EU residents may also contact their local supervisory authority.</span>
+              </p>
+            </div>
+          </section>
+
+          <!-- 8. Cookies -->
+          <section class="rules-section" id="cookies">
+            <h2>
+              <span class="section-emoji">🍪</span>
+              <span class="lang-fr">8. Cookies et traceurs</span>
+              <span class="lang-en">8. Cookies & Trackers</span>
+            </h2>
+            <div class="lang-fr">
+              <p>Conformément à la délibération CNIL n°2020-091 et aux lignes directrices sur les cookies, voici les traceurs utilisés sur ce site :</p>
+            </div>
+            <div class="lang-en">
+              <p>In accordance with CNIL guidelines on cookies, here are the trackers used on this site:</p>
+            </div>
+
+            <div style="display:grid;gap:var(--space-3);margin:var(--space-6) 0;">
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-lune);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-2);">
+                  <strong style="color:var(--color-text);">
+                    <span class="lang-fr">Cookies techniques (strictement nécessaires)</span>
+                    <span class="lang-en">Technical cookies (strictly necessary)</span>
+                  </strong>
+                  <span style="background:var(--color-lune-dim);color:var(--color-lune-light);font-size:var(--text-xs);padding:2px 8px;border-radius:100px;font-family:var(--font-ui);">
+                    <span class="lang-fr">Sans consentement</span><span class="lang-en">No consent needed</span>
+                  </span>
+                </div>
+                <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted);">
+                  <span class="lang-fr">Session de jeu, préférences de langue, panier d'achat. Indispensables au fonctionnement du site. Durée : session ou 30 jours maximum.</span>
+                  <span class="lang-en">Game session, language preferences, shopping cart. Essential to site operation. Duration: session or 30 days maximum.</span>
+                </p>
+              </div>
+              <div style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-gold);border-radius:var(--radius-xl);padding:var(--space-5);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-2);">
+                  <strong style="color:var(--color-text);">
+                    <span class="lang-fr">Cookies analytiques</span>
+                    <span class="lang-en">Analytics cookies</span>
+                  </strong>
+                  <span style="background:rgba(201,168,76,0.15);color:var(--color-gold-light);font-size:var(--text-xs);padding:2px 8px;border-radius:100px;font-family:var(--font-ui);">
+                    <span class="lang-fr">Consentement requis</span><span class="lang-en">Consent required</span>
+                  </span>
+                </div>
+                <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted);">
+                  <span class="lang-fr">Statistiques de fréquentation anonymisées (nombre de visiteurs, pages populaires). Aucune identification individuelle. Durée : 13 mois maximum.</span>
+                  <span class="lang-en">Anonymised traffic statistics (visitor count, popular pages). No individual identification. Duration: 13 months maximum.</span>
+                </p>
+              </div>
+            </div>
+
+            <div style="background:rgba(74,143,168,0.06);border:1px solid var(--color-lune-dim);border-radius:var(--radius-xl);padding:var(--space-5);">
+              <p style="margin:0;font-size:var(--text-sm);color:var(--color-text-muted);">
+                ℹ️ <span class="lang-fr">Vous pouvez à tout moment modifier vos préférences cookies via les paramètres de votre navigateur ou en nous contactant. Refuser les cookies analytiques n'affecte pas l'utilisation du site.</span>
+                <span class="lang-en">You can change your cookie preferences at any time via your browser settings or by contacting us. Refusing analytics cookies does not affect site usage.</span>
+              </p>
+            </div>
+          </section>
+
+          <!-- 9. Mineurs -->
+          <section class="rules-section" id="mineurs">
+            <h2>
+              <span class="section-emoji">🔒</span>
+              <span class="lang-fr">9. Mineurs</span>
+              <span class="lang-en">9. Minors</span>
+            </h2>
+            <div class="lang-fr">
+              <p>Ce site est destiné aux personnes âgées de <strong>15 ans ou plus</strong> (âge du consentement numérique en France, article 45 de la loi Informatique et Libertés modifiée). Pour les mineurs de moins de 15 ans, le consentement d'un titulaire de l'autorité parentale est requis.</p>
+              <p>Si nous apprenons qu'un enfant de moins de 15 ans nous a transmis des données sans autorisation parentale, nous procédons à leur suppression immédiate. Signalez-nous tout cas à <a href="mailto:contact@ombres-erebor.fr" style="color:var(--color-gold);">contact@ombres-erebor.fr</a>.</p>
+            </div>
+            <div class="lang-en">
+              <p>This site is intended for people aged <strong>15 or older</strong> (digital consent age in France under the amended Data Protection Act). For minors under 15, parental consent is required.</p>
+              <p>If we learn that a child under 15 has provided us with data without parental authorisation, we will delete it immediately. Please report any such case to <a href="mailto:contact@ombres-erebor.fr" style="color:var(--color-gold);">contact@ombres-erebor.fr</a>.</p>
+            </div>
+          </section>
+
+          <!-- 10. Contact -->
+          <section class="rules-section" id="contact-privacy">
+            <h2>
+              <span class="section-emoji">✉️</span>
+              <span class="lang-fr">10. Nous contacter</span>
+              <span class="lang-en">10. Contact Us</span>
+            </h2>
+            <div class="lang-fr">
+              <p>Pour toute question relative à cette politique de confidentialité ou à l'exercice de vos droits :</p>
+            </div>
+            <div class="lang-en">
+              <p>For any questions about this privacy policy or to exercise your rights:</p>
+            </div>
+            <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6);margin-top:var(--space-4);">
+              <p style="margin:0;line-height:2.2;color:var(--color-text-muted);font-size:var(--text-sm);">
+                📧 <a href="mailto:contact@ombres-erebor.fr" style="color:var(--color-gold);">contact@ombres-erebor.fr</a><br>
+                🌐 <span class="lang-fr">Les Ombres d'Erebor — Créateur indépendant, France</span><span class="lang-en">Les Ombres d'Erebor — Independent creator, France</span><br>
+                ⚖️ <span class="lang-fr">Autorité de contrôle : CNIL — <a href="https://www.cnil.fr" target="_blank" rel="noopener" style="color:var(--color-gold);">www.cnil.fr</a></span><span class="lang-en">Supervisory authority: CNIL — <a href="https://www.cnil.fr" target="_blank" rel="noopener" style="color:var(--color-gold);">www.cnil.fr</a></span>
+              </p>
+            </div>
+
+            <div style="margin-top:var(--space-8);padding:var(--space-5);background:var(--color-surface-2);border-radius:var(--radius-xl);font-size:var(--text-xs);color:var(--color-text-dim);line-height:1.8;">
+              <span class="lang-fr">Cette politique de confidentialité peut être mise à jour pour refléter des changements légaux ou dans nos pratiques. La date de mise à jour est indiquée en haut de ce document. En cas de modification substantielle, nous vous en informerons par email ou via une notification sur le site.</span>
+              <span class="lang-en">This privacy policy may be updated to reflect legal changes or changes in our practices. The update date is shown at the top of this document. In the event of a substantial change, we will notify you by email or via a notification on the site.</span>
+            </div>
+          </section>
+
+        </div><!-- end rules-content -->
+      </div><!-- end rules-layout -->
+    </div><!-- end container -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo" data-i18n="footer.brand">Les Ombres d'Erebor</span>
+          <p>
+            <span class="lang-fr">Un jeu de déduction sociale pour 8 à 20 joueurs. La nuit tombe sur Erebor.</span>
+            <span class="lang-en">A social deduction game for 8 to 20 players. Night falls over Erebor.</span>
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a></li>
+            <li><a href="rules.html"><span class="lang-fr">Règles</span><span class="lang-en">Rules</span></a></li>
+            <li><a href="roles.html"><span class="lang-fr">Rôles</span><span class="lang-en">Roles</span></a></li>
+            <li><a href="interactions.html">Interactions</a></li>
+            <li><a href="play.html"><span class="lang-fr">Jouer en ligne</span><span class="lang-en">Play online</span></a></li>
+            <li><a href="shop.html"><span class="lang-fr">Boutique</span><span class="lang-en">Shop</span></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4><span class="lang-fr">Légal</span><span class="lang-en">Legal</span></h4>
+          <ul>
+            <li><a href="privacy.html" class="active"><span class="lang-fr">Politique de confidentialité</span><span class="lang-en">Privacy Policy</span></a></li>
+            <li><a href="terms.html"><span class="lang-fr">Conditions d'utilisation</span><span class="lang-en">Terms of Service</span></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:contact@ombres-erebor.fr">contact@ombres-erebor.fr</a></li>
+            <li><a href="https://www.cnil.fr" target="_blank" rel="noopener">CNIL</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2027 Les Ombres d'Erebor. <span class="lang-fr">Tous droits réservés.</span><span class="lang-en">All rights reserved.</span></p>
+        <p>🇫🇷 <span class="lang-fr">Fabriqué en France · Données hébergées dans l'UE</span><span class="lang-en">Made in France · Data hosted in the EU</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/components/nav.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/data/i18n.js"></script>
+  <script src="assets/js/components/lang.js"></script>
+
+  <script>
+    // Active sidebar link on scroll
+    const sections = document.querySelectorAll('.rules-section');
+    const navLinks = document.querySelectorAll('.chapter-nav-list a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.chapter-nav-list a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
