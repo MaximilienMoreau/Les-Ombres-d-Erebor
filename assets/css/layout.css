@@ -90,6 +90,32 @@
   gap: var(--space-3);
 }
 
+/* Icône panier */
+.nav-cart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.nav-cart-btn:hover {
+  color: var(--color-gold-light);
+  background: var(--color-gold-glow);
+}
+.nav-cart-btn svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+.nav-cart-btn.active {
+  color: var(--color-gold);
+}
+
 /* Hamburger mobile */
 .nav-toggle {
   display: none;

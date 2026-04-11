@@ -1,5 +1,5 @@
 /* ============================================
-   DONNÉES — Matrice des interactions
+   DONNÉES: Matrice des interactions
    S = Synergie, C = Conflit, D = Détournement
    ============================================ */
 
