@@ -525,19 +525,39 @@
       }
     });
 
-    // Soumission du formulaire
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
+    // Soumission du formulaire → Formspree
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
       e.preventDefault();
 
       const btn = document.getElementById('submit-btn');
       btn.classList.add('btn-loading');
       btn.disabled = true;
 
-      // Simulation d'envoi (pas de backend)
-      setTimeout(() => {
-        document.getElementById('contact-form-wrapper').style.display = 'none';
-        document.getElementById('contact-success').classList.add('visible');
-      }, 1200);
+      const data = new FormData(this);
+
+      try {
+        const res = await fetch('https://formspree.io/f/xnjolbok', {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          document.getElementById('contact-form-wrapper').style.display = 'none';
+          document.getElementById('contact-success').classList.add('visible');
+        } else {
+          const json = await res.json();
+          const msg = json.errors?.map(e => e.message).join(', ') || 'Erreur inconnue';
+          throw new Error(msg);
+        }
+      } catch (err) {
+        btn.classList.remove('btn-loading');
+        btn.disabled = false;
+        const isEn = document.documentElement.lang === 'en';
+        alert(isEn
+          ? 'An error occurred. Please try again or email us directly.'
+          : 'Une erreur est survenue. Veuillez réessayer ou nous écrire directement.');
+      }
     });
 
     function resetForm() {
