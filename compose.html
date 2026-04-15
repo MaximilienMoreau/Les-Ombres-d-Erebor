@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Compositeur de partie — Les Ombres d'Erebor. Générez une composition équilibrée pour votre partie.">
+  <title>Compositeur de partie — Les Ombres d'Erebor</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/rules.css">
+  <link rel="stylesheet" href="assets/css/lang.css">
+
+  <style>
+    /* ===== LAYOUT ===== */
+    .compose-hero {
+      padding: calc(var(--nav-height) + var(--space-12)) var(--space-6) var(--space-10);
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 60%),
+        var(--color-void);
+    }
+
+    .compose-eyebrow {
+      font-family: var(--font-ui);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--color-gold-dim);
+      margin-bottom: var(--space-4);
+    }
+
+    .compose-title {
+      font-family: var(--font-display);
+      font-size: clamp(var(--text-2xl), 5vw, var(--text-5xl));
+      color: var(--color-gold-light);
+      margin-bottom: var(--space-4);
+    }
+
+    .compose-subtitle {
+      font-family: var(--font-body);
+      font-size: var(--text-lg);
+      color: var(--color-text-muted);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ===== PANNEAU DE CONTROLE ===== */
+    .compose-main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 var(--space-6) var(--space-20);
+    }
+
+    .compose-controls {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-bottom: var(--space-8);
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      margin-bottom: var(--space-8);
+    }
+
+    @media (max-width: 600px) {
+      .controls-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+    }
+
+    .control-group label {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--color-gold-dim);
+      margin-bottom: var(--space-3);
+    }
+
+    /* Sélecteur joueurs */
+    .player-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .player-btn {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      color: var(--color-text-muted);
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .player-btn:hover {
+      border-color: var(--color-gold-dim);
+      color: var(--color-gold-light);
+    }
+
+    .player-btn.active {
+      background: linear-gradient(135deg, var(--color-gold), var(--color-gold-dim));
+      border-color: var(--color-gold);
+      color: var(--color-void);
+    }
+
+    /* Sélecteur difficulté */
+    .difficulty-btns {
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    .diff-btn {
+      flex: 1;
+      padding: var(--space-2) var(--space-3);
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      color: var(--color-text-muted);
+      font-family: var(--font-ui);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-align: center;
+    }
+
+    .diff-btn:hover {
+      border-color: var(--color-gold-dim);
+      color: var(--color-text);
+    }
+
+    .diff-btn.active[data-diff="beginner"] {
+      background: rgba(74,143,168,0.15);
+      border-color: var(--color-lune);
+      color: var(--color-lune-light);
+    }
+
+    .diff-btn.active[data-diff="standard"] {
+      background: rgba(201,168,76,0.1);
+      border-color: var(--color-gold-dim);
+      color: var(--color-gold-light);
+    }
+
+    .diff-btn.active[data-diff="expert"] {
+      background: rgba(139,38,53,0.15);
+      border-color: var(--color-ombre);
+      color: var(--color-ombre-light);
+    }
+
+    /* Bouton générer */
+    .btn-generate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      width: 100%;
+      padding: var(--space-4) var(--space-6);
+      background: linear-gradient(135deg, var(--color-gold), var(--color-gold-dim));
+      color: var(--color-void);
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border: none;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--transition-base);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .btn-generate:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-gold-strong);
+    }
+
+    .btn-generate:active {
+      transform: translateY(0);
+    }
+
+    /* ===== RÉSULTATS ===== */
+    .compose-results {
+      display: none;
+    }
+
+    .compose-results.visible {
+      display: block;
+    }
+
+    /* Récap compteur */
+    .compose-summary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      padding: var(--space-4) var(--space-6);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-6);
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+    }
+
+    .summary-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: 600;
+    }
+
+    .summary-item.lune  { color: var(--color-lune-light); }
+    .summary-item.ombre { color: var(--color-ombre-light); }
+    .summary-item.solitaire { color: var(--color-solitaire-light); }
+
+    .summary-total {
+      color: var(--color-gold-light);
+      font-family: var(--font-display);
+    }
+
+    .summary-sep {
+      color: var(--color-border);
+      font-size: var(--text-lg);
+    }
+
+    /* Sections factions */
+    .faction-section {
+      margin-bottom: var(--space-8);
+    }
+
+    .faction-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .faction-header-icon {
+      font-size: 1.5rem;
+    }
+
+    .faction-header-name {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+    }
+
+    .faction-header.lune  .faction-header-name { color: var(--color-lune-light); }
+    .faction-header.ombre .faction-header-name { color: var(--color-ombre-light); }
+    .faction-header.solitaire .faction-header-name { color: var(--color-solitaire-light); }
+
+    .faction-count {
+      margin-left: auto;
+      font-family: var(--font-ui);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-muted);
+      background: var(--color-surface-2);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-border);
+    }
+
+    /* Cards de rôle */
+    .role-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-3);
+    }
+
+    .role-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      transition: all var(--transition-fast);
+      animation: card-appear 0.3s ease both;
+    }
+
+    @keyframes card-appear {
+      from { opacity: 0; transform: translateY(8px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .role-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .role-card.lune {
+      border-color: var(--color-lune-dim);
+      background: linear-gradient(135deg, var(--color-surface), rgba(74,143,168,0.05));
+    }
+    .role-card.lune:hover { border-color: var(--color-lune); box-shadow: 0 4px 20px var(--color-lune-glow); }
+
+    .role-card.ombre {
+      border-color: var(--color-ombre-dim);
+      background: linear-gradient(135deg, var(--color-surface), rgba(139,38,53,0.05));
+    }
+    .role-card.ombre:hover { border-color: var(--color-ombre); box-shadow: 0 4px 20px var(--color-ombre-glow); }
+
+    .role-card.solitaire {
+      border-color: var(--color-solitaire-dim);
+      background: linear-gradient(135deg, var(--color-surface), rgba(122,90,31,0.05));
+    }
+    .role-card.solitaire:hover { border-color: var(--color-solitaire); box-shadow: 0 4px 20px var(--color-solitaire-glow); }
+
+    .role-card-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .role-card-name {
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--color-text-light);
+      line-height: 1.3;
+    }
+
+    .role-card-name-en {
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+
+    .role-card-diff {
+      margin-top: auto;
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 2px var(--space-2);
+      border-radius: var(--radius-full);
+    }
+
+    .role-card-diff.beginner {
+      background: rgba(82,183,136,0.15);
+      color: #52b788;
+      border: 1px solid rgba(82,183,136,0.3);
+    }
+
+    .role-card-diff.advanced {
+      background: rgba(201,168,76,0.1);
+      color: var(--color-gold-dim);
+      border: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .role-card-diff.expert {
+      background: rgba(139,38,53,0.15);
+      color: var(--color-ombre-light);
+      border: 1px solid rgba(139,38,53,0.3);
+    }
+
+    /* Bouton reroll */
+    .btn-reroll {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      margin: var(--space-8) auto 0;
+      padding: var(--space-3) var(--space-8);
+      background: transparent;
+      color: var(--color-text);
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--transition-base);
+    }
+
+    .btn-reroll:hover {
+      border-color: var(--color-gold-dim);
+      color: var(--color-gold-light);
+      transform: translateY(-1px);
+    }
+
+    /* Avertissement si pas assez de rôles */
+    .compose-warn {
+      display: none;
+      padding: var(--space-4) var(--space-6);
+      background: rgba(139,38,53,0.1);
+      border: 1px solid var(--color-ombre-dim);
+      border-radius: var(--radius-lg);
+      color: var(--color-ombre-light);
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-6);
+      text-align: center;
+    }
+
+    .compose-warn.visible { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-title">Les Ombres d'Erebor</span>
+        <span class="nav-logo-sub"><span class="lang-fr">Jeu de déduction sociale</span><span class="lang-en">Social deduction game</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html"><span class="nav-icon">🏠</span><span data-i18n="nav.home">Accueil</span></a></li>
+        <li><a href="rules.html"><span class="nav-icon">📖</span><span data-i18n="nav.rules">Règles</span></a></li>
+        <li><a href="roles.html"><span class="nav-icon">🎭</span><span data-i18n="nav.roles">Rôles</span></a></li>
+        <li><a href="interactions.html"><span class="nav-icon">🕸️</span><span data-i18n="nav.interactions">Interactions</span></a></li>
+        <li><a href="play.html"><span class="nav-icon">🎮</span><span data-i18n="nav.play">Jouer</span></a></li>
+        <li><a href="shop.html"><span class="nav-icon">🛒</span><span data-i18n="nav.shop">Boutique</span></a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="play.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.8rem;" data-i18n="nav.playBtn">🎮 Jouer</a>
+      </div>
+      <a href="shop.html" class="nav-cart-btn" aria-label="Boutique / Shop">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+      </a>
+      <div class="lang-toggle" role="group" aria-label="Langue / Language">
+        <button class="lang-option active" data-lang="fr"><span class="flag">🇫🇷</span> FR</button>
+        <span class="lang-divider"></span>
+        <button class="lang-option" data-lang="en"><span class="flag">🇬🇧</span> EN</button>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile-drawer">
+    <a href="index.html">🏠 <span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="rules.html">📖 <span class="lang-fr">Règles du jeu</span><span class="lang-en">Game rules</span></a>
+    <a href="roles.html">🎭 <span class="lang-fr">Les 25 rôles</span><span class="lang-en">The 25 roles</span></a>
+    <a href="interactions.html">🕸️ <span class="lang-fr">Matrice d'interactions</span><span class="lang-en">Interaction matrix</span></a>
+    <a href="play.html">🎮 <span class="lang-fr">Jouer en ligne</span><span class="lang-en">Play online</span></a>
+    <a href="shop.html">🛒 <span class="lang-fr">Boutique</span><span class="lang-en">Shop</span></a>
+    <div class="lang-toggle" role="group" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);">
+      <button class="lang-option active" data-lang="fr" style="flex:1;"><span class="flag">🇫🇷</span> FR</button>
+      <span class="lang-divider"></span>
+      <button class="lang-option" data-lang="en" style="flex:1;"><span class="flag">🇬🇧</span> EN</button>
+    </div>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <header class="compose-hero">
+    <div class="compose-eyebrow">✦ <span class="lang-fr">Outil du Maître du Jeu</span><span class="lang-en">Game Master Tool</span> ✦</div>
+    <h1 class="compose-title">
+      <span class="lang-fr">Compositeur de Partie</span>
+      <span class="lang-en">Game Composer</span>
+    </h1>
+    <p class="compose-subtitle">
+      <span class="lang-fr">Générez une composition équilibrée selon le nombre de joueurs et le niveau de difficulté souhaité.</span>
+      <span class="lang-en">Generate a balanced composition based on the number of players and desired difficulty level.</span>
+    </p>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <main class="compose-main">
+
+    <!-- Panneau de contrôles -->
+    <section class="compose-controls" aria-labelledby="controls-title">
+      <div class="controls-grid">
+
+        <!-- Nombre de joueurs -->
+        <div class="control-group">
+          <label id="players-label">
+            <span class="lang-fr">Nombre de joueurs</span>
+            <span class="lang-en">Number of players</span>
+            — <span id="player-count-display">10</span>
+          </label>
+          <div class="player-btns" role="group" aria-labelledby="players-label">
+            <button class="player-btn" data-players="8">8</button>
+            <button class="player-btn" data-players="9">9</button>
+            <button class="player-btn active" data-players="10">10</button>
+            <button class="player-btn" data-players="11">11</button>
+            <button class="player-btn" data-players="12">12</button>
+            <button class="player-btn" data-players="13">13</button>
+            <button class="player-btn" data-players="14">14</button>
+            <button class="player-btn" data-players="15">15</button>
+            <button class="player-btn" data-players="16">16</button>
+            <button class="player-btn" data-players="17">17</button>
+            <button class="player-btn" data-players="18">18</button>
+            <button class="player-btn" data-players="19">19</button>
+            <button class="player-btn" data-players="20">20</button>
+          </div>
+        </div>
+
+        <!-- Difficulté -->
+        <div class="control-group">
+          <label id="diff-label">
+            <span class="lang-fr">Niveau de difficulté</span>
+            <span class="lang-en">Difficulty level</span>
+          </label>
+          <div class="difficulty-btns" role="group" aria-labelledby="diff-label">
+            <button class="diff-btn" data-diff="beginner">
+              🌱 <span class="lang-fr">Débutant</span><span class="lang-en">Beginner</span>
+            </button>
+            <button class="diff-btn active" data-diff="standard">
+              ⚔️ Standard
+            </button>
+            <button class="diff-btn" data-diff="expert">
+              💀 Expert
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-generate" id="btn-generate" type="button">
+        ✨ <span class="lang-fr">Générer la composition</span><span class="lang-en">Generate composition</span>
+      </button>
+    </section>
+
+    <!-- Avertissement -->
+    <div class="compose-warn" id="compose-warn" role="alert"></div>
+
+    <!-- Résultats -->
+    <section class="compose-results" id="compose-results" aria-live="polite">
+
+      <!-- Récapitulatif -->
+      <div class="compose-summary" id="compose-summary"></div>
+
+      <!-- Section Conseil de la Lune -->
+      <div class="faction-section" id="section-lune">
+        <div class="faction-header lune">
+          <span class="faction-header-icon">🌙</span>
+          <span class="faction-header-name">
+            <span class="lang-fr">Conseil de la Lune</span>
+            <span class="lang-en">Council of the Moon</span>
+          </span>
+          <span class="faction-count" id="count-lune"></span>
+        </div>
+        <div class="role-cards" id="cards-lune"></div>
+      </div>
+
+      <!-- Section Ombre Souveraine -->
+      <div class="faction-section" id="section-ombre">
+        <div class="faction-header ombre">
+          <span class="faction-header-icon">🌑</span>
+          <span class="faction-header-name">
+            <span class="lang-fr">Ombre Souveraine</span>
+            <span class="lang-en">Sovereign Shadow</span>
+          </span>
+          <span class="faction-count" id="count-ombre"></span>
+        </div>
+        <div class="role-cards" id="cards-ombre"></div>
+      </div>
+
+      <!-- Section Solitaires -->
+      <div class="faction-section" id="section-solitaire">
+        <div class="faction-header solitaire">
+          <span class="faction-header-icon">🌀</span>
+          <span class="faction-header-name">
+            <span class="lang-fr">Solitaires</span>
+            <span class="lang-en">Loners</span>
+          </span>
+          <span class="faction-count" id="count-solitaire"></span>
+        </div>
+        <div class="role-cards" id="cards-solitaire"></div>
+      </div>
+
+      <!-- Bouton Reroll -->
+      <button class="btn-reroll" id="btn-reroll" type="button">
+        🎲 <span class="lang-fr">Relancer</span><span class="lang-en">Reroll</span>
+      </button>
+
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo">Les Ombres d'Erebor</span>
+          <p><span class="lang-fr">Un jeu de déduction sociale pour 8 à 20 joueurs.</span><span class="lang-en">A social deduction game for 8 to 20 players.</span></p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a></li>
+            <li><a href="rules.html"><span class="lang-fr">Règles</span><span class="lang-en">Rules</span></a></li>
+            <li><a href="roles.html"><span class="lang-fr">Rôles</span><span class="lang-en">Roles</span></a></li>
+            <li><a href="interactions.html">Interactions</a></li>
+            <li><a href="play.html"><span class="lang-fr">Jouer en ligne</span><span class="lang-en">Play online</span></a></li>
+            <li><a href="shop.html"><span class="lang-fr">Boutique</span><span class="lang-en">Shop</span></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4><span class="lang-fr">Le jeu</span><span class="lang-en">The game</span></h4>
+          <ul>
+            <li><a href="rules.html#setup"><span class="lang-fr">Configuration</span><span class="lang-en">Setup</span></a></li>
+            <li><a href="night-order.html"><span class="lang-fr">Ordre nocturne</span><span class="lang-en">Night order</span></a></li>
+            <li><a href="compose.html" class="active"><span class="lang-fr">Compositeur de partie</span><span class="lang-en">Game composer</span></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4><span class="lang-fr">Légal</span><span class="lang-en">Legal</span></h4>
+          <ul>
+            <li><a href="privacy.html"><span class="lang-fr">Confidentialité</span><span class="lang-en">Privacy</span></a></li>
+            <li><a href="terms.html"><span class="lang-fr">CGU</span><span class="lang-en">Terms</span></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4><span class="lang-fr">Contactez-nous</span><span class="lang-en">Contact us</span></h4>
+          <ul>
+            <li><a href="contact.html"><span class="lang-fr">Formulaire de contact</span><span class="lang-en">Contact form</span></a></li>
+            <li><a href="mailto:contact@ombres-erebor.fr">contact@ombres-erebor.fr</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2027 Les Ombres d'Erebor. <span class="lang-fr">Tous droits réservés.</span><span class="lang-en">All rights reserved.</span></p>
+        <p><a href="privacy.html" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='var(--color-gold-light)'" onmouseout="this.style.color='inherit'"><span class="lang-fr">Confidentialité</span><span class="lang-en">Privacy</span></a> · <a href="terms.html" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='var(--color-gold-light)'" onmouseout="this.style.color='inherit'"><span class="lang-fr">CGU</span><span class="lang-en">Terms</span></a> · 🇫🇷 France</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/components/nav.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/data/i18n.js"></script>
+  <script src="assets/js/components/lang.js"></script>
+  <script src="assets/js/data/roles.js"></script>
+
+  <script>
+    /* ============================================
+       COMPOSITEUR DE PARTIE — Les Ombres d'Erebor
+       ============================================ */
+
+    const COMPOSITIONS = {
+      8:  { lune:5,  ombre:2, solitaire:1 },
+      9:  { lune:5,  ombre:3, solitaire:1 },
+      10: { lune:6,  ombre:3, solitaire:1 },
+      11: { lune:7,  ombre:3, solitaire:1 },
+      12: { lune:7,  ombre:3, solitaire:2 },
+      13: { lune:8,  ombre:4, solitaire:1 },
+      14: { lune:8,  ombre:4, solitaire:2 },
+      15: { lune:9,  ombre:4, solitaire:2 },
+      16: { lune:9,  ombre:5, solitaire:2 },
+      17: { lune:10, ombre:5, solitaire:2 },
+      18: { lune:10, ombre:5, solitaire:3 },
+      19: { lune:11, ombre:6, solitaire:2 },
+      20: { lune:11, ombre:6, solitaire:3 },
+    };
+
+    const DIFF_LABELS = {
+      beginner: { fr: 'Débutant', en: 'Beginner' },
+      advanced: { fr: 'Avancé',   en: 'Advanced'  },
+      expert:   { fr: 'Expert',   en: 'Expert'    },
+    };
+
+    let selectedPlayers = 10;
+    let selectedDiff = 'standard';
+    let currentLang = document.documentElement.lang || 'fr';
+
+    // Détecter la langue active
+    function getLang() {
+      const btn = document.querySelector('.lang-option.active');
+      return btn ? btn.dataset.lang : 'fr';
+    }
+
+    // Mélange Fisher-Yates
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    // Filtrer les rôles selon la difficulté
+    function filterByDiff(roles, diff) {
+      if (diff === 'beginner') {
+        return roles.filter(r => r.difficulty === 'beginner' || r.difficulty === 'advanced');
+      }
+      if (diff === 'expert') {
+        // Trier pour prioriser les expert en premier
+        return [...roles].sort((a, b) => {
+          const order = { expert: 0, advanced: 1, beginner: 2 };
+          return (order[a.difficulty] || 1) - (order[b.difficulty] || 1);
+        });
+      }
+      return roles; // standard = tous
+    }
+
+    // Tirer N rôles d'une faction
+    function pickRoles(faction, count, diff) {
+      const pool = (typeof ROLES !== 'undefined') ? ROLES.filter(r => r.faction === faction) : [];
+      const filtered = filterByDiff(pool, diff);
+
+      if (diff === 'expert') {
+        // Priorité aux expert mais compléter si besoin
+        const experts  = filtered.filter(r => r.difficulty === 'expert');
+        const others   = shuffle(filtered.filter(r => r.difficulty !== 'expert'));
+        const combined = [...shuffle(experts), ...others];
+        return combined.slice(0, count);
+      }
+
+      return shuffle(filtered).slice(0, count);
+    }
+
+    // Créer une card HTML pour un rôle
+    function createRoleCard(role) {
+      const lang = getLang();
+      const name   = lang === 'en' ? (role.nameEn || role.name) : role.name;
+      const nameAlt = lang === 'en' ? role.name : (role.nameEn || role.name);
+      const diffLabel = DIFF_LABELS[role.difficulty] || { fr: role.difficulty, en: role.difficulty };
+
+      const card = document.createElement('div');
+      card.className = `role-card ${role.faction}`;
+      card.innerHTML = `
+        <div class="role-card-icon">${role.icon}</div>
+        <div class="role-card-name">${name}</div>
+        <div class="role-card-name-en">${nameAlt}</div>
+        <span class="role-card-diff ${role.difficulty}">${lang === 'en' ? diffLabel.en : diffLabel.fr}</span>
+      `;
+      return card;
+    }
+
+    // Générer la composition
+    function generate() {
+      const comp = COMPOSITIONS[selectedPlayers];
+      if (!comp) return;
+
+      const warn = document.getElementById('compose-warn');
+      const results = document.getElementById('compose-results');
+      warn.classList.remove('visible');
+
+      const luneRoles       = pickRoles('lune', comp.lune, selectedDiff);
+      const ombreRoles      = pickRoles('ombre', comp.ombre, selectedDiff);
+      const solitaireRoles  = pickRoles('solitaire', comp.solitaire, selectedDiff);
+
+      const total = luneRoles.length + ombreRoles.length + solitaireRoles.length;
+
+      // Avertissement si pas assez de rôles disponibles
+      if (total < selectedPlayers) {
+        const lang = getLang();
+        warn.className = 'compose-warn visible';
+        warn.textContent = lang === 'en'
+          ? `⚠ Not enough roles available for the selected difficulty. Try a less restrictive level.`
+          : `⚠ Pas assez de rôles disponibles pour cette difficulté. Essayez un niveau moins restrictif.`;
+      }
+
+      // Résumé
+      const summary = document.getElementById('compose-summary');
+      const lang = getLang();
+      summary.innerHTML = `
+        <span class="summary-item lune">🌙 ${luneRoles.length} <span class="lang-fr">Lune</span><span class="lang-en">Moon</span></span>
+        <span class="summary-sep">·</span>
+        <span class="summary-item ombre">🌑 ${ombreRoles.length} <span class="lang-fr">Ombres</span><span class="lang-en">Shadows</span></span>
+        <span class="summary-sep">·</span>
+        <span class="summary-item solitaire">🌀 ${solitaireRoles.length} <span class="lang-fr">Solitaires</span><span class="lang-en">Loners</span></span>
+        <span class="summary-sep">=</span>
+        <span class="summary-total">${total} <span class="lang-fr">joueurs</span><span class="lang-en">players</span></span>
+      `;
+
+      // Compteurs
+      document.getElementById('count-lune').textContent = `${luneRoles.length} / ${comp.lune}`;
+      document.getElementById('count-ombre').textContent = `${ombreRoles.length} / ${comp.ombre}`;
+      document.getElementById('count-solitaire').textContent = `${solitaireRoles.length} / ${comp.solitaire}`;
+
+      // Cards
+      const fillCards = (containerId, roles) => {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+        roles.forEach((role, i) => {
+          const card = createRoleCard(role);
+          card.style.animationDelay = `${i * 0.05}s`;
+          container.appendChild(card);
+        });
+      };
+
+      fillCards('cards-lune', luneRoles);
+      fillCards('cards-ombre', ombreRoles);
+      fillCards('cards-solitaire', solitaireRoles);
+
+      results.classList.add('visible');
+      results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ===== Sélecteurs joueurs =====
+    document.querySelectorAll('.player-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.player-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedPlayers = parseInt(btn.dataset.players, 10);
+        document.getElementById('player-count-display').textContent = selectedPlayers;
+      });
+    });
+
+    // ===== Sélecteurs difficulté =====
+    document.querySelectorAll('.diff-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedDiff = btn.dataset.diff;
+      });
+    });
+
+    // ===== Boutons générer / reroll =====
+    document.getElementById('btn-generate').addEventListener('click', generate);
+    document.getElementById('btn-reroll').addEventListener('click', generate);
+
+    // Régénérer quand la langue change (pour les labels)
+    document.addEventListener('langChanged', () => {
+      if (document.getElementById('compose-results').classList.contains('visible')) {
+        generate();
+      }
+    });
+  </script>
+
+  <script src="assets/js/components/cookie-consent.js"></script>
+</body>
+</html>

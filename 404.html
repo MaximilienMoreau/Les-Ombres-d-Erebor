@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Page introuvable — Les Ombres d'Erebor">
+  <title>404 — Les Ombres d'Erebor</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/rules.css">
+  <link rel="stylesheet" href="assets/css/lang.css">
+
+  <style>
+    .error-page {
+      min-height: calc(100vh - var(--nav-height));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-12) var(--space-6);
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.04) 0%, transparent 70%),
+        var(--color-void);
+    }
+
+    .error-code {
+      font-family: var(--font-display);
+      font-size: clamp(6rem, 20vw, 14rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--color-gold);
+      text-shadow:
+        0 0 30px rgba(201,168,76,0.6),
+        0 0 80px rgba(201,168,76,0.3),
+        0 0 120px rgba(201,168,76,0.15);
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-6);
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        text-shadow:
+          0 0 30px rgba(201,168,76,0.6),
+          0 0 80px rgba(201,168,76,0.3),
+          0 0 120px rgba(201,168,76,0.15);
+      }
+      50% {
+        text-shadow:
+          0 0 50px rgba(201,168,76,0.9),
+          0 0 100px rgba(201,168,76,0.5),
+          0 0 160px rgba(201,168,76,0.25);
+      }
+    }
+
+    .error-eyebrow {
+      font-family: var(--font-ui);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--color-gold-dim);
+      margin-bottom: var(--space-4);
+    }
+
+    .error-title {
+      font-family: var(--font-display);
+      font-size: clamp(var(--text-xl), 4vw, var(--text-4xl));
+      color: var(--color-text-light);
+      margin-bottom: var(--space-6);
+      line-height: 1.3;
+    }
+
+    .error-message {
+      font-family: var(--font-body);
+      font-size: var(--text-lg);
+      color: var(--color-text-muted);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: var(--space-10);
+    }
+
+    .error-message em {
+      color: var(--color-text);
+      font-style: italic;
+    }
+
+    .error-divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--color-gold-dim), transparent);
+      margin: 0 auto var(--space-10);
+    }
+
+    .error-actions {
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-error-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-8);
+      background: linear-gradient(135deg, var(--color-gold), var(--color-gold-dim));
+      color: var(--color-void);
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: all var(--transition-base);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .btn-error-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-gold-strong);
+      color: var(--color-void);
+    }
+
+    .btn-error-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-8);
+      background: transparent;
+      color: var(--color-text);
+      font-family: var(--font-ui);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: all var(--transition-base);
+    }
+
+    .btn-error-secondary:hover {
+      border-color: var(--color-gold-dim);
+      color: var(--color-gold-light);
+      transform: translateY(-2px);
+    }
+
+    .error-rune {
+      font-size: 3rem;
+      margin-bottom: var(--space-6);
+      opacity: 0.3;
+      filter: sepia(1);
+    }
+
+    .error-particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .error-particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--color-gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: float-particle var(--dur, 6s) ease-in infinite;
+      animation-delay: var(--delay, 0s);
+      left: var(--x, 50%);
+    }
+
+    @keyframes float-particle {
+      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.2; }
+      100% { transform: translateY(-20vh) scale(1.5); opacity: 0; }
+    }
+
+    .error-content {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particules atmosphériques -->
+  <div class="error-particles" aria-hidden="true">
+    <div class="error-particle" style="--x:10%;--dur:7s;--delay:0s;"></div>
+    <div class="error-particle" style="--x:20%;--dur:5s;--delay:1s;"></div>
+    <div class="error-particle" style="--x:33%;--dur:8s;--delay:0.5s;"></div>
+    <div class="error-particle" style="--x:47%;--dur:6s;--delay:2s;"></div>
+    <div class="error-particle" style="--x:60%;--dur:7.5s;--delay:0.8s;"></div>
+    <div class="error-particle" style="--x:73%;--dur:5.5s;--delay:1.5s;"></div>
+    <div class="error-particle" style="--x:85%;--dur:6.5s;--delay:0.3s;"></div>
+    <div class="error-particle" style="--x:93%;--dur:8.5s;--delay:1.2s;"></div>
+  </div>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-title">Les Ombres d'Erebor</span>
+        <span class="nav-logo-sub"><span class="lang-fr">Jeu de déduction sociale</span><span class="lang-en">Social deduction game</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html"><span class="nav-icon">🏠</span><span data-i18n="nav.home">Accueil</span></a></li>
+        <li><a href="rules.html"><span class="nav-icon">📖</span><span data-i18n="nav.rules">Règles</span></a></li>
+        <li><a href="roles.html"><span class="nav-icon">🎭</span><span data-i18n="nav.roles">Rôles</span></a></li>
+        <li><a href="interactions.html"><span class="nav-icon">🕸️</span><span data-i18n="nav.interactions">Interactions</span></a></li>
+        <li><a href="play.html"><span class="nav-icon">🎮</span><span data-i18n="nav.play">Jouer</span></a></li>
+        <li><a href="shop.html"><span class="nav-icon">🛒</span><span data-i18n="nav.shop">Boutique</span></a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="play.html" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.8rem;" data-i18n="nav.playBtn">🎮 Jouer</a>
+      </div>
+      <a href="shop.html" class="nav-cart-btn" aria-label="Boutique / Shop">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+      </a>
+      <div class="lang-toggle" role="group" aria-label="Langue / Language">
+        <button class="lang-option active" data-lang="fr"><span class="flag">🇫🇷</span> FR</button>
+        <span class="lang-divider"></span>
+        <button class="lang-option" data-lang="en"><span class="flag">🇬🇧</span> EN</button>
+      </div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile-drawer">
+    <a href="index.html">🏠 <span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a>
+    <a href="rules.html">📖 <span class="lang-fr">Règles du jeu</span><span class="lang-en">Game rules</span></a>
+    <a href="roles.html">🎭 <span class="lang-fr">Les 25 rôles</span><span class="lang-en">The 25 roles</span></a>
+    <a href="interactions.html">🕸️ <span class="lang-fr">Matrice d'interactions</span><span class="lang-en">Interaction matrix</span></a>
+    <a href="play.html">🎮 <span class="lang-fr">Jouer en ligne</span><span class="lang-en">Play online</span></a>
+    <a href="shop.html">🛒 <span class="lang-fr">Boutique</span><span class="lang-en">Shop</span></a>
+    <div class="lang-toggle" role="group" style="margin:0.75rem 1.25rem;width:calc(100% - 2.5rem);">
+      <button class="lang-option active" data-lang="fr" style="flex:1;"><span class="flag">🇫🇷</span> FR</button>
+      <span class="lang-divider"></span>
+      <button class="lang-option" data-lang="en" style="flex:1;"><span class="flag">🇬🇧</span> EN</button>
+    </div>
+  </div>
+
+  <!-- ============ CONTENU ============ -->
+  <main class="error-page" role="main">
+    <div class="error-content">
+      <div class="error-rune" aria-hidden="true">🌑</div>
+      <div class="error-eyebrow" aria-hidden="true">✦ Erebor ✦</div>
+      <div class="error-code" aria-label="Erreur 404">404</div>
+      <h1 class="error-title">
+        <span class="lang-fr">Page introuvable</span>
+        <span class="lang-en">Page not found</span>
+      </h1>
+      <div class="error-divider" aria-hidden="true"></div>
+      <p class="error-message">
+        <span class="lang-fr">
+          <em>Cette page s'est perdue dans les ténèbres d'Erebor.</em><br>
+          Les Ombres ont brouillé les chemins. Le lien que vous suiviez n'existe pas — ou a été englouti par la nuit.
+        </span>
+        <span class="lang-en">
+          <em>This page has been lost in the shadows of Erebor.</em><br>
+          The Shadows have obscured the paths. The link you followed does not exist — or has been swallowed by the night.
+        </span>
+      </p>
+      <div class="error-actions">
+        <a href="index.html" class="btn-error-primary">
+          🏠 <span class="lang-fr">Retour à l'accueil</span><span class="lang-en">Back to home</span>
+        </a>
+        <a href="rules.html" class="btn-error-secondary">
+          📖 <span class="lang-fr">Voir les règles</span><span class="lang-en">View rules</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo">Les Ombres d'Erebor</span>
+          <p><span class="lang-fr">Un jeu de déduction sociale pour 8 à 20 joueurs.</span><span class="lang-en">A social deduction game for 8 to 20 players.</span></p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a></li>
+            <li><a href="rules.html"><span class="lang-fr">Règles</span><span class="lang-en">Rules</span></a></li>
+            <li><a href="roles.html"><span class="lang-fr">Rôles</span><span class="lang-en">Roles</span></a></li>
+            <li><a href="interactions.html">Interactions</a></li>
+            <li><a href="play.html"><span class="lang-fr">Jouer en ligne</span><span class="lang-en">Play online</span></a></li>
+            <li><a href="shop.html"><span class="lang-fr">Boutique</span><span class="lang-en">Shop</span></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4><span class="lang-fr">Le jeu</span><span class="lang-en">The game</span></h4>
+          <ul>
+            <li><a href="rules.html#setup"><span class="lang-fr">Configuration</span><span class="lang-en">Setup</span></a></li>
+            <li><a href="night-order.html"><span class="lang-fr">Ordre nocturne</span><span class="lang-en">Night order</span></a></li>
+            <li><a href="compose.html"><span class="lang-fr">Compositeur de partie</span><span class="lang-en">Game composer</span></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4><span class="lang-fr">Légal</span><span class="lang-en">Legal</span></h4>
+          <ul>
+            <li><a href="privacy.html"><span class="lang-fr">Confidentialité</span><span class="lang-en">Privacy</span></a></li>
+            <li><a href="terms.html"><span class="lang-fr">CGU</span><span class="lang-en">Terms</span></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4><span class="lang-fr">Contactez-nous</span><span class="lang-en">Contact us</span></h4>
+          <ul>
+            <li><a href="contact.html"><span class="lang-fr">Formulaire de contact</span><span class="lang-en">Contact form</span></a></li>
+            <li><a href="mailto:contact@ombres-erebor.fr">contact@ombres-erebor.fr</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2027 Les Ombres d'Erebor. <span class="lang-fr">Tous droits réservés.</span><span class="lang-en">All rights reserved.</span></p>
+        <p><a href="privacy.html" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='var(--color-gold-light)'" onmouseout="this.style.color='inherit'"><span class="lang-fr">Confidentialité</span><span class="lang-en">Privacy</span></a> · <a href="terms.html" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='var(--color-gold-light)'" onmouseout="this.style.color='inherit'"><span class="lang-fr">CGU</span><span class="lang-en">Terms</span></a> · 🇫🇷 France</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/components/nav.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/data/i18n.js"></script>
+  <script src="assets/js/components/lang.js"></script>
+  <script src="assets/js/components/cookie-consent.js"></script>
+</body>
+</html>
