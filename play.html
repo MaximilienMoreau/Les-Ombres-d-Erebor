@@ -30,7 +30,7 @@
         <li><a href="shop.html"><span class="nav-icon">🛒</span><span data-i18n="nav.shop">Boutique</span></a></li>
       </ul>
       <div class="nav-cta">
-        <a href="shop.html" class="btn btn-secondary" style="padding:0.5rem 1rem;font-size:0.8rem;">🛒 Acheter</a>
+        <a href="shop.html" class="btn btn-secondary" style="padding:0.5rem 1rem;font-size:0.8rem;">🛒 <span class="lang-fr">Acheter</span><span class="lang-en">Buy</span></a>
       </div>
       <a href="shop.html" class="nav-cart-btn" aria-label="Boutique / Shop">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -111,21 +111,21 @@
               <div class="form-group">
                 <label class="form-label" for="player-count" data-i18n="play.playersLabel">Nombre de joueurs</label>
                 <select id="player-count" class="form-select">
-                  <option value="8">8 joueurs</option>
-                  <option value="10" selected>10 joueurs</option>
-                  <option value="12">12 joueurs</option>
-                  <option value="15">15 joueurs</option>
-                  <option value="18">18 joueurs</option>
-                  <option value="20">20 joueurs</option>
+                  <option value="8" data-fr="8 joueurs" data-en="8 players">8 joueurs</option>
+                  <option value="10" selected data-fr="10 joueurs" data-en="10 players">10 joueurs</option>
+                  <option value="12" data-fr="12 joueurs" data-en="12 players">12 joueurs</option>
+                  <option value="15" data-fr="15 joueurs" data-en="15 players">15 joueurs</option>
+                  <option value="18" data-fr="18 joueurs" data-en="18 players">18 joueurs</option>
+                  <option value="20" data-fr="20 joueurs" data-en="20 players">20 joueurs</option>
                 </select>
               </div>
               <div class="form-group">
                 <label class="form-label" for="round-count" data-i18n="play.roundsLabel">Nombre de tours</label>
                 <select id="round-count" class="form-select">
-                  <option value="5">5 tours</option>
-                  <option value="6" selected>6 tours</option>
-                  <option value="7">7 tours</option>
-                  <option value="8">8 tours</option>
+                  <option value="5" data-fr="5 tours" data-en="5 rounds">5 tours</option>
+                  <option value="6" selected data-fr="6 tours" data-en="6 rounds">6 tours</option>
+                  <option value="7" data-fr="7 tours" data-en="7 rounds">7 tours</option>
+                  <option value="8" data-fr="8 tours" data-en="8 rounds">8 tours</option>
                 </select>
               </div>
             </div>
@@ -259,8 +259,8 @@
         <div class="footer-brand">
           <span class="footer-logo" data-i18n="footer.brand">Les Ombres d'Erebor</span>
           <p>
-            <span class="lang-fr">Jouez en ligne ou en physique. Le destin d'Erebor est entre vos mains.</span>
-            <span class="lang-en">Play online or in person. The fate of Erebor is in your hands.</span>
+            <span class="lang-fr">25 rôles aux interactions complexes. Chaque partie est unique.</span>
+            <span class="lang-en">25 roles with complex interactions. Every game is unique.</span>
           </p>
         </div>
         <div class="footer-col">
@@ -269,27 +269,29 @@
             <li><a href="index.html"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></a></li>
             <li><a href="rules.html"><span class="lang-fr">Règles</span><span class="lang-en">Rules</span></a></li>
             <li><a href="roles.html"><span class="lang-fr">Rôles</span><span class="lang-en">Roles</span></a></li>
+            <li><a href="interactions.html">Interactions</a></li>
+            <li><a href="play.html"><span class="lang-fr">Jouer en ligne</span><span class="lang-en">Play online</span></a></li>
             <li><a href="shop.html"><span class="lang-fr">Boutique</span><span class="lang-en">Shop</span></a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4><span class="lang-fr">Jouer</span><span class="lang-en">Play</span></h4>
+          <h4><span class="lang-fr">Factions</span><span class="lang-en">Factions</span></h4>
           <ul>
-            <li><a href="game.html"><span class="lang-fr">Interface de jeu</span><span class="lang-en">Game interface</span></a></li>
-            <li><a href="game.html?mode=local"><span class="lang-fr">Mode local</span><span class="lang-en">Local mode</span></a></li>
-            <li><a href="compose.html"><span class="lang-fr">Compositeur de partie</span><span class="lang-en">Game composer</span></a></li>
-            <li><a href="night-order.html"><span class="lang-fr">Ordre nocturne</span><span class="lang-en">Night order</span></a></li>
+            <li><a href="roles.html?faction=lune">🌙 <span class="lang-fr">Conseil de la Lune</span><span class="lang-en">Council of the Moon</span></a></li>
+            <li><a href="roles.html?faction=ombre">🌑 <span class="lang-fr">Ombre Souveraine</span><span class="lang-en">Sovereign Shadow</span></a></li>
+            <li><a href="roles.html?faction=solitaire">🌀 <span class="lang-fr">Solitaires</span><span class="lang-en">Loners</span></a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4><span class="lang-fr">Acheter</span><span class="lang-en">Buy</span></h4>
+          <h4><span class="lang-fr">Le jeu</span><span class="lang-en">The game</span></h4>
           <ul>
-            <li><a href="shop.html"><span class="lang-fr">Coffret de Base</span><span class="lang-en">Base Set</span></a></li>
-            <li><a href="shop.html"><span class="lang-fr">Édition Collector</span><span class="lang-en">Collector Edition</span></a></li>
-            <li><a href="shop.html"><span class="lang-fr">Extension</span><span class="lang-en">Expansion</span></a></li>
+            <li><a href="rules.html#setup"><span class="lang-fr">Configuration</span><span class="lang-en">Setup</span></a></li>
+            <li><a href="rules.html#phases"><span class="lang-fr">Phases de jeu</span><span class="lang-en">Game phases</span></a></li>
+            <li><a href="rules.html#victoire"><span class="lang-fr">Victoire</span><span class="lang-en">Victory</span></a></li>
+            <li><a href="night-order.html"><span class="lang-fr">Ordre nocturne</span><span class="lang-en">Night order</span></a></li>
+            <li><a href="compose.html"><span class="lang-fr">Compositeur de partie</span><span class="lang-en">Game composer</span></a></li>
           </ul>
         </div>
-
         <div class="footer-col">
           <h4><span class="lang-fr">Contactez-nous</span><span class="lang-en">Contact us</span></h4>
           <ul>
@@ -419,5 +421,18 @@
     });
   </script>
   <script src="assets/js/components/cookie-consent.js"></script>
+  <script>
+    // Traduction des options de sélect
+    function updateSelectOptions(lang) {
+      document.querySelectorAll('select option[data-fr]').forEach(opt => {
+        opt.textContent = lang === 'en' ? opt.dataset.en : opt.dataset.fr;
+      });
+    }
+    document.addEventListener('langchange', e => updateSelectOptions(e.detail.lang));
+    document.addEventListener('DOMContentLoaded', () => {
+      const lang = (window.i18n && window.i18n.getCurrentLang()) || localStorage.getItem('erebor_lang') || 'fr';
+      updateSelectOptions(lang);
+    });
+  </script>
 </body>
 </html>
