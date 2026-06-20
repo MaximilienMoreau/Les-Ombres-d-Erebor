@@ -2,6 +2,16 @@
    GAME ENGINE — Les Ombres d'Erebor (Online)
    ============================================ */
 
+// ---- Sécurité ----
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // ---- Helpers i18n ----
 function t(k, ...args) {
   let str = window.i18n?.t(k) || k;
@@ -227,7 +237,7 @@ function renderPlayerList() {
     const initial = (p.name || '?')[0].toUpperCase();
     row.innerHTML = `
       <div class="player-avatar unassigned">${initial}</div>
-      <span class="player-name">${p.name}</span>
+      <span class="player-name">${escapeHtml(p.name)}</span>
       <span class="player-status-tag ${p.isGM ? 'gm' : 'waiting'}">${p.isGM ? '⚔️ MJ' : t('game.waitingStatus')}</span>
     `;
     list.appendChild(row);
@@ -245,8 +255,12 @@ async function assignRoles() {
     return;
   }
 
-  // Mélanger les rôles
-  const shuffled = selectedRoles.sort(() => Math.random() - 0.5);
+  // Mélanger les rôles (Fisher-Yates)
+  const shuffled = [...selectedRoles];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
 
   const updates = {};
   playerIds.forEach((uid, i) => {
@@ -336,9 +350,9 @@ function renderGMNightPanel() {
     .map(([uid, p]) => {
       const target = p.nightActionTarget ? (STATE.players[p.nightActionTarget]?.name || p.nightActionTarget) : '—';
       return `<div class="submission-item">
-        <span class="submission-actor">${p.name}</span>
+        <span class="submission-actor">${escapeHtml(p.name)}</span>
         <span class="submission-arrow">→</span>
-        <span class="submission-target">${target}</span>
+        <span class="submission-target">${escapeHtml(target)}</span>
         <span class="submission-status">${t('game.actionSubmitted')}</span>
       </div>`;
     }).join('');
@@ -532,7 +546,7 @@ function renderVotePanel() {
       const item = document.createElement('div');
       item.className = `vote-candidate${myVote === uid ? ' voted' : ''}${arrested ? ' arrested' : ''}`;
       item.innerHTML = `
-        <span class="vote-candidate-name">👤 ${p.name}</span>
+        <span class="vote-candidate-name">👤 ${escapeHtml(p.name)}</span>
         ${STATE.isGM ? `<div class="vote-bar-wrapper"><div class="vote-bar" style="width:${pct}%"></div></div><span class="vote-count-text">${voteCount}</span>` : ''}
         ${!STATE.isGM && !arrested ? `<button class="btn btn-secondary" onclick="submitVote('${uid}')" style="padding:0.25rem 0.75rem;font-size:0.75rem;">${t('game.accuseBtn')}</button>` : ''}
       `;
@@ -556,7 +570,7 @@ async function resolveVote() {
   if (topId && STATE.players[topId]) {
     const name = STATE.players[topId].name;
     await writeRoom({ [`players/${topId}/isAlive`]: false });
-    addLog(`💀 ${name} ${t('game.logPlayerExecuted')}`, 'death');
+    addLog(`💀 ${escapeHtml(name)} ${t('game.logPlayerExecuted')}`, 'death');
     await checkVictory();
   } else {
     addLog(t('game.logTie'), 'normal');
@@ -575,7 +589,7 @@ function renderAlivePlayers() {
     const status = p.isAlive ? 'alive' : 'dead';
     row.innerHTML = `
       <div class="alive-indicator ${status}"></div>
-      <span class="alive-player-name">${p.name}</span>
+      <span class="alive-player-name">${escapeHtml(p.name)}</span>
       <span class="alive-player-status">${p.isAlive ? t('game.alive') : t('game.dead')}</span>
     `;
     list.appendChild(row);
@@ -633,14 +647,25 @@ async function checkVictory() {
     const r = ROLES.find(r => r.id === p.roleId);
     return r && r.faction === 'ombre';
   });
+  const solitaire = alive.filter(([, p]) => {
+    const r = ROLES.find(r => r.id === p.roleId);
+    return r && r.faction === 'solitaire';
+  });
 
-  if (ombre.length === 0) {
+  if (lune.length === 0 && ombre.length === 0 && solitaire.length > 0) {
+    await writeRoom({ phase: 'gameover', winner: { faction: 'solitaire' } });
+  } else if (ombre.length === 0) {
     await writeRoom({ phase: 'gameover', winner: { faction: 'lune' } });
   } else if (ombre.length >= lune.length) {
     await writeRoom({ phase: 'gameover', winner: { faction: 'ombre' } });
   } else if (STATE.round >= STATE.config.roundCount) {
     await writeRoom({ phase: 'gameover', winner: { faction: 'ombre', timeout: true } });
   }
+}
+
+async function declareSolitaireVictory() {
+  await writeRoom({ phase: 'gameover', winner: { faction: 'solitaire' } });
+  addLog(t('game.logSolitaireWin') || 'Un Solitaire a rempli sa condition de victoire.', 'event');
 }
 
 // ---- GAME OVER ----
@@ -694,8 +719,8 @@ function applyGameover(winner) {
       item.className = 'role-reveal-item';
       item.innerHTML = `
         <div class="rri-icon">${roleData.icon}</div>
-        <div class="rri-player">${p.name}</div>
-        <div class="rri-role">${roleData.name}</div>
+        <div class="rri-player">${escapeHtml(p.name)}</div>
+        <div class="rri-role">${escapeHtml(roleData.name)}</div>
       `;
       grid.appendChild(item);
     });
@@ -717,7 +742,7 @@ function updateGrimoire() {
     const statusClass = p.isAlive ? 'alive' : 'dead';
     row.innerHTML = `
       <span class="g-icon">${roleData?.icon || '❓'}</span>
-      <span class="g-player">${p.name}</span>
+      <span class="g-player">${escapeHtml(p.name)}</span>
       <span class="g-role">${roleData ? rl(roleData, 'name') : t('game.notAssigned')}</span>
       <div class="g-status ${statusClass}"></div>
     `;
@@ -734,13 +759,7 @@ function toggleGrimoire() {
 async function writeRoom(updates) {
   if (db) {
     if (typeof updates === 'object' && !Array.isArray(updates)) {
-      // Vérifier si ce sont des updates partiels ou un objet complet
-      const hasNestedPaths = Object.keys(updates).some(k => k.includes('/'));
-      if (hasNestedPaths) {
-        await db.ref(`rooms/${STATE.roomCode}`).update(updates);
-      } else {
-        await db.ref(`rooms/${STATE.roomCode}`).update(updates);
-      }
+      await db.ref(`rooms/${STATE.roomCode}`).update(updates);
     }
   } else {
     // Mode local
@@ -814,8 +833,9 @@ window.skipNightAction   = skipNightAction;
 window.selectTarget      = selectTarget;
 window.submitVote        = submitVote;
 window.resolveVote       = resolveVote;
-window.continueToCrepuscule = continueToCrepuscule;
-window.continueToNextNight  = continueToNextNight;
+window.continueToCrepuscule    = continueToCrepuscule;
+window.continueToNextNight     = continueToNextNight;
+window.declareSolitaireVictory = declareSolitaireVictory;
 window.toggleGrimoire    = toggleGrimoire;
 window.gmResolvePassive  = function(roleId) {
   const msg = prompt(t('game.passiveInfoPrompt', roleId));

@@ -145,6 +145,7 @@
 
   // Mettre à jour si la langue change
   document.addEventListener('langchange', () => {
+    if (!document.body.contains(banner)) return;
     const newLang = document.documentElement.lang === 'en' ? 'en' : 'fr';
     const nt = texts[newLang];
     banner.querySelector('.cookie-banner-text').innerHTML = nt.msg;

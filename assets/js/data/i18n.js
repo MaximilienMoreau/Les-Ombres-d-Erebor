@@ -13,7 +13,7 @@ const TRANSLATIONS = {
     },
     footer: {
       brand: "Les Ombres d'Erebor",
-      copy: "© 2025 Les Ombres d'Erebor.",
+      copy: "© 2027 Les Ombres d'Erebor.",
       copy2: '25 rôles · 3 factions · Une nuit sans fin.',
       madeIn: '🇫🇷 Fabriqué en France · Livraison mondiale disponible',
     },
@@ -252,6 +252,7 @@ const TRANSLATIONS = {
       logCrepuscule: '🌅 Crépuscule :',
       logPlayerExecuted: 'a été exécuté par vote du peuple.',
       logTie: "🤝 Égalité — aucun joueur n'est exécuté.",
+      logSolitaireWin: '🌀 Un Solitaire a rempli sa condition de victoire personnelle.',
       alertRolesRequired: 'Sélectionnez au moins %d rôles pour les joueurs.',
     },
   },
@@ -265,7 +266,7 @@ const TRANSLATIONS = {
     },
     footer: {
       brand: "Shadows of Erebor",
-      copy: "© 2025 Shadows of Erebor.",
+      copy: "© 2027 Shadows of Erebor.",
       copy2: '25 roles · 3 factions · One endless night.',
       madeIn: '🇫🇷 Made in France · Worldwide shipping available',
     },
@@ -504,6 +505,7 @@ const TRANSLATIONS = {
       logCrepuscule: '🌅 Dusk:',
       logPlayerExecuted: 'was executed by popular vote.',
       logTie: '🤝 Tie — no player is executed.',
+      logSolitaireWin: '🌀 A Loner has fulfilled their personal victory condition.',
       alertRolesRequired: 'Select at least %d roles for the players.',
     },
   },
