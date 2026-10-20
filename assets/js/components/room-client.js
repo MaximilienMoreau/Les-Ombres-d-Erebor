@@ -3,7 +3,7 @@
 (function (root) {
   'use strict';
   const PREFIX = 'erebor_room_v2_';
-  const secretFields = new Set(['roleId', 'nightActionDone', 'nightActionTarget', 'message']);
+  const secretFields = new Set(['roleId', 'nightActionDone', 'nightActionTarget', 'message', 'powerUsed']);
   const copy = value => JSON.parse(JSON.stringify(value));
   function setPath(object, path, value) {
     const parts = path.split('/');
@@ -13,7 +13,7 @@
     if (value === null) delete cursor[parts.at(-1)];
     else cursor[parts.at(-1)] = value;
   }
-  function player(uid, name, isGM = false) { return { uid, name, isGM, isAlive: true }; }
+  function player(uid, name, isGM = false) { return { uid, name, isGM, isAlive: true, district: 1 }; }
   function normalize(data, secrets = {}) {
     const result = { ...data, players: {} };
     Object.values(data.seats || {}).forEach(p => {

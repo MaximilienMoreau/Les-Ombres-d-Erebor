@@ -4,8 +4,8 @@
    ============================================ */
 
 (function initCookieConsent() {
-  const STORAGE_KEY = 'erebor-cookie-consent';
-  if (localStorage.getItem(STORAGE_KEY)) return;
+  const STORAGE_KEY = 'erebor-storage-notice-v2';
+  try { if (localStorage.getItem(STORAGE_KEY)) return; } catch {}
 
   // ---- CSS injecté dynamiquement ----
   const style = document.createElement('style');
@@ -99,20 +99,20 @@
   // ---- HTML du bandeau ----
   const banner = document.createElement('div');
   banner.className = 'cookie-banner';
-  banner.setAttribute('role', 'dialog');
-  banner.setAttribute('aria-label', 'Consentement aux cookies');
+  banner.setAttribute('role', 'region');
+  banner.setAttribute('aria-label', 'Stockage local / Local storage');
 
   const lang = document.documentElement.lang === 'en' ? 'en' : 'fr';
 
   const texts = {
     fr: {
-      msg: '<strong>🍪 Cookies</strong> — Ce site utilise des cookies analytiques pour améliorer votre expérience. Consultez notre <a href="privacy.html">politique de confidentialité</a>.',
-      accept: 'Accepter',
+      msg: '<strong>Stockage local</strong> — Ce site conserve vos préférences, votre panier et vos parties locales dans votre navigateur. Aucun outil de mesure d’audience n’est intégré au code du site. Consultez notre <a href="privacy.html">politique de confidentialité</a>.',
+      accept: 'Compris',
       decline: 'Refuser',
     },
     en: {
-      msg: '<strong>🍪 Cookies</strong> — This site uses analytics cookies to improve your experience. See our <a href="privacy.html">privacy policy</a>.',
-      accept: 'Accept',
+      msg: '<strong>Local storage</strong> — This site stores preferences, your basket and local games in your browser. No audience analytics tool is integrated into the site code. See our <a href="privacy.html">privacy policy</a>.',
+      accept: 'Understood',
       decline: 'Decline',
     },
   };
@@ -122,7 +122,6 @@
   banner.innerHTML = `
     <p class="cookie-banner-text">${t.msg}</p>
     <div class="cookie-banner-actions">
-      <button class="cookie-btn cookie-btn-decline" id="cookie-decline">${t.decline}</button>
       <button class="cookie-btn cookie-btn-accept" id="cookie-accept">${t.accept}</button>
     </div>
   `;
@@ -135,13 +134,12 @@
   });
 
   function dismiss(choice) {
-    localStorage.setItem(STORAGE_KEY, choice);
+    try { localStorage.setItem(STORAGE_KEY, choice); } catch {}
     banner.style.transform = 'translateY(100%)';
     setTimeout(() => banner.remove(), 400);
   }
 
   document.getElementById('cookie-accept').addEventListener('click', () => dismiss('accepted'));
-  document.getElementById('cookie-decline').addEventListener('click', () => dismiss('declined'));
 
   // Mettre à jour si la langue change
   document.addEventListener('langchange', () => {
@@ -149,7 +147,6 @@
     const newLang = document.documentElement.lang === 'en' ? 'en' : 'fr';
     const nt = texts[newLang];
     banner.querySelector('.cookie-banner-text').innerHTML = nt.msg;
-    document.getElementById('cookie-decline').textContent = nt.decline;
     document.getElementById('cookie-accept').textContent = nt.accept;
   });
 })();

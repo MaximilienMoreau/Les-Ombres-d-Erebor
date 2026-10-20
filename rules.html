@@ -885,7 +885,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2027 Les Ombres d'Erebor. <span class="lang-fr">Tous droits réservés.</span><span class="lang-en">All rights reserved.</span></p>
+        <p>© 2026 Les Ombres d'Erebor. <span class="lang-fr">Tous droits réservés.</span><span class="lang-en">All rights reserved.</span></p>
         <p><a href="privacy.html" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='var(--color-gold-light)'" onmouseout="this.style.color='inherit'"><span class="lang-fr">Confidentialité</span><span class="lang-en">Privacy</span></a> · <a href="terms.html" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='var(--color-gold-light)'" onmouseout="this.style.color='inherit'"><span class="lang-fr">CGU</span><span class="lang-en">Terms</span></a> · 🇫🇷 <span class="lang-fr">France</span><span class="lang-en">France</span></p>
       </div>
     </div>
@@ -899,25 +899,7 @@
   <script src="assets/js/data/i18n.js"></script>
   <script src="assets/js/components/lang.js"></script>
 
-  <script>
-    // Navigation active des chapitres au scroll
-    (function() {
-      const sections = document.querySelectorAll('.rules-section, .quick-ref');
-      const navLinks = document.querySelectorAll('.chapter-nav-list a');
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            navLinks.forEach(link => link.classList.remove('active'));
-            const activeLink = document.querySelector(`.chapter-nav-list a[href="#${entry.target.id}"]`);
-            if (activeLink) activeLink.classList.add('active');
-          }
-        });
-      }, { rootMargin: '-20% 0px -70% 0px' });
-
-      sections.forEach(s => observer.observe(s));
-    })();
-  </script>
+  <script src="assets/js/pages/chapter-nav.js"></script>
 
   <script src="assets/js/components/cookie-consent.js"></script>
 </body>

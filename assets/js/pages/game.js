@@ -49,7 +49,7 @@ const NIGHT_ORDER = [
   { id: 'archives',     name: 'Maître des Archives',     nameEn: 'Master of Archives',   icon: '📜', prompt: "Reçoit un fragment d'alignement sur un joueur aléatoire.",         promptEn: "Receives an alignment fragment about a random player.",            needsTarget: false, gmResolved: true },
   { id: 'messager',     name: 'Messager Céleste',        nameEn: 'Celestial Messenger',  icon: '🕊️', prompt: "Envoie un message secret à un joueur dans un autre quartier.",     promptEn: "Send a secret message to a player in another district.",           needsTarget: true },
   { id: 'collectionneur', name: 'Collectionneur',        nameEn: 'Collector',            icon: '🗃️', prompt: "Écoute une conversation privée entre deux joueurs.",              promptEn: "Listen to a private conversation between two players.",            needsTarget: true },
-  { id: 'assassinmuet', name: 'Assassin Muet',           nameEn: 'Silent Assassin',      icon: '🤫', prompt: "Peut utiliser son unique meurtre cette nuit.",                     promptEn: "Can use their single kill tonight.",                               needsTarget: true, optional: true },
+  { id: 'assassinmuet', name: 'Assassin Muet',           nameEn: 'Silent Assassin',      icon: '🤫', prompt: "Peut utiliser son unique meurtre cette nuit.",                     promptEn: "Can use their single kill tonight.",                               needsTarget: true, optional: true, oneTime: true },
 ];
 
 // ---- App State ----
@@ -150,6 +150,7 @@ function applySnapshot(data) {
   }
 
   renderPhase();
+  renderHostTools();
 }
 
 // ---- Rendu de la phase ----
@@ -240,6 +241,8 @@ async function assignRoles() {
   const updates = {};
   playerIds.forEach((uid, i) => {
     updates[`players/${uid}/roleId`] = shuffled[i] || null;
+    updates[`players/${uid}/powerUsed`] = false;
+    updates[`players/${uid}/district`] = i % 3 + 1;
   });
   // MJ sans rôle (arbitre)
   updates[`players/${STATE.playerId}/roleId`] = 'gm';
@@ -375,7 +378,7 @@ function renderPlayerNightPanel() {
   };
 
   // Carte de rôle
-  let html = '';
+  let html = `<p class="player-district">${ui('Votre quartier', 'Your district')} : ${me.district || 1}</p>`;
   if (roleData) {
     html += `
       <div class="role-reveal-card ${roleData.faction}">
@@ -391,7 +394,8 @@ function renderPlayerNightPanel() {
 
   // Formulaire d'action nocturne
   const currentStep = NIGHT_ORDER[STATE.nightStep];
-  const isMyTurn = me.isAlive && currentStep && roleData && currentStep.id === roleData.id;
+  const isMyTurn = me.isAlive && !me.arrested && currentStep && roleData && currentStep.id === roleData.id && !(currentStep.oneTime && me.powerUsed);
+  if (me.powerUsed && currentStep?.oneTime && currentStep.id === me.roleId) html += `<p role="status">${ui('Votre pouvoir unique a déjà été utilisé.', 'Your one-time power has already been used.')}</p>`;
   if (me.message) html += `<p class="private-message" role="status">${escapeHtml(me.message)}</p>`;
 
   if (STATE.nightSubmitted || (me && me.nightActionDone)) {
@@ -403,7 +407,7 @@ function renderPlayerNightPanel() {
     `;
   } else if (isMyTurn && currentStep.needsTarget) {
     const alivePlayers = Object.entries(STATE.players)
-      .filter(([uid, p]) => p.isAlive && (uid !== STATE.playerId || roleData.id === 'pretresse') && !p.isGM)
+      .filter(([uid, p]) => p.isAlive && (uid !== STATE.playerId || roleData.id === 'pretresse') && !p.isGM && (!['assassin', 'gardien'].includes(roleData.id) || p.district === me.district))
       .map(([uid, p]) => `
         <button class="target-btn" data-uid="${uid}" onclick="selectTarget('${uid}', this)">
           <span class="t-icon">👤</span>
@@ -445,23 +449,24 @@ function selectTarget(uid, btn) {
 
 async function submitNightAction() {
   if (!canActAtNight() || !STATE.selectedNightTarget || !STATE.players[STATE.selectedNightTarget]?.isAlive) return;
-  STATE.nightSubmitted = true;
   const updates = {
     [`players/${STATE.playerId}/nightActionDone`]:   true,
     [`players/${STATE.playerId}/nightActionTarget`]: STATE.selectedNightTarget,
   };
+  if (NIGHT_ORDER[STATE.nightStep]?.oneTime) updates[`players/${STATE.playerId}/powerUsed`] = true;
   await writeRoom(updates);
+  STATE.nightSubmitted = true;
   renderPlayerNightPanel();
 }
 
 async function skipNightAction() {
   if (!canActAtNight() || !NIGHT_ORDER[STATE.nightStep]?.optional) return;
-  STATE.nightSubmitted = true;
   const updates = {
     [`players/${STATE.playerId}/nightActionDone`]: true,
     [`players/${STATE.playerId}/nightActionTarget`]: null,
   };
   await writeRoom(updates);
+  STATE.nightSubmitted = true;
   renderPlayerNightPanel();
 }
 
@@ -550,6 +555,11 @@ async function submitVote(targetId) {
 
 async function resolveVote() {
   if (!STATE.isGM || STATE.phase !== 'day' || STATE.voteResolved) return;
+  await writeRoom({ voteResolved: true });
+  if (client) {
+    const latest = await client.readPublic(STATE.roomCode);
+    if (latest) STATE.votes = EreborRoom.normalize(latest).votes;
+  }
   const tallies = {};
   Object.entries(STATE.votes || {}).forEach(([voter, target]) => {
     const p = STATE.players[voter], candidate = STATE.players[target];
@@ -557,7 +567,6 @@ async function resolveVote() {
   });
   const sorted = Object.entries(tallies).sort((a, b) => b[1] - a[1]);
   const topId = sorted.length && (!sorted[1] || sorted[0][1] > sorted[1][1]) ? sorted[0][0] : null;
-  await writeRoom({ voteResolved: true });
 
   if (topId && STATE.players[topId]) {
     const name = STATE.players[topId].name;
@@ -581,7 +590,7 @@ function renderAlivePlayers() {
     const status = p.isAlive ? 'alive' : 'dead';
     row.innerHTML = `
       <div class="alive-indicator ${status}"></div>
-      <span class="alive-player-name">${escapeHtml(p.name)}</span>
+      <span class="alive-player-name">${escapeHtml(p.name)} · ${ui('Quartier', 'District')} ${p.district || 1}</span>
       <span class="alive-player-status">${p.isAlive ? t('game.alive') : t('game.dead')}</span>
     `;
     list.appendChild(row);
@@ -751,13 +760,13 @@ function toggleGrimoire() {
 
 function canActAtNight() {
   const me = STATE.players[STATE.playerId];
-  return STATE.phase === 'night' && me?.isAlive && !me.isGM && !me.nightActionDone && me.roleId === NIGHT_ORDER[STATE.nightStep]?.id;
+  return STATE.phase === 'night' && me?.isAlive && !me.arrested && !me.isGM && !me.nightActionDone && !(NIGHT_ORDER[STATE.nightStep]?.oneTime && me.powerUsed) && me.roleId === NIGHT_ORDER[STATE.nightStep]?.id;
 }
 async function writeRoom(updates) {
   if (!client) throw new Error('Room not connected');
   if (!STATE.isGM) {
     const own = `players/${STATE.playerId}/`;
-    if (!Object.keys(updates).every(path => path === `votes/${STATE.playerId}` || path === own + 'nightActionDone' || path === own + 'nightActionTarget')) throw new Error('Forbidden action');
+    if (!Object.keys(updates).every(path => path === `votes/${STATE.playerId}` || path === own + 'nightActionDone' || path === own + 'nightActionTarget' || path === own + 'powerUsed')) throw new Error('Forbidden action');
   }
   await client.write(updates);
 }
@@ -819,6 +828,7 @@ window.continueToCrepuscule    = continueToCrepuscule;
 window.continueToNextNight     = continueToNextNight;
 window.declareSolitaireVictory = declareSolitaireVictory;
 window.checkVictory = checkVictory;
+window.hostUpdatePlayer = hostUpdatePlayer;
 window.toggleGrimoire    = toggleGrimoire;
 window.gmResolvePassive  = async function(roleId) {
   if (!STATE.isGM) return;
@@ -830,7 +840,7 @@ window.gmResolvePassive  = async function(roleId) {
   }
 };
 
-['assignRoles', 'startNight', 'startDay', 'advanceNightStep', 'submitNightAction', 'skipNightAction', 'submitVote', 'resolveVote', 'continueToCrepuscule', 'continueToNextNight', 'declareSolitaireVictory', 'gmResolvePassive', 'checkVictory'].forEach(name => {
+['assignRoles', 'startNight', 'startDay', 'advanceNightStep', 'submitNightAction', 'skipNightAction', 'submitVote', 'resolveVote', 'continueToCrepuscule', 'continueToNextNight', 'declareSolitaireVictory', 'gmResolvePassive', 'checkVictory', 'hostUpdatePlayer'].forEach(name => {
   const action = window[name];
   let busy = false;
   window[name] = async (...args) => {
@@ -844,5 +854,53 @@ document.addEventListener('langchange', () => {
   const selected = [...document.querySelectorAll('.role-checkbox-item input:checked')].map(input => input.value);
   buildRoleCheckboxes();
   document.querySelectorAll('.role-checkbox-item input').forEach(input => { input.checked = selected.includes(input.value); });
-  if (lastSnapshot) { renderPhase(); updateConnectionBar(); }
+  if (lastSnapshot) { renderPhase(); renderHostTools(); updateConnectionBar(); }
 });
+
+function ui(fr, en) { return window.i18n?.getCurrentLang?.() === 'en' ? en : fr; }
+function renderHostTools() {
+  let panel = document.getElementById('host-tools');
+  if (!panel) {
+    panel = document.createElement('section'); panel.id = 'host-tools'; panel.className = 'host-tools';
+    document.getElementById('game-main').append(panel);
+  }
+  panel.hidden = !STATE.isGM || STATE.phase === 'gameover';
+  if (panel.hidden) return;
+  const heading = document.createElement('h2'); heading.textContent = ui('Arbitrage du MJ', 'GM adjudication');
+  const note = document.createElement('p');
+  note.textContent = ui('Gérez les vies, les quartiers et les blocages. Les pouvoirs uniques sont consommés à la soumission ; vous pouvez les rétablir en cas d’erreur. Vérifiez la victoire après vos arbitrages.', 'Manage lives, districts and restrictions. One-time powers are consumed on submission; you can restore them after a mistake. Check victory after adjudicating.');
+  panel.replaceChildren(heading, note);
+  Object.entries(STATE.players).filter(([, p]) => !p.isGM).forEach(([uid, player]) => {
+    const row = document.createElement('div'); row.className = 'host-player'; row.dataset.uid = uid;
+    const name = document.createElement('strong'); name.textContent = player.name;
+    const life = document.createElement('button'); life.className = 'btn btn-secondary'; life.dataset.action = 'life';
+    life.textContent = player.isAlive ? ui('Éliminer', 'Eliminate') : ui('Ressusciter', 'Revive');
+    life.setAttribute('aria-label', `${life.textContent} ${player.name}`);
+    life.onclick = () => window.hostUpdatePlayer(uid, 'isAlive', !player.isAlive);
+    const districtLabel = document.createElement('label'); districtLabel.textContent = ui('Quartier ', 'District ');
+    const district = document.createElement('select'); district.className = 'form-select'; district.dataset.action = 'district';
+    district.setAttribute('aria-label', `${ui('Quartier de', 'District for')} ${player.name}`);
+    for (let i = 1; i <= 3; i++) { const option = document.createElement('option'); option.value = i; option.textContent = `${ui('Quartier', 'District')} ${i}`; district.append(option); }
+    district.value = player.district || 1; district.onchange = () => window.hostUpdatePlayer(uid, 'district', Number(district.value));
+    districtLabel.append(district);
+    const blocked = document.createElement('button'); blocked.className = 'btn btn-secondary'; blocked.dataset.action = 'arrested';
+    blocked.textContent = player.arrested ? ui('Lever le blocage', 'Lift restriction') : ui('Bloquer les actions et le vote', 'Restrict actions and voting');
+    blocked.setAttribute('aria-pressed', String(!!player.arrested)); blocked.onclick = () => window.hostUpdatePlayer(uid, 'arrested', !player.arrested);
+    row.append(name, life, districtLabel, blocked);
+    if (NIGHT_ORDER.find(step => step.id === player.roleId)?.oneTime) {
+      const power = document.createElement('button'); power.className = 'btn btn-secondary'; power.dataset.action = 'power';
+      power.textContent = player.powerUsed ? ui('Rétablir le pouvoir unique', 'Restore one-time power') : ui('Marquer le pouvoir utilisé', 'Mark power used');
+      power.onclick = () => window.hostUpdatePlayer(uid, 'powerUsed', !player.powerUsed); row.append(power);
+    }
+    panel.append(row);
+  });
+  const victory = document.createElement('button'); victory.className = 'btn btn-primary'; victory.textContent = ui('Vérifier la victoire', 'Check victory');
+  victory.onclick = () => window.checkVictory(); panel.append(victory);
+}
+async function hostUpdatePlayer(uid, field, value) {
+  if (!STATE.isGM || !STATE.players[uid] || STATE.players[uid].isGM || STATE.phase === 'gameover') return;
+  if (!['isAlive', 'district', 'arrested', 'powerUsed'].includes(field)) return;
+  if (field === 'district' ? ![1, 2, 3].includes(value) : typeof value !== 'boolean') return;
+  await writeRoom({ [`players/${uid}/${field}`]: value });
+  if (field === 'isAlive') addLog(`${STATE.players[uid].name} — ${value ? ui('ressuscité', 'revived') : ui('éliminé', 'eliminated')}`, value ? 'revive' : 'death');
+}

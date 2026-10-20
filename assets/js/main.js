@@ -21,12 +21,16 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', (e) => {
     const href = link.getAttribute('href');
     if (!href || href === '#') return;
-    const target = document.getElementById(decodeURIComponent(href.slice(1)));
+    const base = decodeURIComponent(href.slice(1)).replace(/-en$/, '');
+    const target = (document.documentElement.lang === 'en' && document.getElementById(base + '-en')) || document.getElementById(base);
     if (!target) return;
     e.preventDefault();
     const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 72;
     const top    = target.getBoundingClientRect().top + window.scrollY - offset - 16;
-    window.scrollTo({ top, behavior: 'smooth' });
+    history.replaceState(null, '', '#' + target.id);
+    window.scrollTo({ top, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    target.tabIndex = -1;
+    target.focus({ preventScroll: true });
   });
 });
 

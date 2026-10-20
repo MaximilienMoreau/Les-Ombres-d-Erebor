@@ -113,3 +113,25 @@ test('online transport preserves private roles, targets and final reveals end to
     assert.equal(states.a.winner.faction,'ombre');
   } finally { gm.unsubscribe(); a.unsubscribe(); b.unsubscribe(); }
 });
+test('one-time powers cannot be reused or restored by players',async()=>{
+ await start();
+ await update(ref(db('gm'),'rooms/ABC234'),{'secrets/a/roleId':'voyant','public/currentRole':'voyant'});
+ await assertSucceeds(update(ref(db('a'),'rooms/ABC234/secrets/a'),{nightActionDone:true,nightActionTarget:'1',powerUsed:true}));
+ await assertFails(set(ref(db('a'),'rooms/ABC234/secrets/a/powerUsed'),false));
+ await update(ref(db('gm'),'rooms/ABC234/secrets/a'),{nightActionDone:false});
+ await assertFails(set(ref(db('a'),'rooms/ABC234/secrets/a/nightActionDone'),true));
+ await assertSucceeds(set(ref(db('gm'),'rooms/ABC234/secrets/a/powerUsed'),false));
+ await assertSucceeds(set(ref(db('a'),'rooms/ABC234/secrets/a/nightActionDone'),true));
+});
+test('district constraints and host adjudication are enforced',async()=>{
+ await start();
+ await assertSucceeds(update(ref(db('gm'),'rooms/ABC234/public'),{'seats/0/district':1,'seats/1/district':2}));
+ await assertFails(set(ref(db('a'),'rooms/ABC234/secrets/a/nightActionTarget'),'1'));
+ await assertFails(set(ref(db('a'),'rooms/ABC234/public/seats/0/district'),2));
+ await assertFails(set(ref(db('a'),'rooms/ABC234/public/seats/1/isAlive'),false));
+ await assertSucceeds(set(ref(db('gm'),'rooms/ABC234/public/seats/1/district'),1));
+ await assertSucceeds(set(ref(db('a'),'rooms/ABC234/secrets/a/nightActionTarget'),'1'));
+ await assertSucceeds(set(ref(db('gm'),'rooms/ABC234/public/seats/0/arrested'),true));
+ await assertFails(set(ref(db('a'),'rooms/ABC234/secrets/a/nightActionDone'),true));
+ await assertFails(set(ref(db('gm'),'rooms/ABC234/public/seats/0/district'),4));
+});
