@@ -46,51 +46,13 @@
     </div>
   </div>
 
-  <!-- ======== VUE : SETUP (sans salle) ======== -->
-  <div id="view-setup" class="game-view" style="padding-top:var(--nav-height);">
-    <div class="setup-box">
-      <h1>Rejoindre ou Créer</h1>
-
-      <div class="tab-bar">
-        <button class="tab-btn active" data-tab="create" data-i18n="game.tabCreate">🏰 Créer une salle</button>
-        <button class="tab-btn" data-tab="join" data-i18n="game.tabJoin">🚪 Rejoindre</button>
-      </div>
-
-      <div id="tab-create" class="tab-panel active">
-        <div class="setup-card create">
-          <h2><span class="lang-fr">Nouvelle partie</span><span class="lang-en">New game</span></h2>
-          <p><span class="lang-fr">Vous serez le Maître du Jeu (MJ).</span><span class="lang-en">You will be the Game Master (GM).</span></p>
-          <div class="form-group">
-            <label class="form-label"><span class="lang-fr">Votre nom</span><span class="lang-en">Your name</span></label>
-            <input type="text" class="form-input" id="setup-gm-name" placeholder="Maître du Jeu" maxlength="20">
-          </div>
-          <div class="form-group">
-            <span class="form-label"><span class="lang-fr">Sélectionnez les rôles</span><span class="lang-en">Select roles</span></span>
-            <div class="role-checkboxes" id="role-checkboxes-setup"></div>
-          </div>
-          <button class="btn btn-primary" style="width:100%;margin-top:1rem;" onclick="setupCreateRoom()">
-            🏰 <span class="lang-fr">Créer la salle</span><span class="lang-en">Create room</span>
-          </button>
-        </div>
-      </div>
-
-      <div id="tab-join" class="tab-panel">
-        <div class="setup-card join">
-          <h2><span class="lang-fr">Rejoindre une partie</span><span class="lang-en">Join a game</span></h2>
-          <p><span class="lang-fr">Entrez le code partagé par le MJ.</span><span class="lang-en">Enter the code shared by the GM.</span></p>
-          <div class="form-group">
-            <label class="form-label"><span class="lang-fr">Votre nom</span><span class="lang-en">Your name</span></label>
-            <input type="text" class="form-input" id="setup-player-name" placeholder="Votre prénom" maxlength="20">
-          </div>
-          <div class="form-group">
-            <label class="form-label"><span class="lang-fr">Code de salle</span><span class="lang-en">Room code</span></label>
-            <input type="text" class="form-input code-input" id="setup-room-code" placeholder="XXXXXX" maxlength="6">
-          </div>
-          <button class="btn btn-secondary" style="width:100%;margin-top:1rem;justify-content:center;" onclick="setupJoinRoom()">
-            🚪 <span class="lang-fr">Rejoindre</span><span class="lang-en">Join</span>
-          </button>
-        </div>
-      </div>
+  <main id="game-main">
+  <div id="view-setup" class="game-view" style="padding:calc(var(--nav-height) + 3rem) 1.5rem;">
+    <div class="setup-container">
+      <h1><span class="lang-fr">Créer ou rejoindre une partie</span><span class="lang-en">Create or join a game</span></h1>
+      <p><span class="lang-fr">Cette salle est introuvable ou vous ne l’avez pas encore rejointe.</span><span class="lang-en">This room is unavailable or you have not joined it yet.</span></p>
+      <a href="play.html" class="btn btn-primary"><span class="lang-fr">Accéder aux salles</span><span class="lang-en">Open rooms</span></a>
+      <a href="play.html?mode=local" class="btn btn-secondary"><span class="lang-fr">Essayer le mode local</span><span class="lang-en">Try local mode</span></a>
     </div>
   </div>
 
@@ -282,10 +244,13 @@
   </div>
 
   <!-- Scripts -->
+  </main>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
   <script src="assets/js/config/firebase-config.js"></script>
+  <script src="assets/js/components/room-client.js"></script>
   <script src="assets/js/data/roles.js"></script>
   <script src="assets/js/data/interactions.js"></script>
   <script src="assets/js/data/i18n.js"></script>
@@ -294,101 +259,7 @@
   <script src="assets/js/main.js"></script>
   <script src="assets/js/pages/game.js"></script>
 
-  <script>
-    // Fonctions du setup inline (depuis game.html sans passer par play.html)
-    function setupCreateRoom() {
-      const name  = document.getElementById('setup-gm-name').value.trim();
-      if (!name) return alert('Entrez votre nom.');
-      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-      let code = '';
-      for (let i=0;i<6;i++) code += chars[Math.floor(Math.random()*chars.length)];
 
-      sessionStorage.setItem('erebor_room', code);
-      sessionStorage.setItem('erebor_is_gm', 'true');
-
-      const uid = getOrCreateUID();
-      const roomData = {
-        gmId: uid, phase: 'lobby', round: 0, nightStep: 0,
-        config: { playerCount: 10, roundCount: 6 },
-        createdAt: Date.now(),
-        players: { [uid]: { name, isGM: true, isAlive: true, roleId: null, nightActionDone: false, nightActionTarget: null } }
-      };
-
-      if (db) {
-        db.ref(`rooms/${code}`).set(roomData).then(() => {
-          window.location.search = `?room=${code}&gm=1`;
-        });
-      } else {
-        sessionStorage.setItem(`room_${code}`, JSON.stringify(roomData));
-        window.location.search = `?room=${code}&gm=1`;
-      }
-    }
-
-    function setupJoinRoom() {
-      const name = document.getElementById('setup-player-name').value.trim();
-      const code = document.getElementById('setup-room-code').value.trim().toUpperCase();
-      if (!name) return alert('Entrez votre nom.');
-      if (code.length !== 6) return alert('Code invalide (6 caractères requis).');
-
-      const uid = getOrCreateUID();
-      sessionStorage.setItem('erebor_room', code);
-      sessionStorage.setItem('erebor_is_gm', 'false');
-
-      if (db) {
-        db.ref(`rooms/${code}`).get().then(snap => {
-          if (!snap.exists()) return alert('Salle introuvable.');
-          db.ref(`rooms/${code}/players/${uid}`).set({
-            name, isGM: false, isAlive: true, roleId: null, nightActionDone: false, nightActionTarget: null
-          }).then(() => { window.location.search = `?room=${code}`; });
-        });
-      } else {
-        const raw = sessionStorage.getItem(`room_${code}`);
-        if (!raw) return alert('Salle introuvable (mode local).');
-        const room = JSON.parse(raw);
-        room.players[uid] = { name, isGM: false, isAlive: true, roleId: null, nightActionDone: false, nightActionTarget: null };
-        sessionStorage.setItem(`room_${code}`, JSON.stringify(room));
-        window.location.search = `?room=${code}`;
-      }
-    }
-
-    // Construction des checkboxes en lobby
-    function buildLobbyCheckboxes() {
-      const c = document.getElementById('role-checkboxes-lobby');
-      if (!c || typeof ROLES === 'undefined') return;
-      c.innerHTML = '';
-      ROLES.forEach(role => {
-        const label = document.createElement('label');
-        label.className = 'role-checkbox-item';
-        label.innerHTML = `
-          <input type="checkbox" value="${role.id}" ${['herald','assassin','pretresse','gardien','murmure','archives','voyant','changeur'].includes(role.id) ? 'checked' : ''}>
-          <span class="rci-icon">${role.icon}</span>
-          <span class="rci-name">${role.name}</span>
-          <span class="rci-faction ${role.faction}"></span>
-        `;
-        c.appendChild(label);
-      });
-    }
-
-    // Initialiser checkboxes après que game.js a construit celles du setup
-    setTimeout(() => {
-      buildLobbyCheckboxes();
-      // Actions MJ crépuscule
-      const gmCrep = document.getElementById('gm-crepuscule-actions');
-      if (gmCrep && STATE && STATE.isGM) gmCrep.style.display = 'flex';
-      // Vote actions MJ
-      const gmVote = document.getElementById('gm-vote-actions');
-      if (gmVote && STATE && STATE.isGM) gmVote.style.display = 'block';
-    }, 200);
-
-    // Mise à jour du label de phase dans la nav
-    const origRenderPhase = window.renderPhase;
-    window.renderPhase = function() {
-      if (typeof origRenderPhase === 'function') origRenderPhase();
-      const phases = { lobby: 'Lobby', night: 'Nuit', day: 'Jour', crepuscule: 'Crépuscule', gameover: 'Fin de partie' };
-      const label = document.getElementById('nav-phase-label');
-      if (label && STATE) label.textContent = phases[STATE.phase] || 'En jeu';
-    };
-  </script>
 
   <!-- FOOTER -->
   <footer class="footer">

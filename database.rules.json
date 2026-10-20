@@ -1,0 +1,115 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "rooms": {
+      "$code": {
+        "public": {
+          ".read": "auth != null",
+          ".write": "auth != null && ((!data.exists() && newData.child('gmId').val() === auth.uid && newData.child('phase').val() === 'lobby' && newData.child('seats/gm/uid').val() === auth.uid) || (data.child('gmId').val() === auth.uid && newData.child('gmId').val() === auth.uid))",
+          ".validate": "newData.hasChildren(['gmId','phase','round','nightStep','config','createdAt','seats'])",
+          "gmId": {
+            ".validate": "newData.isString() && (!data.exists() || newData.val() === data.val())"
+          },
+          "phase": {
+            ".validate": "newData.val() === 'lobby' || newData.val() === 'night' || newData.val() === 'day' || newData.val() === 'crepuscule' || newData.val() === 'gameover'"
+          },
+          "config": {
+            ".validate": "newData.hasChildren(['playerCount','roundCount'])",
+            "playerCount": {
+              ".validate": "newData.isNumber() && newData.val() >= 2 && newData.val() <= 20 && newData.val() % 1 === 0"
+            },
+            "roundCount": {
+              ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 12 && newData.val() % 1 === 0"
+            },
+            "$other": {
+              ".validate": false
+            }
+          },
+          "round": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "nightStep": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "currentRole": {
+            ".validate": "newData.isString()"
+          },
+          "createdAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "seats": {
+            "$slot": {
+              ".write": "auth != null && !data.exists() && root.child('rooms').child($code).child('public').child('phase').val() === 'lobby' && $slot.matches(/^(0|[1-9][0-9]?)$/) && (($slot === '0' && root.child('rooms').child($code).child('public/config/playerCount').val() > 0) || ($slot === '1' && root.child('rooms').child($code).child('public/config/playerCount').val() > 1) || ($slot === '2' && root.child('rooms').child($code).child('public/config/playerCount').val() > 2) || ($slot === '3' && root.child('rooms').child($code).child('public/config/playerCount').val() > 3) || ($slot === '4' && root.child('rooms').child($code).child('public/config/playerCount').val() > 4) || ($slot === '5' && root.child('rooms').child($code).child('public/config/playerCount').val() > 5) || ($slot === '6' && root.child('rooms').child($code).child('public/config/playerCount').val() > 6) || ($slot === '7' && root.child('rooms').child($code).child('public/config/playerCount').val() > 7) || ($slot === '8' && root.child('rooms').child($code).child('public/config/playerCount').val() > 8) || ($slot === '9' && root.child('rooms').child($code).child('public/config/playerCount').val() > 9) || ($slot === '10' && root.child('rooms').child($code).child('public/config/playerCount').val() > 10) || ($slot === '11' && root.child('rooms').child($code).child('public/config/playerCount').val() > 11) || ($slot === '12' && root.child('rooms').child($code).child('public/config/playerCount').val() > 12) || ($slot === '13' && root.child('rooms').child($code).child('public/config/playerCount').val() > 13) || ($slot === '14' && root.child('rooms').child($code).child('public/config/playerCount').val() > 14) || ($slot === '15' && root.child('rooms').child($code).child('public/config/playerCount').val() > 15) || ($slot === '16' && root.child('rooms').child($code).child('public/config/playerCount').val() > 16) || ($slot === '17' && root.child('rooms').child($code).child('public/config/playerCount').val() > 17) || ($slot === '18' && root.child('rooms').child($code).child('public/config/playerCount').val() > 18) || ($slot === '19' && root.child('rooms').child($code).child('public/config/playerCount').val() > 19)) && newData.child('uid').val() === auth.uid && newData.child('isGM').val() === false && newData.child('isAlive').val() === true",
+              ".validate": "newData.hasChildren(['uid', 'name', 'isGM', 'isAlive'])",
+              "uid": {
+                ".validate": "newData.isString()"
+              },
+              "name": {
+                ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 20"
+              },
+              "isGM": {
+                ".validate": "newData.isBoolean() && (newData.val() === false || newData.parent().child('uid').val() === newData.parent().parent().parent().child('gmId').val())"
+              },
+              "isAlive": {
+                ".validate": "newData.isBoolean()"
+              },
+              "arrested": {
+                ".validate": "newData.isBoolean()"
+              },
+              "$other": {
+                ".validate": false
+              }
+            }
+          },
+          "votes": {
+            "$uid": {
+              ".write": "auth != null && auth.uid === $uid && root.child('rooms').child($code).child('public').child('phase').val() === 'day' && root.child('rooms').child($code).child('secrets').child($uid).child('roleId').exists() && root.child('rooms').child($code).child('secrets').child($uid).child('roleId').val() !== 'gm' && root.child('rooms').child($code).child('public').child('seats').child(root.child('rooms').child($code).child('secrets').child(auth.uid).child('seat').val()).child('isAlive').val() === true && root.child('rooms').child($code).child('public').child('seats').child(root.child('rooms').child($code).child('secrets').child(auth.uid).child('seat').val()).child('arrested').val() !== true && root.child('rooms').child($code).child('public/voteResolved').val() !== true",
+              ".validate": "newData.isString() && root.child('rooms').child($code).child('public').child('seats').child(newData.val()).child('isAlive').val() === true && root.child('rooms').child($code).child('public').child('seats').child(newData.val()).child('isGM').val() === false"
+            }
+          },
+          "event": {},
+          "winner": {},
+          "logs": {
+            "$log": {
+              ".validate": "newData.hasChildren(['text','type','ts'])"
+            }
+          },
+          "$other": {
+            ".validate": false
+          },
+          "voteResolved": {
+            ".validate": "newData.isBoolean()"
+          }
+        },
+        "secrets": {
+          ".read": "auth != null && root.child('rooms').child($code).child('public').child('gmId').val() === auth.uid || (auth != null && root.child('rooms').child($code).child('public').child('phase').val() === 'gameover')",
+          ".write": "auth != null && root.child('rooms').child($code).child('public').child('gmId').val() === auth.uid",
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid",
+            "roleId": {
+              ".validate": "newData.isString()"
+            },
+            "seat": {
+              ".validate": "newData.isString()"
+            },
+            "message": {
+              ".validate": "newData.isString() && newData.val().length <= 2000"
+            },
+            "nightActionDone": {
+              ".write": "auth != null && auth.uid === $uid && root.child('rooms').child($code).child('public').child('seats').child(root.child('rooms').child($code).child('secrets').child(auth.uid).child('seat').val()).child('isAlive').val() === true && root.child('rooms').child($code).child('public').child('seats').child(root.child('rooms').child($code).child('secrets').child(auth.uid).child('seat').val()).child('arrested').val() !== true && root.child('rooms').child($code).child('public').child('phase').val() === 'night' && data.parent().child('roleId').val() === root.child('rooms').child($code).child('public').child('currentRole').val() && data.parent().child('nightActionDone').val() !== true",
+              ".validate": "newData.isBoolean()"
+            },
+            "nightActionTarget": {
+              ".write": "auth != null && auth.uid === $uid && root.child('rooms').child($code).child('public').child('seats').child(root.child('rooms').child($code).child('secrets').child(auth.uid).child('seat').val()).child('isAlive').val() === true && root.child('rooms').child($code).child('public').child('seats').child(root.child('rooms').child($code).child('secrets').child(auth.uid).child('seat').val()).child('arrested').val() !== true && root.child('rooms').child($code).child('public').child('phase').val() === 'night' && data.parent().child('roleId').val() === root.child('rooms').child($code).child('public').child('currentRole').val() && data.parent().child('nightActionDone').val() !== true",
+              ".validate": "newData.isString() && root.child('rooms').child($code).child('public').child('seats').child(newData.val()).child('isAlive').val() === true && root.child('rooms').child($code).child('public').child('seats').child(newData.val()).child('isGM').val() === false"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      }
+    }
+  }
+}

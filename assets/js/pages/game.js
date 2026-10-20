@@ -70,54 +70,40 @@ let STATE = {
   nightSubmitted: false,
 };
 
-let db = null;
-let roomRef = null;
-
-// ---- Init ----
-function init() {
+let client = null;
+let lastSnapshot = null;
+function gameError(error) {
+  console.error(error);
+  let box = document.getElementById('game-error');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'game-error'; box.className = 'game-error'; box.setAttribute('role', 'alert');
+    document.querySelector('main').prepend(box);
+  }
+  box.replaceChildren();
+  const text = document.createElement('span');
+  text.textContent = window.i18n?.getCurrentLang?.() === 'en'
+    ? 'Action failed. Check your connection and retry. ' : 'Action impossible. Vérifiez votre connexion puis réessayez. ';
+  const retry = document.createElement('button');
+  retry.className = 'btn btn-secondary'; retry.textContent = window.i18n?.getCurrentLang?.() === 'en' ? 'Reconnect' : 'Reconnecter';
+  retry.onclick = () => window.location.reload();
+  box.append(text, retry);
+}
+async function init() {
   const params = new URLSearchParams(window.location.search);
   STATE.roomCode = params.get('room') || sessionStorage.getItem('erebor_room');
-  STATE.isGM     = params.get('gm') === '1' || sessionStorage.getItem('erebor_is_gm') === 'true';
-  STATE.isLocal  = params.get('mode') === 'local' || !FIREBASE_CONFIG.configured;
-  STATE.playerId = getOrCreateUID();
-
-  // Connexion Firebase ou mode local
-  if (FIREBASE_CONFIG.configured && !STATE.isLocal) {
-    try {
-      if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
-      db = firebase.database();
-    } catch(e) { console.warn('Firebase:', e); STATE.isLocal = true; }
-  }
-
-  // Indicateur connexion
-  updateConnectionBar();
-
-  if (!STATE.roomCode) {
-    showView('setup');
-    return;
-  }
-
-  if (STATE.isLocal && STATE.isGM && !STATE.roomCode) {
-    setupLocalRoom();
-    return;
-  }
-
-  showView('lobby');
-  syncRoom();
-
-  // Afficher le grimoire si GM
-  if (STATE.isGM) {
-    document.querySelector('.grimoire-toggle')?.classList.add('visible');
-  }
-}
-
-function getOrCreateUID() {
-  let uid = sessionStorage.getItem('erebor_uid');
-  if (!uid) {
-    uid = 'u' + Date.now() + Math.random().toString(36).slice(2, 7);
-    sessionStorage.setItem('erebor_uid', uid);
-  }
-  return uid;
+  if (!STATE.roomCode || !/^[A-HJ-NP-Z2-9]{6}$/.test(STATE.roomCode)) { showView('setup'); return; }
+  try {
+    client = await new RoomClient(params.get('mode') === 'local').init();
+    STATE.playerId = client.uid;
+    STATE.isLocal = !client.db;
+    updateConnectionBar();
+    client.subscribe(STATE.roomCode, data => {
+      if (!data || !data.players[STATE.playerId]) { showView('setup'); return; }
+      document.getElementById('game-error')?.remove();
+      applySnapshot(data);
+    }, gameError);
+  } catch (error) { gameError(error); }
 }
 
 function updateConnectionBar() {
@@ -128,7 +114,7 @@ function updateConnectionBar() {
   if (STATE.isLocal) {
     dot.className  = 'connection-dot local';
     text.textContent = `${t('game.connectionLocal')} ${STATE.roomCode || '—'}`;
-  } else if (db) {
+  } else if (client?.db) {
     dot.className  = 'connection-dot';
     text.textContent = `${t('game.connectionOnline')} ${STATE.roomCode}`;
   } else {
@@ -145,43 +131,16 @@ function showView(name) {
   STATE.currentView = name;
 }
 
-// ---- Sync depuis Firebase ou LocalStorage ----
-function syncRoom() {
-  if (db) {
-    roomRef = db.ref(`rooms/${STATE.roomCode}`);
-    roomRef.on('value', snap => {
-      if (!snap.exists()) { showView('setup'); return; }
-      applySnapshot(snap.val());
-    });
-  } else {
-    loadLocalRoom();
-  }
-}
-
-function loadLocalRoom() {
-  const raw = sessionStorage.getItem(`room_${STATE.roomCode}`);
-  if (!raw) { showView('setup'); return; }
-  applySnapshot(JSON.parse(raw));
-
-  // Polling léger pour le mode local (même onglet)
-  setInterval(() => {
-    const r = sessionStorage.getItem(`room_${STATE.roomCode}`);
-    if (r) applySnapshot(JSON.parse(r));
-  }, 1500);
-}
-
-function saveLocalRoom(data) {
-  if (STATE.isLocal || !db) {
-    sessionStorage.setItem(`room_${STATE.roomCode}`, JSON.stringify(data));
-  }
-}
-
 function applySnapshot(data) {
+  lastSnapshot = data;
+  STATE.isGM = data.gmId === STATE.playerId;
+  document.querySelector('.grimoire-toggle')?.classList.toggle('visible', STATE.isGM);
   STATE.players    = data.players || {};
   STATE.phase      = data.phase || 'lobby';
   STATE.round      = data.round || 0;
   STATE.nightStep  = data.nightStep || 0;
   STATE.votes      = data.votes || {};
+  STATE.voteResolved = !!data.voteResolved;
   STATE.event      = data.event || null;
   STATE.config     = data.config || STATE.config;
 
@@ -195,6 +154,15 @@ function applySnapshot(data) {
 
 // ---- Rendu de la phase ----
 function renderPhase() {
+  const labels = window.i18n?.getCurrentLang?.() === 'en'
+    ? { lobby: 'Lobby', night: 'Night', day: 'Day', crepuscule: 'Twilight', gameover: 'Game over' }
+    : { lobby: 'Salon', night: 'Nuit', day: 'Jour', crepuscule: 'Crépuscule', gameover: 'Fin de partie' };
+  const label = document.getElementById('nav-phase-label');
+  if (label) label.textContent = labels[STATE.phase] || '';
+  for (const id of ['gm-vote-actions', 'gm-crepuscule-actions']) {
+    const panel = document.getElementById(id);
+    if (panel) panel.style.display = STATE.isGM ? 'block' : 'none';
+  }
   switch(STATE.phase) {
     case 'lobby':       renderLobby();      break;
     case 'night':       renderNight();      break;
@@ -236,7 +204,7 @@ function renderPlayerList() {
     row.className = 'player-row';
     const initial = (p.name || '?')[0].toUpperCase();
     row.innerHTML = `
-      <div class="player-avatar unassigned">${initial}</div>
+      <div class="player-avatar unassigned">${escapeHtml(initial)}</div>
       <span class="player-name">${escapeHtml(p.name)}</span>
       <span class="player-status-tag ${p.isGM ? 'gm' : 'waiting'}">${p.isGM ? '⚔️ MJ' : t('game.waitingStatus')}</span>
     `;
@@ -246,12 +214,19 @@ function renderPlayerList() {
 
 // ---- Assigner les rôles (MJ) ----
 async function assignRoles() {
+  if (!STATE.isGM || STATE.phase !== 'lobby') return;
   const playerIds = Object.keys(STATE.players).filter(uid => !STATE.players[uid].isGM);
-  const checkedBoxes = document.querySelectorAll('.role-checkbox-item input:checked');
+  const checkedBoxes = document.querySelectorAll('#role-checkboxes-lobby .role-checkbox-item input:checked');
   const selectedRoles = Array.from(checkedBoxes).map(cb => cb.value);
 
-  if (selectedRoles.length < playerIds.length) {
-    alert(t('game.alertRolesRequired', playerIds.length));
+  if (!playerIds.length || selectedRoles.length !== playerIds.length) {
+    alert(window.i18n?.getCurrentLang?.() === 'en' ? `Select exactly ${playerIds.length} roles.` : `Sélectionnez exactement ${playerIds.length} rôles.`);
+    return;
+  }
+
+  const factions = new Set(selectedRoles.map(id => ROLES.find(role => role.id === id)?.faction));
+  if (!factions.has('lune') || !factions.has('ombre')) {
+    alert(window.i18n?.getCurrentLang?.() === 'en' ? 'Include at least one Moon and one Shadow role.' : 'Ajoutez au moins un rôle de la Lune et un rôle de l’Ombre.');
     return;
   }
 
@@ -275,18 +250,27 @@ async function assignRoles() {
 
 // ---- Démarrer la nuit (MJ) ----
 async function startNight() {
+  if (!STATE.isGM || !['lobby', 'day', 'crepuscule'].includes(STATE.phase)) return;
+  const players = Object.values(STATE.players).filter(p => !p.isGM);
+  if (!players.length || players.some(p => !p.roleId)) {
+    alert(window.i18n?.getCurrentLang?.() === 'en' ? 'Assign all roles first.' : 'Distribuez tous les rôles avant de commencer.');
+    return;
+  }
+  if (STATE.phase !== 'lobby') { await checkVictory(); if (STATE.phase === 'gameover') return; }
   const updates = {
     phase: 'night',
     round: STATE.round + 1,
     nightStep: 0,
     votes: null,
     'event': null,
+    currentRole: NIGHT_ORDER[0].id,
   };
 
   // Reset actions nocturnes
   Object.keys(STATE.players).forEach(uid => {
     updates[`players/${uid}/nightActionDone`]   = false;
     updates[`players/${uid}/nightActionTarget`] = null;
+    updates[`players/${uid}/message`] = null;
   });
 
   await writeRoom(updates);
@@ -296,8 +280,8 @@ async function startNight() {
 // ---- NIGHT ----
 function renderNight() {
   showView('night');
-  STATE.selectedNightTarget = null;
-  STATE.nightSubmitted = false;
+  const turn = `${STATE.round}:${STATE.nightStep}`;
+  if (STATE.turn !== turn) { STATE.selectedNightTarget = null; STATE.nightSubmitted = false; STATE.turn = turn; }
 
   renderNightOrder();
   updateGrimoire();
@@ -407,7 +391,8 @@ function renderPlayerNightPanel() {
 
   // Formulaire d'action nocturne
   const currentStep = NIGHT_ORDER[STATE.nightStep];
-  const isMyTurn = currentStep && roleData && currentStep.id === roleData.id;
+  const isMyTurn = me.isAlive && currentStep && roleData && currentStep.id === roleData.id;
+  if (me.message) html += `<p class="private-message" role="status">${escapeHtml(me.message)}</p>`;
 
   if (STATE.nightSubmitted || (me && me.nightActionDone)) {
     html += `
@@ -418,11 +403,11 @@ function renderPlayerNightPanel() {
     `;
   } else if (isMyTurn && currentStep.needsTarget) {
     const alivePlayers = Object.entries(STATE.players)
-      .filter(([uid, p]) => p.isAlive && uid !== STATE.playerId && !p.isGM)
+      .filter(([uid, p]) => p.isAlive && (uid !== STATE.playerId || roleData.id === 'pretresse') && !p.isGM)
       .map(([uid, p]) => `
         <button class="target-btn" data-uid="${uid}" onclick="selectTarget('${uid}', this)">
           <span class="t-icon">👤</span>
-          <span class="t-name">${p.name}</span>
+          <span class="t-name">${escapeHtml(p.name)}</span>
         </button>
       `).join('');
 
@@ -447,6 +432,8 @@ function renderPlayerNightPanel() {
   }
 
   panel.innerHTML = html;
+  const selected = [...panel.querySelectorAll('.target-btn')].find(button => button.dataset.uid === STATE.selectedNightTarget);
+  if (selected) selectTarget(STATE.selectedNightTarget, selected);
 }
 
 function selectTarget(uid, btn) {
@@ -457,7 +444,7 @@ function selectTarget(uid, btn) {
 }
 
 async function submitNightAction() {
-  if (!STATE.selectedNightTarget) return;
+  if (!canActAtNight() || !STATE.selectedNightTarget || !STATE.players[STATE.selectedNightTarget]?.isAlive) return;
   STATE.nightSubmitted = true;
   const updates = {
     [`players/${STATE.playerId}/nightActionDone`]:   true,
@@ -468,6 +455,7 @@ async function submitNightAction() {
 }
 
 async function skipNightAction() {
+  if (!canActAtNight() || !NIGHT_ORDER[STATE.nightStep]?.optional) return;
   STATE.nightSubmitted = true;
   const updates = {
     [`players/${STATE.playerId}/nightActionDone`]: true,
@@ -478,17 +466,19 @@ async function skipNightAction() {
 }
 
 async function advanceNightStep() {
+  if (!STATE.isGM || STATE.phase !== 'night') return;
   const nextStep = STATE.nightStep + 1;
   if (nextStep >= NIGHT_ORDER.length) {
-    await writeRoom({ nightStep: NIGHT_ORDER.length });
+    await writeRoom({ nightStep: NIGHT_ORDER.length, currentRole: null });
   } else {
-    await writeRoom({ nightStep: nextStep });
+    await writeRoom({ nightStep: nextStep, currentRole: NIGHT_ORDER[nextStep].id });
   }
 }
 
 // ---- Démarrer le jour (MJ) ----
 async function startDay() {
-  const updates = { phase: 'day', votes: null };
+  if (!STATE.isGM || STATE.phase !== 'night' || STATE.nightStep < NIGHT_ORDER.length) return;
+  const updates = { phase: 'day', votes: null, voteResolved: false };
   await writeRoom(updates);
   addLog(t('game.logDayRises'), 'gm');
 }
@@ -503,28 +493,25 @@ function renderDay() {
   updateGrimoire();
 }
 
+function appendLog(body, log) {
+  const entry = document.createElement('div'); entry.className = 'feed-entry';
+  const icon = document.createElement('span'); icon.className = 'feed-icon';
+  icon.textContent = log.type === 'death' ? '💀' : log.type === 'gm' ? '⚔️' : '📣';
+  const text = document.createElement('span'); text.className = 'feed-text'; text.textContent = log.text;
+  const time = document.createElement('span'); time.className = 'feed-ts';
+  time.textContent = new Date(log.ts).toLocaleTimeString(window.i18n?.getCurrentLang?.() === 'en' ? 'en-GB' : 'fr-FR', { hour: '2-digit', minute: '2-digit' });
+  entry.append(icon, text, time); body.append(entry);
+}
 function renderEventFeed() {
   const body = document.getElementById('event-feed-body');
-  if (!body || !STATE.event) return;
-}
-
-function addLog(text, type = 'normal') {
-  const body = document.getElementById('event-feed-body');
   if (!body) return;
-
-  const entry = document.createElement('div');
-  entry.className = 'feed-entry';
-  const icon = type === 'death' ? '💀' : type === 'revive' ? '✨' : type === 'event' ? '🌀' : type === 'gm' ? '⚔️' : '📣';
-  entry.innerHTML = `
-    <span class="feed-icon">${icon}</span>
-    <span class="feed-text ${type}">${text}</span>
-    <span class="feed-ts">${new Date().toLocaleTimeString(window.i18n?.getCurrentLang?.() === 'en' ? 'en-GB' : 'fr-FR', { hour: '2-digit', minute: '2-digit' })}</span>
-  `;
-  body.appendChild(entry);
+  body.replaceChildren();
+  Object.values(lastSnapshot?.logs || {}).sort((a, b) => a.ts - b.ts).slice(-100).forEach(log => appendLog(body, log));
   body.scrollTop = body.scrollHeight;
-
-  // Persister dans Firebase
-  if (db) db.ref(`rooms/${STATE.roomCode}/logs`).push({ text, type, ts: Date.now() });
+}
+function addLog(text, type = 'normal') {
+  if (!STATE.isGM || !client) return;
+  client.write({ [`logs/${crypto.randomUUID()}`]: { text, type, ts: Date.now() } }).catch(gameError);
 }
 
 function renderVotePanel() {
@@ -532,7 +519,7 @@ function renderVotePanel() {
   if (!panel) return;
 
   const me = STATE.players[STATE.playerId];
-  const arrested = me && me.arrested;
+  const arrested = !me?.isAlive || me.arrested;
   const myVote   = STATE.votes[STATE.playerId];
 
   panel.innerHTML = '';
@@ -540,7 +527,7 @@ function renderVotePanel() {
     .filter(([, p]) => p.isAlive && !p.isGM)
     .forEach(([uid, p]) => {
       const voteCount = Object.values(STATE.votes || {}).filter(v => v === uid).length;
-      const total     = Object.keys(STATE.players).filter(id => STATE.players[id].isAlive).length;
+      const total     = Object.keys(STATE.players).filter(id => STATE.players[id].isAlive && !STATE.players[id].isGM).length;
       const pct       = total > 0 ? Math.round((voteCount / total) * 100) : 0;
 
       const item = document.createElement('div');
@@ -548,29 +535,34 @@ function renderVotePanel() {
       item.innerHTML = `
         <span class="vote-candidate-name">👤 ${escapeHtml(p.name)}</span>
         ${STATE.isGM ? `<div class="vote-bar-wrapper"><div class="vote-bar" style="width:${pct}%"></div></div><span class="vote-count-text">${voteCount}</span>` : ''}
-        ${!STATE.isGM && !arrested ? `<button class="btn btn-secondary" onclick="submitVote('${uid}')" style="padding:0.25rem 0.75rem;font-size:0.75rem;">${t('game.accuseBtn')}</button>` : ''}
+        ${!STATE.isGM && !arrested && !STATE.voteResolved ? `<button class="btn btn-secondary" onclick="submitVote('${uid}')" style="padding:0.25rem 0.75rem;font-size:0.75rem;">${t('game.accuseBtn')}</button>` : ''}
       `;
       panel.appendChild(item);
     });
 }
 
 async function submitVote(targetId) {
+  const me = STATE.players[STATE.playerId], target = STATE.players[targetId];
+  if (STATE.isGM || STATE.voteResolved || STATE.phase !== 'day' || !me?.isAlive || me.arrested || !target?.isAlive || target.isGM) return;
   await writeRoom({ [`votes/${STATE.playerId}`]: targetId });
   renderVotePanel();
 }
 
 async function resolveVote() {
+  if (!STATE.isGM || STATE.phase !== 'day' || STATE.voteResolved) return;
   const tallies = {};
-  Object.values(STATE.votes || {}).forEach(v => { tallies[v] = (tallies[v] || 0) + 1; });
-  let topId = null, topCount = 0;
-  Object.entries(tallies).forEach(([uid, count]) => {
-    if (count > topCount) { topId = uid; topCount = count; }
+  Object.entries(STATE.votes || {}).forEach(([voter, target]) => {
+    const p = STATE.players[voter], candidate = STATE.players[target];
+    if (p?.isAlive && !p.isGM && !p.arrested && candidate?.isAlive && !candidate.isGM) tallies[target] = (tallies[target] || 0) + 1;
   });
+  const sorted = Object.entries(tallies).sort((a, b) => b[1] - a[1]);
+  const topId = sorted.length && (!sorted[1] || sorted[0][1] > sorted[1][1]) ? sorted[0][0] : null;
+  await writeRoom({ voteResolved: true });
 
   if (topId && STATE.players[topId]) {
     const name = STATE.players[topId].name;
     await writeRoom({ [`players/${topId}/isAlive`]: false });
-    addLog(`💀 ${escapeHtml(name)} ${t('game.logPlayerExecuted')}`, 'death');
+    addLog(`💀 ${name} ${t('game.logPlayerExecuted')}`, 'death');
     await checkVictory();
   } else {
     addLog(t('game.logTie'), 'normal');
@@ -604,6 +596,9 @@ function renderGMDayControls() {
 
 // ---- CRÉPUSCULE (MJ) ----
 async function startCrepuscule() {
+  if (!STATE.isGM || STATE.phase !== 'day') return;
+  await checkVictory();
+  if (STATE.phase === 'gameover') return;
   const event = CREPUSCULE_EVENTS[Math.floor(Math.random() * CREPUSCULE_EVENTS.length)];
   await writeRoom({ phase: 'crepuscule', event });
   const lang = window.i18n?.getCurrentLang?.() || 'fr';
@@ -613,6 +608,7 @@ async function startCrepuscule() {
 
 function renderCrepuscule() {
   showView('crepuscule');
+  document.querySelectorAll('#view-crepuscule button').forEach(button => { button.hidden = !STATE.isGM; });
   const ev = STATE.event;
   if (!ev) return;
 
@@ -638,6 +634,7 @@ async function continueToNextNight() {
 
 // ---- Vérifier victoire ----
 async function checkVictory() {
+  if (!STATE.isGM || STATE.phase === 'lobby' || STATE.phase === 'gameover') return;
   const alive = Object.entries(STATE.players).filter(([, p]) => p.isAlive && !p.isGM);
   const lune   = alive.filter(([, p]) => {
     const r = ROLES.find(r => r.id === p.roleId);
@@ -654,7 +651,7 @@ async function checkVictory() {
 
   if (lune.length === 0 && ombre.length === 0 && solitaire.length > 0) {
     await writeRoom({ phase: 'gameover', winner: { faction: 'solitaire' } });
-  } else if (ombre.length === 0) {
+  } else if (ombre.length === 0 && lune.length > 0) {
     await writeRoom({ phase: 'gameover', winner: { faction: 'lune' } });
   } else if (ombre.length >= lune.length) {
     await writeRoom({ phase: 'gameover', winner: { faction: 'ombre' } });
@@ -664,6 +661,7 @@ async function checkVictory() {
 }
 
 async function declareSolitaireVictory() {
+  if (!STATE.isGM || STATE.phase === 'gameover') return;
   await writeRoom({ phase: 'gameover', winner: { faction: 'solitaire' } });
   addLog(t('game.logSolitaireWin') || 'Un Solitaire a rempli sa condition de victoire.', 'event');
 }
@@ -672,12 +670,7 @@ async function declareSolitaireVictory() {
 function renderGameover() {
   showView('gameover');
 
-  // Lire les données depuis Firebase
-  if (db) {
-    db.ref(`rooms/${STATE.roomCode}/winner`).get().then(snap => {
-      if (snap.exists()) applyGameover(snap.val());
-    });
-  }
+  if (lastSnapshot?.winner) applyGameover(lastSnapshot.winner);
 }
 
 function applyGameover(winner) {
@@ -720,7 +713,7 @@ function applyGameover(winner) {
       item.innerHTML = `
         <div class="rri-icon">${roleData.icon}</div>
         <div class="rri-player">${escapeHtml(p.name)}</div>
-        <div class="rri-role">${escapeHtml(roleData.name)}</div>
+        <div class="rri-role">${escapeHtml(rl(roleData, 'name'))}</div>
       `;
       grid.appendChild(item);
     });
@@ -751,38 +744,27 @@ function updateGrimoire() {
 }
 
 function toggleGrimoire() {
+  if (!STATE.isGM) return;
   const panel = document.getElementById('grimoire-panel');
   if (panel) panel.classList.toggle('open');
 }
 
-// ---- Écriture Firebase ou LocalStorage ----
+function canActAtNight() {
+  const me = STATE.players[STATE.playerId];
+  return STATE.phase === 'night' && me?.isAlive && !me.isGM && !me.nightActionDone && me.roleId === NIGHT_ORDER[STATE.nightStep]?.id;
+}
 async function writeRoom(updates) {
-  if (db) {
-    if (typeof updates === 'object' && !Array.isArray(updates)) {
-      await db.ref(`rooms/${STATE.roomCode}`).update(updates);
-    }
-  } else {
-    // Mode local
-    const raw = sessionStorage.getItem(`room_${STATE.roomCode}`) || '{}';
-    const room = JSON.parse(raw);
-    // Appliquer les mises à jour (supporte les chemins plats)
-    Object.entries(updates).forEach(([key, val]) => {
-      const parts = key.split('/');
-      let obj = room;
-      for (let i = 0; i < parts.length - 1; i++) {
-        if (!obj[parts[i]]) obj[parts[i]] = {};
-        obj = obj[parts[i]];
-      }
-      obj[parts[parts.length - 1]] = val;
-    });
-    sessionStorage.setItem(`room_${STATE.roomCode}`, JSON.stringify(room));
-    applySnapshot(room);
+  if (!client) throw new Error('Room not connected');
+  if (!STATE.isGM) {
+    const own = `players/${STATE.playerId}/`;
+    if (!Object.keys(updates).every(path => path === `votes/${STATE.playerId}` || path === own + 'nightActionDone' || path === own + 'nightActionTarget')) throw new Error('Forbidden action');
   }
+  await client.write(updates);
 }
 
 // ---- Rôles (sélection GM) ----
 function buildRoleCheckboxes() {
-  const container = document.getElementById('role-checkboxes-setup');
+  const container = document.getElementById('role-checkboxes-lobby');
   if (!container || typeof ROLES === 'undefined') return;
   container.innerHTML = '';
 
@@ -792,7 +774,7 @@ function buildRoleCheckboxes() {
     label.innerHTML = `
       <input type="checkbox" value="${role.id}" ${['herald','assassin','pretresse','gardien','murmure','archives'].includes(role.id) ? 'checked' : ''}>
       <span class="rci-icon">${role.icon}</span>
-      <span class="rci-name">${role.name}</span>
+      <span class="rci-name">${rl(role, 'name')}</span>
       <span class="rci-faction ${role.faction}"></span>
     `;
     container.appendChild(label);
@@ -819,7 +801,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navigator.clipboard.writeText(STATE.roomCode || '').then(() => {
       const btn = document.getElementById('copy-room-code');
       if (btn) { btn.textContent = t('game.copied'); setTimeout(() => btn.textContent = t('game.copyCode'), 2000); }
-    });
+    }).catch(gameError);
   });
 });
 
@@ -836,8 +818,31 @@ window.resolveVote       = resolveVote;
 window.continueToCrepuscule    = continueToCrepuscule;
 window.continueToNextNight     = continueToNextNight;
 window.declareSolitaireVictory = declareSolitaireVictory;
+window.checkVictory = checkVictory;
 window.toggleGrimoire    = toggleGrimoire;
-window.gmResolvePassive  = function(roleId) {
+window.gmResolvePassive  = async function(roleId) {
+  if (!STATE.isGM) return;
   const msg = prompt(t('game.passiveInfoPrompt', roleId));
-  if (msg) addLog(`[Info MJ → ${roleId}] ${msg}`, 'gm');
+  if (msg) {
+    const updates = {};
+    Object.entries(STATE.players).filter(([, p]) => p.roleId === roleId && p.isAlive).forEach(([uid]) => { updates[`players/${uid}/message`] = msg.slice(0, 2000); });
+    await writeRoom(updates);
+  }
 };
+
+['assignRoles', 'startNight', 'startDay', 'advanceNightStep', 'submitNightAction', 'skipNightAction', 'submitVote', 'resolveVote', 'continueToCrepuscule', 'continueToNextNight', 'declareSolitaireVictory', 'gmResolvePassive', 'checkVictory'].forEach(name => {
+  const action = window[name];
+  let busy = false;
+  window[name] = async (...args) => {
+    if (busy) return;
+    busy = true;
+    try { return await action(...args); } catch (error) { gameError(error); } finally { busy = false; }
+  };
+});
+window.addEventListener('pagehide', () => client?.unsubscribe());
+document.addEventListener('langchange', () => {
+  const selected = [...document.querySelectorAll('.role-checkbox-item input:checked')].map(input => input.value);
+  buildRoleCheckboxes();
+  document.querySelectorAll('.role-checkbox-item input').forEach(input => { input.checked = selected.includes(input.value); });
+  if (lastSnapshot) { renderPhase(); updateConnectionBar(); }
+});
