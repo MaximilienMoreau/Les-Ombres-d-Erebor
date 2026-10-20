@@ -50,9 +50,9 @@
       th.className = 'matrix-col-header';
       th.setAttribute('scope', 'col');
       th.innerHTML = `
-        <div class="col-header-inner" data-role="${role.id}" title="${rl(role, 'name')}">
+        <button type="button" class="col-header-inner" data-role="${role.id}" title="${rl(role, 'name')}">
           <span class="col-header-text">${role.icon} ${rl(role, 'name')}</span>
-        </div>
+        </button>
       `;
       headerRow.appendChild(th);
     });
@@ -71,10 +71,10 @@
       rowTh.className = 'matrix-row-header';
       rowTh.setAttribute('scope', 'row');
       rowTh.innerHTML = `
-        <div class="row-header-inner" data-role="${rowRole.id}" title="${rl(rowRole, 'name')}">
+        <button type="button" class="row-header-inner" data-role="${rowRole.id}" title="${rl(rowRole, 'name')}">
           <span class="row-icon">${rowRole.icon}</span>
           <span class="row-name">${rl(rowRole, 'name')}</span>
-        </div>
+        </button>
       `;
       tr.appendChild(rowTh);
 
@@ -126,10 +126,11 @@
   function bindTooltip(table) {
     if (!tooltip) return;
 
-    table.addEventListener('mousemove', (e) => {
-      const cell = e.target.closest('.matrix-cell[data-interaction]');
+    tooltip.setAttribute('role', 'tooltip');
+    tooltip.setAttribute('aria-hidden', 'true');
+    function showTooltip(cell, clientX, clientY) {
       if (!cell) {
-        tooltip.classList.remove('visible');
+        hideTooltip();
         return;
       }
 
@@ -152,20 +153,40 @@
 
       const rect   = tooltip.getBoundingClientRect();
       const margin = 12;
-      let x = e.clientX + margin;
-      let y = e.clientY + margin;
+      let x = clientX + margin;
+      let y = clientY + margin;
 
       // Éviter de sortir de l'écran
-      if (x + 280 > window.innerWidth)  x = e.clientX - 280 - margin;
-      if (y + rect.height > window.innerHeight) y = e.clientY - rect.height - margin;
+      if (x + 280 > window.innerWidth)  x = clientX - 280 - margin;
+      if (y + rect.height > window.innerHeight) y = clientY - rect.height - margin;
 
-      tooltip.style.left = `${x}px`;
-      tooltip.style.top  = `${y}px`;
+      tooltip.style.left = `${Math.max(8, x)}px`;
+      tooltip.style.top = `${Math.max(8, y)}px`;
       tooltip.classList.add('visible');
+      tooltip.setAttribute('aria-hidden', 'false');
+      cell.setAttribute('aria-describedby', tooltip.id);
+    }
+    function hideTooltip() {
+      tooltip.classList.remove('visible'); tooltip.setAttribute('aria-hidden', 'true');
+      table.querySelectorAll('[aria-describedby]').forEach(cell => cell.removeAttribute('aria-describedby'));
+    }
+    table.addEventListener('mousemove', event => showTooltip(event.target.closest('.matrix-cell[data-interaction]'), event.clientX, event.clientY));
+    table.addEventListener('focusin', event => {
+      const cell = event.target.closest('.matrix-cell[data-interaction]');
+      if (cell) { const rect = cell.getBoundingClientRect(); showTooltip(cell, rect.right, rect.bottom); }
     });
-
-    table.addEventListener('mouseleave', () => {
-      tooltip.classList.remove('visible');
+    table.addEventListener('focusout', hideTooltip);
+    table.addEventListener('mouseleave', () => { if (!table.contains(document.activeElement)) hideTooltip(); });
+    table.addEventListener('keydown', event => {
+      if (event.key === 'Escape') { hideTooltip(); return; }
+      const cell = event.target.closest('.matrix-cell[data-interaction]');
+      if (!cell || !['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key)) return;
+      event.preventDefault();
+      const cells = [...table.querySelectorAll('.matrix-cell[data-interaction]')];
+      const row = cell.dataset.row, col = cell.dataset.col;
+      const axis = event.key === 'ArrowLeft' || event.key === 'ArrowRight' ? cells.filter(c => c.dataset.row === row) : cells.filter(c => c.dataset.col === col);
+      const direction = event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1;
+      axis[(axis.indexOf(cell) + direction + axis.length) % axis.length]?.focus();
     });
   }
 
@@ -301,12 +322,16 @@
   // ---- Rebuild on language change ----
   document.addEventListener('langchange', () => {
     if (tableContainer) {
+      tooltip?.classList.remove('visible');
       tableContainer.innerHTML = '';
       buildMatrix();
     }
     if (mobileSelect && mobileList) {
+      const selected = mobileSelect.value;
       mobileSelect.innerHTML = '';
       buildMobileSelect();
+      mobileSelect.value = selected;
+      buildMobileList(selected);
     }
   });
 })();

@@ -11,7 +11,9 @@
 
   if (!grid) return;
 
-  let currentFaction = 'all';
+  const requestedFaction = new URLSearchParams(location.search).get('faction');
+  let currentFaction = ['lune', 'ombre', 'solitaire'].includes(requestedFaction) ? requestedFaction : 'all';
+  filterBtns.forEach(button => { button.classList.toggle('active', (button.dataset.faction || 'all') === currentFaction); button.setAttribute('aria-pressed', String((button.dataset.faction || 'all') === currentFaction)); });
   let currentSearch  = '';
 
   // Instancier la modale
@@ -125,6 +127,10 @@
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentFaction = btn.dataset.faction || 'all';
+      filterBtns.forEach(button => button.setAttribute('aria-pressed', String(button === btn)));
+      const url = new URL(location.href);
+      if (currentFaction === 'all') url.searchParams.delete('faction'); else url.searchParams.set('faction', currentFaction);
+      history.replaceState(null, '', url);
       buildCards();
     });
   });

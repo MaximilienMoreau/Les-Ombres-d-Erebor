@@ -129,11 +129,15 @@ Pour forcer ce mode même si Firebase est configuré, ouvrez `play.html?mode=loc
 
 Les nouvelles salles utilisent `rooms/{code}/public` pour la phase, les sièges et les votes, et `rooms/{code}/secrets/{uid}` pour les rôles, les cibles nocturnes et les messages privés. Les joueurs ne lisent que leurs secrets ; le MJ authentifié lit tous les secrets et arbitre les phases. Les rôles sont révélés en fin de partie. L’URL `?gm=1` n’accorde aucun droit. Les sièges numérotés limitent les entrées concurrentes à la capacité configurée, sans écraser un joueur existant. Une reconnexion dans la même session conserve le rôle. Les anciennes salles au format précédent doivent être recréées.
 
-Le MJ reste responsable de la résolution des pouvoirs et des objectifs individuels des Solitaires. Les informations passives sont adressées uniquement aux joueurs concernés. La session anonyme en ligne est conservée dans l’onglet : fermer cette session ou effacer son stockage peut faire perdre l’identité et l’accès à son rôle.
+Le panneau d’arbitrage du MJ permet d’éliminer ou ressusciter un joueur, de changer son quartier, de bloquer ses actions et son vote et de rétablir un pouvoir unique utilisé par erreur. Le Voyant Éclipsé et l’Assassin Muet consomment leur pouvoir unique lors de la soumission ; passer son tour ne le consomme pas. Les restrictions de quartier de l’Assassin Voilé et du Gardien s’appliquent aux cibles. Le MJ reste responsable de la résolution des autres pouvoirs et des objectifs individuels des Solitaires. Les informations passives sont adressées uniquement aux joueurs concernés. La session anonyme en ligne est conservée dans l’onglet : fermer cette session ou effacer son stockage peut faire perdre l’identité et l’accès à son rôle.
 
 **Boutique**
 
 Le panier conserve au maximum dix exemplaires par produit et ignore les données invalides. La boutique ne traite aucun paiement ni aucune commande. La demande de disponibilité prépare un email avec les produits choisis ; l’utilisateur envoie lui-même ce message. Les prix et frais affichés sont indicatifs jusqu’à confirmation.
+
+**Compositeur et navigation**
+
+Le compositeur tire exactement 8 à 20 rôles distincts. Le mode débutant privilégie les rôles non experts et annonce les experts nécessaires pour compléter les grandes parties. Changer de langue conserve le tirage. Les liens de faction ouvrent la galerie filtrée. La navigation des chapitres adapte ses ancres à la langue et suit la lecture ; les liens directs comme `rules.html#setup` fonctionnent également avec l’anglais mémorisé.
 
 **Validation**
 
@@ -175,6 +179,6 @@ Documentation Firebase : [règles de sécurité](https://firebase.google.com/doc
 
 <div align="center">
 
-© 2027 **Les Ombres d'Erebor** · Tous droits réservés
+© 2026 **Les Ombres d'Erebor** · Tous droits réservés
 
 </div>

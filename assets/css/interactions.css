@@ -441,3 +441,5 @@
   .interaction-stats { display: none; }
   .mobile-interactions { display: block; }
 }
+
+button.col-header-inner, button.row-header-inner { font: inherit; color: inherit; background: transparent; border: 0; cursor: pointer; }

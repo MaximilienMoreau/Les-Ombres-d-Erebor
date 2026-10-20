@@ -46,3 +46,17 @@ test('distribution requires an exact number of roles and host authority', async 
   assert.deepEqual(assigned.sort(), ['assassin','herald','pretresse']);
   e.run('STATE.isGM=false'); await e.run('assignRoles()'); assert.equal(e.updates.length,1);
 });
+test('host adjudication permits life, district and power changes only to the host', async()=>{
+ const e=engine();
+ await e.run("hostUpdatePlayer('a','district',2)");assert.equal(e.updates.at(-1)['players/a/district'],2);
+ await e.run("hostUpdatePlayer('a','isAlive',false)");assert.equal(e.updates.at(-1)['players/a/isAlive'],false);
+ await e.run("hostUpdatePlayer('a','powerUsed',true)");assert.equal(e.updates.at(-1)['players/a/powerUsed'],true);
+ const count=e.updates.length;
+ await e.run("hostUpdatePlayer('a','district',4)");await e.run("hostUpdatePlayer('gm','isAlive',false)");
+ e.run('STATE.isGM=false');await e.run("hostUpdatePlayer('b','isAlive',false)");assert.equal(e.updates.length,count);
+});
+test('one-time powers and restrictions persist across nights',async()=>{
+ const e=engine();e.run("STATE.phase='night'; STATE.playerId='a'; STATE.players.a.roleId='voyant'; STATE.nightStep=8; STATE.players.a.powerUsed=true");assert.equal(e.run('canActAtNight()'),false);
+ e.run('STATE.players.a.powerUsed=false; STATE.players.a.arrested=true');assert.equal(e.run('canActAtNight()'),false);
+ e.run('STATE.players.a.arrested=false');assert.equal(e.run('canActAtNight()'),true);
+});
