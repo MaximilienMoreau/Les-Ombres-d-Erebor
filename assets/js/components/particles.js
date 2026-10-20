@@ -5,14 +5,21 @@
 class ParticleSystem {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
-    if (!this.canvas) return;
+    if (!this.canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     this.ctx = this.canvas.getContext('2d');
+    if (!this.ctx) return;
     this.particles = [];
     this.running = true;
     this.resize();
     this.init();
     this.loop();
-    window.addEventListener('resize', () => this.resize());
+    this.onResize = () => this.resize();
+    this.onVisibility = () => {
+      cancelAnimationFrame(this.frame);
+      if (!document.hidden && this.running) this.loop();
+    };
+    window.addEventListener('resize', this.onResize);
+    document.addEventListener('visibilitychange', this.onVisibility);
   }
 
   resize() {
@@ -108,10 +115,13 @@ class ParticleSystem {
       this.draw(p);
     });
 
-    requestAnimationFrame(() => this.loop());
+    this.frame = requestAnimationFrame(() => this.loop());
   }
 
   destroy() {
     this.running = false;
+    cancelAnimationFrame(this.frame);
+    window.removeEventListener('resize', this.onResize);
+    document.removeEventListener('visibilitychange', this.onVisibility);
   }
 }

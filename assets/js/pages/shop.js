@@ -4,7 +4,17 @@
 
 const CART_KEY = 'erebor_cart';
 
-let cart = JSON.parse(localStorage.getItem(CART_KEY) || '{}');
+function loadCart() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(CART_KEY) || '{}');
+    if (!stored || typeof stored !== 'object' || Array.isArray(stored)) return {};
+    return Object.fromEntries(Object.entries(stored).filter(([id, qty]) => SHOP_PRODUCTS.some(p => p.id === id && !p.draft) && Number.isInteger(qty) && qty > 0 && qty <= 10));
+  } catch { return {}; }
+}
+let cart = loadCart();
+function saveCart() {
+  try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch { /* Keep this visit's basket usable when storage is unavailable. */ }
+}
 // cart: { [productId]: quantity }
 
 function getLang() {
@@ -54,9 +64,9 @@ function buildProducts() {
             <div class="price-unit">€ TTC</div>
           </div>
           <div class="quantity-control">
-            <button class="qty-btn" onclick="changeQty('${p.id}', -1)">−</button>
+            <button class="qty-btn" aria-label="${getLang() === 'en' ? 'Change quantity' : 'Modifier la quantité'}" onclick="changeQty('${p.id}', -1)">−</button>
             <input type="number" class="qty-input" id="qty-${p.id}" value="1" min="1" max="10" readonly>
-            <button class="qty-btn" onclick="changeQty('${p.id}', +1)">+</button>
+            <button class="qty-btn" aria-label="${getLang() === 'en' ? 'Change quantity' : 'Modifier la quantité'}" onclick="changeQty('${p.id}', +1)">+</button>
           </div>
           <button class="btn-add-cart" id="add-${p.id}" onclick="addToCart('${p.id}')">
             ${window.i18n ? window.i18n.t('shop.addToCart') : '🛒 Ajouter au panier'}
@@ -64,10 +74,10 @@ function buildProducts() {
         </div>
       </div>
       <div class="product-contents">
-        <div class="contents-toggle" onclick="toggleContents(this)">
+        <button type="button" class="contents-toggle" aria-expanded="false" onclick="toggleContents(this)">
           ${window.i18n ? window.i18n.t('shop.contentsToggle') : 'Contenu de la boîte'}
           <span class="toggle-icon">▼</span>
-        </div>
+        </button>
         <ul class="contents-list">${contentsList}</ul>
       </div>
     `;
@@ -89,8 +99,9 @@ function changeQty(productId, delta) {
 
 function addToCart(productId) {
   const qty = parseInt(document.getElementById(`qty-${productId}`)?.value || '1');
-  cart[productId] = (cart[productId] || 0) + qty;
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  if (!SHOP_PRODUCTS.some(p => p.id === productId && !p.draft)) return;
+  cart[productId] = Math.min(10, (cart[productId] || 0) + qty);
+  saveCart();
   renderCart();
 
   const btn = document.getElementById(`add-${productId}`);
@@ -103,13 +114,13 @@ function addToCart(productId) {
 
 function removeFromCart(productId) {
   delete cart[productId];
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  saveCart();
   renderCart();
 }
 
 function clearCart() {
   cart = {};
-  localStorage.removeItem(CART_KEY);
+  try { localStorage.removeItem(CART_KEY); } catch {}
   renderCart();
 }
 
@@ -172,7 +183,7 @@ function renderCart() {
 }
 
 function toggleContents(toggleEl) {
-  toggleEl.classList.toggle('open');
+  toggleEl.setAttribute('aria-expanded', String(toggleEl.classList.toggle('open')));
 }
 
 function scrollToProduct(id) {
@@ -198,7 +209,7 @@ function openCheckout() {
     summary.innerHTML = entries.map(([id, qty]) => {
       const p = SHOP_PRODUCTS.find(p => p.id === id);
       return `<div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;">
-        <span>${p?.icon} ${p?.name} × ${qty}</span>
+        <span>${p?.icon} ${pt(p, 'name')} × ${qty}</span>
         <strong style="color:var(--color-gold);">${(p ? p.price * qty : 0).toFixed(2).replace('.', ',')} €</strong>
       </div>`;
     }).join('') + `
@@ -212,39 +223,18 @@ function openCheckout() {
     if (totalBtn) totalBtn.textContent = `${total.toFixed(2).replace('.', ',')} €`;
   }
 
-  document.getElementById('checkout-form-view')?.removeAttribute('style');
-  document.getElementById('checkout-success')?.classList.remove('visible');
+  const lines = entries.map(([id, qty]) => {
+    const p = SHOP_PRODUCTS.find(product => product.id === id);
+    return `${pt(p, 'name')} × ${qty} — ${(p.price * qty).toFixed(2)} EUR`;
+  });
+  const subject = getLang() === 'en' ? 'Availability enquiry — Les Ombres d’Erebor' : 'Demande de disponibilité — Les Ombres d’Erebor';
+  document.getElementById('reservation-email').href = `mailto:contact@ombres-erebor.fr?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
   document.getElementById('checkout-overlay')?.classList.add('open');
-  document.body.style.overflow = 'hidden';
 }
 
 function closeCheckout() {
   document.getElementById('checkout-overlay')?.classList.remove('open');
   document.body.style.overflow = '';
-}
-
-function submitOrder() {
-  const firstname = document.getElementById('co-firstname')?.value.trim();
-  const lastname  = document.getElementById('co-lastname')?.value.trim();
-  const email     = document.getElementById('co-email')?.value.trim();
-  const address   = document.getElementById('co-address')?.value.trim();
-  const zip       = document.getElementById('co-zip')?.value.trim();
-  const city      = document.getElementById('co-city')?.value.trim();
-
-  if (!firstname || !lastname || !email || !address || !zip || !city) {
-    alert(window.i18n ? window.i18n.t('shop.alertRequired') || 'Veuillez remplir tous les champs obligatoires.' : 'Veuillez remplir tous les champs obligatoires.');
-    return;
-  }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    alert(window.i18n ? window.i18n.t('shop.alertEmail') || 'Adresse email invalide.' : 'Adresse email invalide.');
-    return;
-  }
-
-  // Simulation de traitement (dans un vrai projet : appel Stripe/PayPal ici)
-  setTimeout(() => {
-    document.getElementById('checkout-form-view').style.display = 'none';
-    document.getElementById('checkout-success').classList.add('visible');
-  }, 800);
 }
 
 // ---- Initialisation ----
@@ -260,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('langchange', () => {
     buildProducts();
     renderCart();
+    if (document.getElementById('checkout-overlay')?.classList.contains('open')) openCheckout();
   });
 });
 
@@ -268,8 +259,9 @@ window.clearCart      = clearCart;
 window.removeFromCart = removeFromCart;
 window.openCheckout   = openCheckout;
 window.closeCheckout  = closeCheckout;
-window.submitOrder    = submitOrder;
 window.changeQty      = changeQty;
 window.addToCart      = addToCart;
 window.toggleContents = toggleContents;
 window.scrollToProduct = scrollToProduct;
+
+window.addEventListener('storage', event => { if (event.key === CART_KEY || event.key === null) { cart = loadCart(); renderCart(); } });

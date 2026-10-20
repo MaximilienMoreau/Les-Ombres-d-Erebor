@@ -89,8 +89,8 @@
         <div class="guarantee-item">
           <span class="guarantee-icon">🔒</span>
           <div class="guarantee-text">
-            <strong data-i18n="shop.guarantee3Title">Paiement sécurisé</strong>
-            <span data-i18n="shop.guarantee3Desc">CB, PayPal, virement</span>
+            <strong data-i18n="shop.guarantee3Title">Vente sur demande</strong>
+            <span data-i18n="shop.guarantee3Desc">Disponibilité à confirmer par email</span>
           </div>
         </div>
         <div class="guarantee-item">
@@ -123,7 +123,7 @@
             <p data-i18n="shop.cartEmptyDesc">Ajoutez un produit pour commencer.</p>
           </div>
 
-          <div id="cart-items" class="cart-items" style="display:none;"></div>
+          <div aria-live="polite" id="cart-items" class="cart-items" style="display:none;"></div>
 
           <div class="cart-footer">
             <div class="cart-subtotal">
@@ -139,7 +139,7 @@
               <span class="cart-total-amount" id="cart-total">0,00 €</span>
             </div>
             <button class="btn-checkout" id="btn-checkout" onclick="openCheckout()" disabled data-i18n="shop.cartCheckout">
-              Finaliser la commande →
+              Demander la disponibilité →
             </button>
           </div>
         </div>
@@ -175,93 +175,18 @@
     </div>
   </main>
 
-  <!-- Modal Checkout -->
-  <div class="checkout-overlay" id="checkout-overlay">
-    <div class="checkout-modal">
-      <!-- Formulaire -->
-      <div id="checkout-form-view">
-        <div class="checkout-modal-header">
-          <h2 data-i18n="shop.checkoutTitle">Finaliser la commande</h2>
-          <button onclick="closeCheckout()" style="background:none;border:1px solid var(--color-border);border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--color-text-muted);font-size:1rem;">✕</button>
-        </div>
-        <div class="checkout-modal-body">
-
-          <div class="checkout-section">
-            <h3 data-i18n="shop.checkoutSummary">📦 Récapitulatif</h3>
-            <div id="checkout-summary" style="background:var(--color-deep);border-radius:var(--radius-md);padding:1rem;font-size:0.875rem;color:var(--color-text-muted);"></div>
-          </div>
-
-          <div class="checkout-section">
-            <h3 data-i18n="shop.checkoutInfo">👤 Coordonnées</h3>
-            <div class="form-grid-2">
-              <div class="form-group">
-                <label class="form-label" data-i18n="shop.firstnameLabel">Prénom</label>
-                <input type="text" class="form-input" id="co-firstname" placeholder="Jean" data-i18n-placeholder="shop.firstnamePlaceholder" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label" data-i18n="shop.lastnameLabel">Nom</label>
-                <input type="text" class="form-input" id="co-lastname" placeholder="Dupont" data-i18n-placeholder="shop.lastnamePlaceholder" required>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label" data-i18n="shop.emailLabel">Email</label>
-              <input type="email" class="form-input" id="co-email" placeholder="jean@exemple.fr" data-i18n-placeholder="shop.emailPlaceholder" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" data-i18n="shop.phoneLabel">Téléphone</label>
-              <input type="tel" class="form-input" id="co-phone" placeholder="+33 6 00 00 00 00" data-i18n-placeholder="shop.phonePlaceholder">
-            </div>
-          </div>
-
-          <div class="checkout-section">
-            <h3 data-i18n="shop.checkoutAddress">🚚 Adresse de livraison</h3>
-            <div class="form-group">
-              <label class="form-label" data-i18n="shop.addressLabel">Adresse</label>
-              <input type="text" class="form-input" id="co-address" placeholder="12 rue des Ombres" data-i18n-placeholder="shop.addressPlaceholder" required>
-            </div>
-            <div class="form-grid-2">
-              <div class="form-group">
-                <label class="form-label" data-i18n="shop.zipLabel">Code postal</label>
-                <input type="text" class="form-input" id="co-zip" placeholder="75001" data-i18n-placeholder="shop.zipPlaceholder" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label" data-i18n="shop.cityLabel">Ville</label>
-                <input type="text" class="form-input" id="co-city" placeholder="Paris" data-i18n-placeholder="shop.cityPlaceholder" required>
-              </div>
-            </div>
-          </div>
-
-          <div class="checkout-section">
-            <h3 data-i18n="shop.paymentTitle">💳 Paiement</h3>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
-              <label style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:var(--color-deep);border:1px solid var(--color-border);border-radius:var(--radius-md);cursor:pointer;font-size:0.8rem;color:var(--color-text-muted);">
-                <input type="radio" name="payment" value="card" checked> <span data-i18n="shop.payCard">💳 Carte</span>
-              </label>
-              <label style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:var(--color-deep);border:1px solid var(--color-border);border-radius:var(--radius-md);cursor:pointer;font-size:0.8rem;color:var(--color-text-muted);">
-                <input type="radio" name="payment" value="paypal"> <span data-i18n="shop.payPaypal">🅿️ PayPal</span>
-              </label>
-              <label style="display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:var(--color-deep);border:1px solid var(--color-border);border-radius:var(--radius-md);cursor:pointer;font-size:0.8rem;color:var(--color-text-muted);">
-                <input type="radio" name="payment" value="virement"> <span data-i18n="shop.payTransfer">🏦 Virement</span>
-              </label>
-            </div>
-            <div style="padding:1rem;background:rgba(201,168,76,0.06);border:1px solid var(--color-gold-dim);border-radius:var(--radius-md);font-size:0.8rem;color:var(--color-text-muted);" data-i18n="shop.paySecure">
-              🔒 Paiement sécurisé SSL. Vos données ne sont jamais stockées sur nos serveurs.
-            </div>
-          </div>
-
-          <button class="btn btn-primary" style="width:100%;padding:1rem;" onclick="submitOrder()">
-            <span data-i18n="shop.orderBtn">🛒 Passer la commande —</span> <span id="checkout-total-btn">0,00 €</span>
-          </button>
-        </div>
+  <!-- Availability enquiry: no order or payment is processed on this site. -->
+  <div class="checkout-overlay" id="checkout-overlay" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+    <div class="checkout-modal" tabindex="-1">
+      <div class="checkout-modal-header">
+        <h2 id="checkout-title" data-i18n="shop.checkoutTitle">Demander la disponibilité</h2>
+        <button class="btn btn-secondary" data-dialog-close onclick="closeCheckout()" data-i18n-aria="modal.close" aria-label="Fermer">✕</button>
       </div>
-
-      <!-- Confirmation -->
-      <div class="checkout-success" id="checkout-success">
-        <div class="checkout-success-icon">✅</div>
-        <h2 data-i18n="shop.successTitle">Commande confirmée !</h2>
-        <p style="margin-bottom:1rem;" data-i18n="shop.successMsg">Merci pour votre commande. Vous recevrez un email de confirmation dans quelques minutes.</p>
-        <p style="margin-bottom:2rem;font-size:0.8rem;" data-i18n="shop.successShipping">Expédition sous 2–3 jours ouvrés depuis notre atelier.</p>
-        <button class="btn btn-primary" onclick="closeCheckout();clearCart();" data-i18n="shop.successBtn">🏠 Retour à la boutique</button>
+      <div class="checkout-modal-body">
+        <p data-i18n="shop.enquiryNotice">La vente en ligne n’est pas encore disponible. Ce panier est une estimation. Contactez-nous pour connaître la disponibilité et les conditions de livraison ; aucune commande ni aucun paiement ne sont effectués ici.</p>
+        <div id="checkout-summary" style="margin:1rem 0;"></div>
+        <a class="btn btn-primary" id="reservation-email" href="mailto:contact@ombres-erebor.fr" data-i18n="shop.enquiryEmail">Préparer une demande par email</a>
+        <p style="margin-top:1rem;" data-i18n="shop.enquiryHelp">Votre messagerie s’ouvrira avec le récapitulatif. Vous devrez envoyer le message vous-même. Vous pouvez aussi écrire à contact@ombres-erebor.fr.</p>
       </div>
     </div>
   </div>
