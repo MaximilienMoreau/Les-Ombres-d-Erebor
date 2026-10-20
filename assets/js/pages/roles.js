@@ -31,11 +31,13 @@
     solitaire: { emoji: '🌀', key: 'common.factionSolitaire' },
   };
 
+  function normalizeSearch(value) {
+    return value.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().trim();
+  }
+
   function matchesSearch(role) {
-    return role.name.toLowerCase().includes(currentSearch)
-        || role.shortPower.toLowerCase().includes(currentSearch)
-        || (role.nameEn && role.nameEn.toLowerCase().includes(currentSearch))
-        || (role.shortPowerEn && role.shortPowerEn.toLowerCase().includes(currentSearch));
+    return [role.name, role.shortPower, role.nameEn, role.shortPowerEn]
+      .some(value => value && normalizeSearch(value).includes(currentSearch));
   }
 
   function buildCard(role, indexInGroup) {
@@ -138,7 +140,7 @@
   // Recherche
   if (searchEl) {
     searchEl.addEventListener('input', (e) => {
-      currentSearch = e.target.value.toLowerCase().trim();
+      currentSearch = normalizeSearch(e.target.value);
       buildCards();
     });
   }
